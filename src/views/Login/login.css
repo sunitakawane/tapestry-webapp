@@ -1,0 +1,78 @@
+.card {
+  position: relative;
+  left: 60%;
+  width: 30%;
+  transform: translateY(45%);
+}
+
+.card-title {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 74px;
+  /* identical to box height, or 308% */
+
+  letter-spacing: 0.225px;
+  text-transform: uppercase;
+
+  color: #333333;
+}
+
+.card-subtitle {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height, or 133% */
+
+  color: #535353;
+}
+
+.btn.btn-primary,
+.btn.btn-primary:hover,
+.btn.btn-primary:active,
+.btn.btn-primary:visited {
+  background-color: #1ec491 !important;
+  border-color: #1ec491;
+  border-radius: 5px;
+  width: 65%;
+
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.15px;
+}
+
+.card-text,
+.card-text a {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  /* identical to box height */
+
+  color: #535353;
+}
+
+a:hover {
+  color: #1ec491;
+}
+
+
+.input {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 1.15px;
+
+  color: #535353;
+}
+

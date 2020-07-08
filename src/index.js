@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import routes from './services/route/routes';
 import * as routeService from './services/route/routeService';
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
 
 ReactDOM.render(
