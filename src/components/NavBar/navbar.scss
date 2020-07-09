@@ -1,3 +1,5 @@
+@import 'src/constants/color.scss';
+
 .navbar-brand {
   font-family: Source Sans Pro;
   font-style: normal;
@@ -9,7 +11,7 @@
   letter-spacing: 1.29375px;
   text-transform: uppercase;
 
-  color: #333333;
+  color: $text;
 }
 
 .navbar-nav.ml-auto li a {
@@ -19,5 +21,6 @@
   font-size: 14px;
   line-height: 18px;
 
-  color: #333333;
+  color: $text;
 }
+

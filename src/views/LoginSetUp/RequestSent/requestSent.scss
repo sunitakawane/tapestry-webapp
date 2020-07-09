@@ -1,0 +1,54 @@
+@import "src/constants/color.scss";
+
+.request-card{
+  position: relative;
+  left: 60%;
+  width: 30%;
+  transform: translateY(70%);
+}
+
+.card-title {
+  font-style: normal;
+  font-weight: bold !important;
+  font-size: 24px;
+  line-height: 74px;
+  /* identical to box height, or 308% */
+
+  letter-spacing: 0.225px;
+  text-transform: uppercase;
+
+  color: $text;
+}
+
+.requestSent {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  /* identical to box height, or 133% */
+
+  color: $primary;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.card-text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height */
+
+  color: $primary;
+}
+
+.card-text a,
+.card-text a:hover {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+
+  color: $background;
+}

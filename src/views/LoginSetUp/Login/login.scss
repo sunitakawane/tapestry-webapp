@@ -1,3 +1,5 @@
+@import "src/constants/color.scss";
+
 .card {
   position: relative;
   left: 60%;
@@ -6,9 +8,8 @@
 }
 
 .card-title {
-  font-family: Source Sans Pro;
   font-style: normal;
-  font-weight: bold;
+  font-weight: bold !important;
   font-size: 24px;
   line-height: 74px;
   /* identical to box height, or 308% */
@@ -16,63 +17,56 @@
   letter-spacing: 0.225px;
   text-transform: uppercase;
 
-  color: #333333;
+  color: $text;
 }
 
 .card-subtitle {
-  font-family: Source Sans Pro;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 16px;
   /* identical to box height, or 133% */
 
-  color: #535353;
+  color: $primary;
 }
 
 .btn.btn-primary,
 .btn.btn-primary:hover,
 .btn.btn-primary:active,
 .btn.btn-primary:visited {
-  background-color: #1ec491 !important;
-  border-color: #1ec491;
+  background-color: $background !important;
+  border-color: $background;
   border-radius: 5px;
   width: 65%;
 
-  font-family: Source Sans Pro;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
   text-align: center;
   letter-spacing: 0.15px;
+  margin-bottom: 70px;
 }
 
 .card-text,
-.card-text a {
-  font-family: Source Sans Pro;
+.card-text a,
+.card-text a:hover {
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 18px;
   /* identical to box height */
 
-  color: #535353;
+  color: $primary;
 }
 
-a:hover {
-  color: #1ec491;
-}
-
-
-.input {
-  font-family: Source Sans Pro;
+.card-text a:hover {
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 1.15px;
+  font-size: 14px;
+  line-height: 18px;
+  /* identical to box height */
 
-  color: #535353;
+  color: $background;
 }
 
