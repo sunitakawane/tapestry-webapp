@@ -1,0 +1,31 @@
+@import '../../constants/colors.scss';
+
+.navbar {
+    background-color: $color-background;
+}
+
+.navbar-brand {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+    /* identical to box height */
+
+    letter-spacing: 1.29375px;
+    text-transform: uppercase;
+
+    color: $color-shade !important;
+    mix-blend-mode: normal;
+}
+
+#user-nav-dropdown {
+    color: $color-shade !important; 
+}
+
+.nav-link {
+    color: $color-shade !important;
+}
+
+.nav-link.active {
+    border-bottom: 2px solid $color-shade;
+}
