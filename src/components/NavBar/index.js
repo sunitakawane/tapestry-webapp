@@ -7,7 +7,7 @@ class NavBar extends Component {
     return (
       <Navbar>
         <Navbar.Brand href="#home">TAPESTRY POOLING</Navbar.Brand>
-        <Navbar.Toggle />
+        {/* <Navbar.Toggle /> */}
         <ul className="navbar-nav ml-auto">
           <li>
             <a className="nav-link"> Develop using our Algorithm</a>

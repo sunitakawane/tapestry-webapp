@@ -5,8 +5,8 @@ import "./login.scss";
 class Login extends Component {
   render() {
     return (
-      <Card border="light">
-        <Card.Title>WELCOME BACK!</Card.Title>
+      <Card className="login-page" border="light">
+        <Card.Title className="login-page-title">WELCOME BACK!</Card.Title>
         <Card.Subtitle>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </Card.Subtitle> <br />

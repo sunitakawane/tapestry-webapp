@@ -1,4 +1,4 @@
-@import "src/constants/color.scss";
+@import 'src/constants/color.scss';
 
 .card {
   position: relative;
@@ -17,7 +17,7 @@
   letter-spacing: 0.225px;
   text-transform: uppercase;
 
-  color: $text;
+  color: $color-text;
 }
 
 .card-subtitle {
@@ -27,15 +27,15 @@
   line-height: 16px;
   /* identical to box height, or 133% */
 
-  color: $primary;
+  color: $color-primary;
 }
 
 .btn.btn-primary,
 .btn.btn-primary:hover,
 .btn.btn-primary:active,
 .btn.btn-primary:visited {
-  background-color: $background !important;
-  border-color: $background;
+  background-color: $color-background !important;
+  border-color: $color-background;
   border-radius: 5px;
   width: 65%;
 
@@ -46,27 +46,30 @@
   text-align: center;
   letter-spacing: 0.15px;
   margin-bottom: 70px;
+
 }
 
 .card-text,
-.card-text a,
-.card-text a:hover {
+.card-text a {
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 18px;
   /* identical to box height */
 
-  color: $primary;
+  color: $color-primary;
 }
 
-.card-text a:hover {
+a:hover {
+  color: $color-background;
+}
+
+.input {
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 18px;
-  /* identical to box height */
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 1.15px;
 
-  color: $background;
+  color: $color-primary;
 }
-

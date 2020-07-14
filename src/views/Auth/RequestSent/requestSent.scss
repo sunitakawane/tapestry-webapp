@@ -17,7 +17,7 @@
   letter-spacing: 0.225px;
   text-transform: uppercase;
 
-  color: $text;
+  color: $color-text;
 }
 
 .requestSent {
@@ -27,7 +27,7 @@
   line-height: 28px;
   /* identical to box height, or 133% */
 
-  color: $primary;
+  color: $color-primary;
   margin-top: 30px;
   margin-bottom: 50px;
 }
@@ -39,7 +39,7 @@
   line-height: 20px;
   /* identical to box height */
 
-  color: $primary;
+  color: $color-primary;
 }
 
 .card-text a,
@@ -50,5 +50,5 @@
   font-size: 16px;
   line-height: 20px;
 
-  color: $background;
+  color: $color-background;
 }
