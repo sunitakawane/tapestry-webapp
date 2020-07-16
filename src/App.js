@@ -18,7 +18,7 @@ export class App extends Component {
       console.log(this.props),
       <div className="App">
         <header className="App-header">
-          <h1>Welcome to Tapestry-Pooling</h1>
+          <h1>Welcome to Tapestry-Pooling! Watch this space.</h1>
           {<h2>{this.props.currentUser.name}</h2>}
         </header>
       </div>
