@@ -1,0 +1,86 @@
+.RectangleParent {
+	position: relative;
+	width: 80%;
+	height: relative;
+	left: 10%;
+	padding: 1% 0%;
+	font-size: 30px;
+	background: #1EC491;
+	color: white;
+}
+.Rectangle1 {
+	position: relative;
+	left: 10%;
+	width: 80%;
+	top: 7%;
+	background: #FAFAFA;
+	border: 1px solid #E4E4E4;
+	box-sizing: border-box;
+	padding: 2%;
+}
+.Rectangle2 {
+	position: relative;
+	left: 10%;
+	width: 80%;
+	top: 7%;
+	background: white;
+	border: 1px solid #E4E4E4;
+	box-sizing: border-box;
+	padding: 2%;
+}
+.test-label {
+	color: #ffffff !important;
+}
+.downloadpoolingmatrix {
+	background: #1EC491;
+	border: 1px solid #1EC491;
+	box-sizing: border-box;
+	border-radius: 2px;
+	font-size: 16px;
+	padding: 3%;
+	color: white;
+}
+.endbuttons {
+	border: 1px solid #535353;
+	box-sizing: border-box;
+	border-radius: 2px;
+	font-size: 16px;
+	padding: 5% 15%;
+	background: #ffffff;
+	&:hover {
+		color: #1EC491;
+		border: 1px solid #1EC491;
+	}
+}
+.normalbuttons {
+	border: 1px solid #535353;
+	box-sizing: border-box;
+	border-radius: 2px;
+	font-size: 16px;
+	padding: 5% 15%;
+	background: #ffffff;
+	&:hover {
+		color: #1EC491;
+		border: 1px solid #1EC491;
+	}
+	&:focus {
+		color: #1EC491;
+		border: 1px solid #1EC491;
+		display: inline-block;
+	}
+	.fa-check {
+		position: relative;
+		top: 5px;
+		right: 10px;
+		color: black;
+		font-weight: normal;
+	}
+}
+.close {
+	background: #1EC491;
+	color: white;
+	font-weight: normal;
+	border: 0px solid #1EC491;
+	font-size: 36px;
+	text-align: right;
+}

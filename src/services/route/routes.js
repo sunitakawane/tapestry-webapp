@@ -1,5 +1,6 @@
 import Wrapper from '../../bootstrap/Wrapper/Wrapper';
 import App from '../../App';
+import Test from '../../components/Test'
 
 const routes = [
   {
@@ -11,6 +12,13 @@ const routes = [
         strict: true,
         name: 'Home',
         component: App,
+      },
+      {
+        path: '/test',
+        exact: true,
+        strict: true,
+        name: 'Home',
+        component: Test,
       },
     ]
   }
