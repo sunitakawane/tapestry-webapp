@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "tapestry-pooling-f9f8e",
+    "staging": "dev-tapestry-pooling-aea91"
+  }
+}
