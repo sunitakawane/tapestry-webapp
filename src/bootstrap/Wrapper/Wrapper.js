@@ -6,7 +6,7 @@ const Wrapper = (props) => {
   const { route } = props;
   return (
     <Fragment>
-      <NavBar />
+      {/* <NavBar /> */}
       <div>{routeService.renderRoutes(route.routes)}</div>
     </Fragment>
   );

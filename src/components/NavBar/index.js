@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { Component } from "react";
+import "./navbar.scss";
 
-const NavBar = () => {
-  return <div>NavBar</div>
-};
-
+class NavBar extends Component {
+  render() {
+    return (
+     <NavBar />
+    );
+  }
+}
 export default NavBar;
