@@ -68,13 +68,13 @@ export default function NewLab(){
                     <Grid item xs={1}></ Grid>
                     <Grid item xs={4} align-items-xs-center>
                         <br/>
-                        <TextField id="outlined-basic" label="" variant="outlined" />                     
+                        <TextField id="outlined-basic" label="Name" variant="outlined" />                     
                         <br/>
                         <br/>
-                        <TextField id="outlined-basic" label="" variant="outlined" />                 
+                        <TextField id="outlined-basic" label="Designation" variant="outlined" />                 
                         <br/>
                         <br/>
-                        <TextField id="outlined-basic" label="" variant="outlined" />                 
+                        <TextField id="outlined-basic" label="Address" variant="outlined" />                 
                     </Grid>
                     <Grid item xs={1}></ Grid>
                     <Grid item xs={3} align-items-xs-center>
@@ -87,7 +87,7 @@ export default function NewLab(){
                         <br/>
                         <br/>
                         <br/>
-                        <TextField id="outlined-basic" label="" variant="outlined" />                 
+                        <TextField id="outlined-basic" label="Contact No" variant="outlined" />                 
                     </Grid>
                 </Grid> 
             </Grid>  

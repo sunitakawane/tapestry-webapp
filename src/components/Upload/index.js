@@ -6,7 +6,7 @@ import './style.css'
 export default function uploadsuccessful(){
     return (
     <div>
-        <div class="Parent">
+        <div class="Upload">
             <Grid container spacing={2}>
                 <Grid container item xs={12}>
                     <Grid item xs={1}></ Grid>
