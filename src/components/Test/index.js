@@ -7,14 +7,17 @@ import LabelRow from './rows/labelsrow';
 import TestIDRow from './rows/testrow';
 import ButtonRow from './rows/buttonrow';
 
-function Test() {
+const Test = ({ handleClose, show}) => {
+  const showHideClassname = show ? "modal display-block" : "modal display-none";
+
+ 
   return (
-    <div>
+    <div className={showHideClassname}>
       <div class="RectangleParent">
         <Grid container spacing={1}>
           <Grid container item xs={12}>
             <Grid item xs={4} align-items-xs-right>
-              <button type="button" class="close" aria-label="Close"><span class="spantimes" aria-hidden="true">&times;</span></button>
+              <button type="button" class="close" aria-label="Close" onClick={handleClose}><span class="spantimes" aria-hidden="true">&times;</span></button>
             </Grid>
             <Grid item xs={1}></ Grid>
             <Grid item xs={4} align-items-xs-center>Test Configuration</Grid>

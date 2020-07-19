@@ -3,6 +3,7 @@ import { Container, Button, Form, FormControl, InputGroup, Row, Col} from 'react
 
 import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
+import Test from '../../../components/Test'
 import './ongoingTests.scss'
 import getSVG from "../../../utils/getSVG"
 
@@ -16,13 +17,22 @@ class OngoingTests extends Component {
             {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
             {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
             {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
-        ]
+        ],
+        showtest:false
     };
+    showTestModal = () => {
+        this.setState({ show: true });
+      };
+    
+    hideTestModal = () => {
+        this.setState({ show: false });
+      };
     render() {
         return (          
             <div>
             <NavBarLanding activepage='/testSamples' userId={this.state.userId} labName={this.state.labName}/>
             <Container fluid>
+                <Test show={this.state.show} handleClose={this.hideTestModal}></Test>
                 <Row className='mt-3'>
                     <Col xs={6}>
                         <Row>
@@ -57,7 +67,7 @@ class OngoingTests extends Component {
                                 </Form>
                             </Col>
                             <Col xs={3}>
-                            <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn'>+ New Test</Button>
+                            <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={this.showTestModal}>+ New Test</Button>
                             </Col>
                         </Row>
                     </Col>
