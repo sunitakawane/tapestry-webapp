@@ -29,3 +29,13 @@
 .nav-link.active {
     border-bottom: 2px solid $color-shade;
 }
+
+.firstline {
+    border-color: $color-background;
+    width: 75%;
+}
+
+.secondline {
+    border-color: $color-background;
+    width: 20%;
+}

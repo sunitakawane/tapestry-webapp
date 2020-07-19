@@ -1,9 +1,9 @@
 import Wrapper from '../../bootstrap/Wrapper/Wrapper';
 import App from '../../App';
-/*import Login from '../../views/LoginSetup/Login';
+import Login from '../../views/LoginSetup/Login';
 import SignUp from '../../views/LoginSetup/SignUp';
-import RequestSent from '../../views/LoginSetup/RequestSent';*/
-import TestSamples from '../../views/LandingPage/TestSamples'
+import RequestSent from '../../views/LoginSetup/RequestSent';
+import OngoingTests from '../../views/LandingPage/OngoingTests'
 import CompletedTests from '../../views/LandingPage/CompletedTests';
 
 const routes = [{
@@ -16,7 +16,7 @@ const routes = [{
           name: 'Home',
           component: App,
       },
-/*      {
+      {
           path: '/login',
           exact: true,
           strict: true,
@@ -36,13 +36,13 @@ const routes = [{
           strict: true,
           name: 'requestSent',
           component: RequestSent,
-      },*/
+      },
       {
-          path: '/testsamples',
+          path: '/ongoingtests',
           exact: true,
           strict: true,
-          name: 'testSamples',
-          component: TestSamples,
+          name: 'ongoingTests',
+          component: OngoingTests,
       },
       {
           path: '/completedtests',

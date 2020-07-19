@@ -17,7 +17,6 @@ class TableLanding extends Component {
         var keys = this.getKeys();
         return items.map((row, index)=>{
             return <tr key={index}>
-                <th>#{/*Need to add checkbox here*/}</th> 
                 {keys.map(key => 
                     <th key={key}>{row[key]}</th>    
                 )}      
@@ -32,7 +31,6 @@ class TableLanding extends Component {
                     <Table borderless hover responsive className='border shadow-sm'>
                         <thead className='border-bottom bg-light'>
                             <tr>
-                                <th key='checkbox'>#{/* Add checkbox for select all*/}</th>
                                 {this.getHeader()}
                             </tr>
                         </thead>
