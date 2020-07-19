@@ -1,6 +1,8 @@
 import Wrapper from '../../bootstrap/Wrapper/Wrapper';
 import App from '../../App';
 import Test from '../../components/Test'
+import Upload from '../../components/Upload'
+import NewLab from '../../components/NewLab'
 
 const routes = [
   {
@@ -19,6 +21,20 @@ const routes = [
         strict: true,
         name: 'Home',
         component: Test,
+      },
+      {
+      path: '/upload',
+      exact: true,
+      strict: true,
+      name: 'Home',
+      component: Upload,
+      },
+      {
+        path: '/newlab',
+        exact: true,
+        strict: true,
+        name: 'Home',
+        component: NewLab,
       },
     ]
   }

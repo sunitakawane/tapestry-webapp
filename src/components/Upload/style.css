@@ -1,0 +1,74 @@
+.Parent{
+    position: relative;
+    width: 30%;
+    height: relative;
+    left: 30%;
+    font-size: 30x;
+    background: #1ec491;
+    color: white;
+}
+.Content{
+    position: relative;
+    width: 30%;
+    height: relative;
+    left: 30%;
+    font-size: 20x;
+    background: #FFFFFF;
+    color: black;
+}
+.test-label {
+    color: #fff !important;
+}
+.downloadpoolingmatrix {
+    background: #1ec491;
+    border: 1px solid #1ec491;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-size: 16px;
+    padding: 3%;
+    color: white;
+}
+.endbuttons {
+    border: 1px solid #535353;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-size: 16px;
+    padding: 5% 15%;
+    background: #fff;
+}
+.endbuttons:hover {
+    color: #1ec491;
+    border: 1px solid #1ec491;
+}
+.normalbuttons {
+    border: 1px solid #535353;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-size: 16px;
+    padding: 5% 15%;
+    background: #fff;
+}
+.normalbuttons:hover {
+    color: #1ec491;
+    border: 1px solid #1ec491;
+}
+.normalbuttons:focus {
+    color: #1ec491;
+    border: 1px solid #1ec491;
+    display: inline-block;
+}
+.normalbuttons .fa-check {
+    position: relative;
+    top: 5px;
+    right: 10px;
+    color: black;
+    font-weight: normal;
+}
+.close {
+    background: #1ec491;
+    color: white;
+    font-weight: normal;
+    border: 0px solid #1ec491;
+    font-size: 25px;
+    text-align: right;
+}
