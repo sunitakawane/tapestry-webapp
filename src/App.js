@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+
+import {connect} from 'react-redux';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends Component {
+
+  componentDidMount = () => {
+    const user = {
+      name: "Tapestry"
+    }
+    this.props.setUser(user)
+  }
+  
+  render() {
+    return (
+      console.log(this.props),
+      <div className="App">
+        <header className="App-header">
+          <h1>Welcome to Tapestry-Pooling! Watch this space.</h1>
+          {<h2>{this.props.currentUser.name}</h2>}
+        </header>
+      </div>
+    );
+  }
 }
 
-export default App;
+function mapDispatchToProps (dispatch){
+  return {
+    setUser: (userObj) => {
+      dispatch({type: "SET_USER", payload: userObj})
+    }
+  }
+}
+
+function mapStateToProps (state){
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
