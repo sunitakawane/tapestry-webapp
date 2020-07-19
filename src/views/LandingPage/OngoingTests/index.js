@@ -21,7 +21,7 @@ class OngoingTests extends Component {
     render() {
         return (          
             <div>
-            <NavBarLanding activepage='/testSamples' userId={this.state.userId} labName={this.state.labName}/>
+            <NavBarLanding activepage='/ongoingtests' userId={this.state.userId} labName={this.state.labName}/>
             <Container fluid>
                 <Row className='mt-3'>
                     <Col xs={6}>

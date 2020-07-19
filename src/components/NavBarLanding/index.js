@@ -12,7 +12,7 @@ class NavBarLanding extends Component {
                 <Navbar.Brand href="#home">TAPESTRY POOLING</Navbar.Brand>
                 <Nav className='m-auto nav align-content-md-end' activeKey={this.props.activepage}>
                     <Nav.Item>
-                        <Nav.Link href="/testSamples">Ongoing Tests</Nav.Link>
+                        <Nav.Link href="/ongoingtests">Ongoing Tests</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link href="/completedTests">Completed Tests</Nav.Link>
@@ -31,7 +31,7 @@ class NavBarLanding extends Component {
                         </Col>
                         <Col xs={{span:2, offset:2}}>
                             <Row>
-                                <a href="/testsamples">edit</a>
+                                <a href="/ongoingtests">edit</a>
                             </Row>
                         </Col>
                         </Row>
