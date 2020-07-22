@@ -4,8 +4,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 
 
-function Machine() {
-  const [value,setValue]=useState('BioqPCR');
+function DropdownContent(props) {
+  const [value,setValue]=useState(props.value);
   const handleSelect=(e)=>{
     console.log(e);
     setValue(e)
@@ -20,13 +20,12 @@ function Machine() {
       variant="Secondary "
       onSelect={handleSelect}
         >
-              <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
-              <Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
-              <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
+            {props.item.map(
+            item => <Dropdown.Item eventKey={item}>{item}</Dropdown.Item>)}
               <Dropdown.Divider />
       </DropdownButton>
     </div>
   );
 }
 
-export default Machine;
+export default DropdownContent;

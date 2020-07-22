@@ -24,8 +24,7 @@ class OngoingTests extends Component {
     target = React.createRef()
     showTest = () => {
         this.setState({ showtest: true });
-        console.log(this.target);
-      };
+    };
     
     hideTest = () => {
     this.setState({ showtest: false });

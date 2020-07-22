@@ -2,7 +2,6 @@ import Wrapper from '../../bootstrap/Wrapper/Wrapper';
 import App from '../../App';
 import Test from '../../components/Test'
 import Upload from '../../components/Upload'
-import NewLab from '../../components/NewLab'
 import Login from '../../views/LoginSetup/Login';
 import SignUp from '../../views/LoginSetup/SignUp';
 import RequestSent from '../../views/LoginSetup/RequestSent';
@@ -32,13 +31,6 @@ const routes = [{
       strict: true,
       name: 'upload',
       component: Upload,
-      },
-      {
-        path: '/newlab',
-        exact: true,
-        strict: true,
-        name: 'newlab',
-        component: NewLab,
       },
       {
         path: '/login',

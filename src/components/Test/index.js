@@ -2,20 +2,38 @@ import React from 'react';
 import {Container,Row,Col,InputGroup,FormControl} from 'react-bootstrap';
 
 import './styles.scss'
-import Machine from './dropdown/Dropdown';
+import DropdownContent from './dropdown/Dropdown';
 
 
-export default function Test(props){
-  // const showHideClassname = props.showtest? "RectangleParent display-block" : "RectangleParent display-none";
-  // console.log(props.children)
+export default class Test extends React.Component{
 
-  // if(true)
-  // {
+constructor(props){
+  super(props)
+  this.handleClose = props.handleClose;
+  this.state ={
+    testid:'',
+    remarks:'',
+    testconductedby:'Anirudha',
+    totalsamples:'',
+    prevalancerate:'',
+    machine:'Biorad q PCr',
+    kit:'P12 BioTest'
+  }
+  this.handleInput = this.handleInput.bind(this)
+}
+
+handleInput(event)
+{
+  console.log(this.state)
+  this.setState({
+    [event.target.name]:event.target.value
+  })
+}
+
+render()
+{
   return (
     <div>
-      {/* <section className="modal-main">
-        {props.children}
-      </section> */}
       <div className="RectangleParent">
         <Container>
           <Row className="justify-content-md-center"> 
@@ -23,7 +41,7 @@ export default function Test(props){
             <Col xs lg="4" className="justify-content-md-center">Test Configuration</Col>
             <Col xs lg="4"></Col>
             <Col xs lg="2">         
-              <button type="button" class="close" aria-label="Close" onClick={props.handleClose}><span aria-hidden="true">&times;</span></button>
+              <button type="button" class="close" aria-label="Close" onClick={this.handleClose}><span aria-hidden="true">&times;</span></button>
             </Col>
           </Row>
         </Container>
@@ -31,26 +49,54 @@ export default function Test(props){
       <div className="Rectangle1">
         <Container>
           <Row className="justify-content-md-right">
-            <Col xs lg="2">KIT TYPE</Col>
-            <Col xs lg="8"></Col>
-            <Col xs lg="2">MACHINE</Col>            
+            <Col xs lg="2">KIT TYPE</Col>           
+          </Row>
+          <Row>
+            <Col xs lg="2">
+              <DropdownContent name="kit" value={this.state.kit} onChange={this.handleChange} item={["P12 BioTest","ABGun RT-PCR","In"]}/>      
+            </Col>
           </Row>
           <Row className="justify-content-md-right">
+            <Col xs lg="2">Machine TYPE</Col>           
+          </Row>
+          <Row>
             <Col xs lg="2">
-              <button className="normalbuttons">ADD Covid-19</button>
+              <DropdownContent name="kit" value={this.state.machine} item={["ABGun RT-PCR","In"]}/>      
             </Col>
+          </Row>
+          <Row>
+            <Col xs lg="2">Total Samples</Col> 
+            <Col xs lg="1"></Col>           
+            <Col xs lg="2">Prevalance Rate</Col>           
+          </Row>
+          <Row>
             <Col xs lg="2">
-              <button className="normalbuttons">P12 BioTest</button>
+              <InputGroup className="mb-2">
+                <FormControl
+                  type="number"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                  min="0"
+                  name="totalsamples"   
+                  onChange={this.handleInput}             
+                />
+              </InputGroup>
             </Col>
+            <Col xs lg="1"></Col>
             <Col xs lg="2">
-              <button className="normalbuttons">ESP32CORO</button>
-            </Col>  
-            <Col xs lg="4">
-              <button className="normalbuttons">+ADD NEW KIT</button>
-            </Col>           
-            <Col xs lg="2">
-              <Machine/>
-            </Col> 
+              <InputGroup className="mb-2">
+                <FormControl
+                  type="number"
+                  placeholder="Percentage"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                  max="100"
+                  min="0"
+                  name="prevalancerate"
+                  onChange={this.handleInput}
+                />
+              </InputGroup>
+            </Col>
           </Row>
         </Container>        
       </div>
@@ -66,34 +112,32 @@ export default function Test(props){
                   placeholder="TEST ID"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
+                  name="testid"
+                  onChange={this.handleInput}
                 />
               </InputGroup>
             </Col>
           </Row>
-          <Row className="justify-content-md-center">
+          <Row>
+            <Col xs lg="4">
+            </Col>
             <Col xs lg="2">
               TEST Conducted By
             </Col>
             <Col xs lg="2">
-              <InputGroup className="mb-2">
-                <FormControl
-                  placeholder="Select"
-                  aria-label="Select"
-                  aria-describedby="basic-addon1"
-                />
-              </InputGroup>
+              <DropdownContent value={this.state.testconductedby} item={[]}/>
             </Col>
           </Row>
-          <Row className="justify-content-md-center">
+          <br/>
+          <Row>
+            <Col xs lg="4">
+            </Col>
             <Col xs lg="2">
-              <br/>
               TEST Remarks
             </Col>
-          </Row>
-          <Row className="justify-content-md-center">
-            <Col xs lg="8">
+            <Col xs lg="6">
               <InputGroup size="lg">
-                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
+                <FormControl name="remarks" onChange={this.handleInput} aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
               </InputGroup>                
             </Col>
           </Row>
@@ -102,7 +146,7 @@ export default function Test(props){
             </Col>
             <Col xs lg="6">
               <br/>
-              <button className="downloadpoolingmatrix">Download Pooling matrix</button>
+              <button id="downloadbutton" className="downloadpoolingmatrix">Download Pooling matrix</button>
                               
             </Col>
           </Row>
@@ -119,8 +163,9 @@ export default function Test(props){
             <button className="endbuttons">Done</button>
           </Grid> */}
           <Row className="justify-content-md-center">
+            <br/>
             <Col xs lg="2">
-              <button className="endbuttons" onClick={props.handleClose}>Close</button>
+              <button className="endbuttons" onClick={this.handleClose}>Close</button>
             </Col>
             <Col xs lg="7"></Col>
             <Col xs lg="2">
@@ -131,15 +176,5 @@ export default function Test(props){
       </div>
     </div>
     );
-  // }
-  // else
-  // {
-  //   return(
-  //   <div>
-  //     {props.children}
-  //   </div>
-  //   );
-  // }
 }
-
-// export default Test;
+}
