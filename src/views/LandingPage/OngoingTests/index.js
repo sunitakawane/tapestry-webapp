@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Button, Form, FormControl, InputGroup, Row, Col} from 'react-bootstrap';
+import { Container, Button, Form, FormControl, InputGroup, Row, Col,Overlay} from 'react-bootstrap';
 
 import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
-import Test from '../../../components/Test'
 import './ongoingTests.scss'
 import getSVG from "../../../utils/getSVG"
+import Test from '../../../components/Test';
+
 
 class OngoingTests extends Component {
     state = {
@@ -18,21 +19,26 @@ class OngoingTests extends Component {
             {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
             {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
         ],
-        showtest:false
+        showtest:false,
     };
-    showTestModal = () => {
-        this.setState({ show: true });
+    target = React.createRef()
+    showTest = () => {
+        this.setState({ showtest: true });
+        console.log(this.target);
       };
     
-    hideTestModal = () => {
-        this.setState({ show: false });
-      };
+    hideTest = () => {
+    this.setState({ showtest: false });
+    };
+    
+    
+
     render() {
+        // let target = useRef(null);
         return (          
             <div>
-            <NavBarLanding activepage='/testSamples' userId={this.state.userId} labName={this.state.labName}/>
+            <NavBarLanding activepage='/ongoingtests' userId={this.state.userId} labName={this.state.labName}/>
             <Container fluid>
-                <Test show={this.state.show} handleClose={this.hideTestModal}></Test>
                 <Row className='mt-3'>
                     <Col xs={6}>
                         <Row>
@@ -67,7 +73,13 @@ class OngoingTests extends Component {
                                 </Form>
                             </Col>
                             <Col xs={3}>
-                            <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={this.showTestModal}>+ New Test</Button>
+                            <Button ref={this.target} bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={this.showTest}>+ New Test</Button>
+                            {/* <Overlay  target={this.target.current} show={this.state.showtest} placement="center">
+                                <Test handleClose={this.hideTest}/>
+                            </Overlay> */}
+                            <Overlay target={this.target.current} show={this.state.showtest} placement="center">
+                                <Test handleClose={this.hideTest}/>
+                            </Overlay>
                             </Col>
                         </Row>
                     </Col>
@@ -75,6 +87,7 @@ class OngoingTests extends Component {
                 <Row className='mt-3 ml-3 mr-3'>
                     <Col>
                         <TableLanding jsonoutput={this.state.jsonoutput}/>
+
                     </Col>
                 </Row>
             </Container>

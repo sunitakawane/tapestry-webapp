@@ -1,56 +1,31 @@
-import React from 'react';
-import './style.css';
+import React,{useState} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 
-export default class Dropdown extends React.Component {
-constructor(){
- super();
-
- this.state = {
-       displayMenu: false,
-     };
-
-  this.showDropdownMenu = this.showDropdownMenu.bind(this);
-  this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
-
-};
-
-showDropdownMenu(event) {
-    event.preventDefault();
-    this.setState({ displayMenu: true }, () => {
-    document.addEventListener('click', this.hideDropdownMenu);
-    });
+function City() {
+  const [value,setValue]=useState('Bangalore');
+  const handleSelect=(e)=>{
+    console.log(e);
+    setValue(e)
   }
-
-  hideDropdownMenu() {
-    this.setState({ displayMenu: false }, () => {
-      document.removeEventListener('click', this.hideDropdownMenu);
-    });
-
-  }
-
-  render() {
-    return (
-        <div  className="dropdown" style = {{background:"red",width:"200px"}} >
-         <div className="button" onClick={this.showDropdownMenu}> My Setting </div>
-
-          { this.state.displayMenu ? (
-          <ul>
-         <li><a className="active" href="#Create Page">Create Page</a></li>
-         <li><a href="#Manage Pages">Manage Pages</a></li>
-         <li><a href="#Create Ads">Create Ads</a></li>
-         <li><a href="#Manage Ads">Manage Ads</a></li>
-         <li><a href="#Activity Logs">Activity Logs</a></li>
-         <li><a href="#Setting">Setting</a></li>
-         <li><a href="#Log Out">Log Out</a></li>
-          </ul>
-        ):
-        (
-          null
-        )
-        }
-
-       </div>
-
-    )};
+  return (
+    <div className="App container">
+      
+      <DropdownButton
+      alignRight
+      title={value}
+      id="dropdown-menu-align-right"
+      onSelect={handleSelect}
+        >
+              <Dropdown.Item eventKey="option-1">Delhi</Dropdown.Item>
+              <Dropdown.Item eventKey="option-2">Mumbai</Dropdown.Item>
+              <Dropdown.Item eventKey="option-3">Pune</Dropdown.Item>
+              <Dropdown.Divider />
+      </DropdownButton>
+    </div>
+  );
 }
+
+export default City;

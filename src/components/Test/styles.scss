@@ -3,34 +3,48 @@
 	width: 80%;
 	height: relative;
 	left: 10%;
-	top:10%;
+	top:20%;
 	padding: 1% 0%;
-	font-size: 30px;
+	font-size: 18px;
 	background: #1EC491;
 	color: white;
 }
+.modal-main {
+	position:fixed;
+	background:white;
+	width: 100%;
+	height: auto;
+	top:20%;
+	left:50%;
+	font-size:14px;
+	transform: translate(-50%,-50%);
+}
+
 .Rectangle1 {
 	position: relative;
 	left: 10%;
 	width: 80%;
-	top:10%;
+	top:20%;
 	background: #FAFAFA;
 	border: 1px solid #E4E4E4;
 	box-sizing: border-box;
 	padding: 2%;
+	color:black;
 }
-.Rectangle2 {
+
+.Rectangle2{
 	position: relative;
 	left: 10%;
 	width: 80%;
-	top:10%;
-	background: white;
+	top:20%;
+	background: #FFFFFF;
 	border: 1px solid #E4E4E4;
 	box-sizing: border-box;
 	padding: 2%;
+	color:black;
 }
 .test-label {
-	color: #ffffff !important;
+	color: black !important;
 }
 .downloadpoolingmatrix {
 	background: #1EC491;
@@ -86,17 +100,18 @@
 	text-align: right;
 }
 
-.modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.6);
-}
 .display-block {
+	background: white;
+	height:100%;
 	display: block;
+	top: 10%;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+
 }
 .display-none {
 	display: none;
 }
+

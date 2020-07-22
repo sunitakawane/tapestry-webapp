@@ -1,89 +1,145 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import {Container,Row,Col,InputGroup,FormControl} from 'react-bootstrap';
 
 import './styles.scss'
-import LabelRow from './rows/labelsrow';
-import TestIDRow from './rows/testrow';
-import ButtonRow from './rows/buttonrow';
+import Machine from './dropdown/Dropdown';
 
-const Test = ({ handleClose, show}) => {
-  const showHideClassname = show ? "modal display-block" : "modal display-none";
 
- 
+export default function Test(props){
+  // const showHideClassname = props.showtest? "RectangleParent display-block" : "RectangleParent display-none";
+  // console.log(props.children)
+
+  // if(true)
+  // {
   return (
-    <div className={showHideClassname}>
-      <div class="RectangleParent">
-        <Grid container spacing={1}>
-          <Grid container item xs={12}>
-            <Grid item xs={4} align-items-xs-right>
-              <button type="button" class="close" aria-label="Close" onClick={handleClose}><span class="spantimes" aria-hidden="true">&times;</span></button>
-            </Grid>
-            <Grid item xs={1}></ Grid>
-            <Grid item xs={4} align-items-xs-center>Test Configuration</Grid>
-            <Grid item xs={3}></ Grid>
-          </Grid>
-        </Grid>
+    <div>
+      {/* <section className="modal-main">
+        {props.children}
+      </section> */}
+      <div className="RectangleParent">
+        <Container>
+          <Row className="justify-content-md-center"> 
+            <Col xs lg="2"></Col>
+            <Col xs lg="4" className="justify-content-md-center">Test Configuration</Col>
+            <Col xs lg="4"></Col>
+            <Col xs lg="2">         
+              <button type="button" class="close" aria-label="Close" onClick={props.handleClose}><span aria-hidden="true">&times;</span></button>
+            </Col>
+          </Row>
+        </Container>
       </div>
-      <div class="Rectangle1">
-        <Grid container spacing={1}>
-          <Grid container item xs={12} spacing={2}>
-            <LabelRow />
-          </Grid>
-          <Grid container item xs={12} spacing={2}>
-            <ButtonRow />
-          </Grid>
-        </Grid>        
+      <div className="Rectangle1">
+        <Container>
+          <Row className="justify-content-md-right">
+            <Col xs lg="2">KIT TYPE</Col>
+            <Col xs lg="8"></Col>
+            <Col xs lg="2">MACHINE</Col>            
+          </Row>
+          <Row className="justify-content-md-right">
+            <Col xs lg="2">
+              <button className="normalbuttons">ADD Covid-19</button>
+            </Col>
+            <Col xs lg="2">
+              <button className="normalbuttons">P12 BioTest</button>
+            </Col>
+            <Col xs lg="2">
+              <button className="normalbuttons">ESP32CORO</button>
+            </Col>  
+            <Col xs lg="4">
+              <button className="normalbuttons">+ADD NEW KIT</button>
+            </Col>           
+            <Col xs lg="2">
+              <Machine/>
+            </Col> 
+          </Row>
+        </Container>        
       </div>
-      <div class="Rectangle2">
-        <Grid container spacing={1}>
-          <Grid container item xs={12} spacing={2}>
-            <TestIDRow/>
+      <div className="Rectangle2">
+        <Container> 
+          <Row className="justify-content-md-center">
+            <Col xs lg="2">
+              TEST ID
+            </Col>
+            <Col xs lg="2">
+              <InputGroup className="mb-2">
+                <FormControl
+                  placeholder="TEST ID"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                />
+              </InputGroup>
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center">
+            <Col xs lg="2">
+              TEST Conducted By
+            </Col>
+            <Col xs lg="2">
+              <InputGroup className="mb-2">
+                <FormControl
+                  placeholder="Select"
+                  aria-label="Select"
+                  aria-describedby="basic-addon1"
+                />
+              </InputGroup>
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center">
+            <Col xs lg="2">
+              <br/>
+              TEST Remarks
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center">
+            <Col xs lg="8">
+              <InputGroup size="lg">
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
+              </InputGroup>                
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center">
+            <Col xs lg="4">
+            </Col>
+            <Col xs lg="6">
+              <br/>
+              <button className="downloadpoolingmatrix">Download Pooling matrix</button>
+                              
+            </Col>
+          </Row>
+        </Container>
+        <Container>
+          {/* <Grid item xs={1}>
           </Grid>
-          <Grid container item xs={12} spacing={2}>
-            <Grid item xs={4}>
-            </ Grid>
-            <Grid item xs={4}>
-              <TextareaAutosize aria-label="minimum height" rowsMin={6} colMin={6} placeholder="Write remakrs here" />;
-            </Grid>
-            <Grid item xs={4}>
-            </Grid>
+          <Grid item xs={2}>
+            <button className="endbuttons">Close</button>
           </Grid>
-         <Grid container item xs={12} spacing={2}>
-            <Grid item xs={5}>
-            </ Grid>
-            <Grid item xs={4}>
-              <button class="downloadpoolingmatrix">Download Pooling matrix</button>
-            </Grid>
-            <Grid item xs={3}>
-            </Grid>
+          <Grid item xs={7}>
           </Grid>
-          <Grid container item xs={12} spacing={2}>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={8}>
-              <hr style={{color: '#F2F2F2', backgroundColor: '#F2F2F2',height: .01,borderColor : '#F2F2F2'}}/>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-          </Grid>
-          <Grid container item xs={12} spacing={2}>
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={2}>
-              <button class="endbuttons">Close</button>
-            </Grid>
-            <Grid item xs={7}>
-            </Grid>
-            <Grid item xs={2}>
-              <button class="endbuttons">Done</button>
-            </Grid>
-          </Grid>
-        </Grid>
-        
+          <Grid item xs={2}>
+            <button className="endbuttons">Done</button>
+          </Grid> */}
+          <Row className="justify-content-md-center">
+            <Col xs lg="2">
+              <button className="endbuttons" onClick={props.handleClose}>Close</button>
+            </Col>
+            <Col xs lg="7"></Col>
+            <Col xs lg="2">
+              <button className="endbuttons">Done</button>
+            </Col>
+          </Row>
+        </Container>
       </div>
     </div>
     );
+  // }
+  // else
+  // {
+  //   return(
+  //   <div>
+  //     {props.children}
+  //   </div>
+  //   );
+  // }
 }
 
-export default Test;
+// export default Test;

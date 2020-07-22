@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import {Container,Row,Col,InputGroup,FormControl} from 'react-bootstrap';
 
 import './style.css'
 
@@ -7,49 +7,40 @@ export default function uploadsuccessful(){
     return (
     <div>
         <div class="Upload">
-            <Grid container spacing={2}>
-                <Grid container item xs={12}>
-                    <Grid item xs={1}></ Grid>
-                    <Grid item xs={3} align-items-xs-center>
+            <Container>
+                <Row className="justify-content-md-center">
+                    <Col xs lg="4">
                         Upload Successful
-                    </Grid>
-                    <Grid item xs={6}></ Grid>
-                    <Grid item xs={2} align-items-xs-right>
+                    </Col>
+                    <Col xs lg="4">
                         <button type="button" class="close" aria-label="Close"><span class="spantimes" aria-hidden="true">&times;</span></button>
-                    </Grid>
-                </Grid>
-            </Grid>
+                    </Col>
+                </Row>
+            </Container>
         </div>
         <div class="Content">
-            <Grid container spacing={2}>
-                <Grid container item xs={12}>
-                    <Grid item xs={2}></ Grid>
-                    <Grid item xs={4} align-items-xs-center>
+            <Container>
+                <Row className="justify-content-md-center">
+                    <Col xs lg="4">
                         <br/>
                         <br/>
                         152PoolingMatrix.xls
-                    </Grid>
-                    <Grid item xs={2} align-items-xs-right>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-                <Grid container item xs={12}>
-                    <Grid item xs={6} align-items-xs-center>
-                        <br/>
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-right">
+                    <Col xs lg="6">
                         <br/>
                         <br/>
                         File uploaded successfully
-                    </Grid>
-                    <Grid item xs={4}></ Grid>
-                    <Grid item xs={2} align-items-xs-right>
-                        <br/>
-                        <br/>
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Col xs lg="4">
                         <br/>
                         <button class="endbuttons">Done</button>
-                    </Grid>
-                </Grid>
-            </Grid>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     </div>
     )
