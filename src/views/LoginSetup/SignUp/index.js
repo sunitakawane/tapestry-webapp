@@ -3,7 +3,11 @@ import React, { Component } from 'react';
 class SignUp extends Component {
     state = {}
     render() { 
-        return (null);
+        return (
+            <div>
+                Sign Up
+            </div>
+        );
     }
 }
  

@@ -1,0 +1,26 @@
+@import 'src/constants/color.scss';
+
+.navbar-brand {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  /* identical to box height */
+
+  letter-spacing: 1.29375px;
+  text-transform: uppercase;
+
+  color: $color-text;
+}
+
+.navbar-nav.ml-auto li a {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+
+  color: $color-text;
+}
+

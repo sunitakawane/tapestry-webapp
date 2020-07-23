@@ -5,10 +5,9 @@ import routes from './services/route/routes';
 import * as routeService from './services/route/routeService';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import reducer from './reducers/reducer.js';
+import { createStore } from 'redux';
+import reducer from './reducers/reducer';
+import { Provider } from 'react-redux'
 
 import './index.scss';
 

@@ -67,6 +67,22 @@ const routes = [{
         name: 'completedTests',
         component: CompletedTests,
       },
-  ]
-}];
+      {
+        path: '/signUp',
+        exact: true,
+        strict: true,
+        name: 'singUp',
+        component: SignUp,
+      },
+      {
+        path: '/requestSent',
+        exact: true,
+        strict: true,
+        name: 'requestSent',
+        component: RequestSent,
+      },
+    ]
+  }
+];
+
 export default routes;

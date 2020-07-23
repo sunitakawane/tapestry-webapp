@@ -3,7 +3,11 @@ import React, { Component } from 'react';
 class RequestSent extends Component {
     state = {  }
     render() { 
-        return (null);
+        return (
+            <div>
+                Request Sent
+            </div>
+        );
     }
 }
  
