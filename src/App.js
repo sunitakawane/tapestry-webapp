@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 import './App.css';
 
+
 export class App extends Component {
 
   componentDidMount = () => {
@@ -19,7 +20,7 @@ export class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>Welcome to Tapestry-Pooling! Watch this space.</h1>
-          {<h2>{this.props.currentUser.name}</h2>}
+          {/* {<h2>{this.props.currentUser.name}</h2>} */}
         </header>
       </div>
     );

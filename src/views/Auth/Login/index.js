@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
 import {
   Button,
   Form,
@@ -9,10 +11,42 @@ import {
   Image,
   Navbar,
 } from "react-bootstrap";
+import { loginActions } from "../../../redux/actions/authActions/loginActions";
 import "./login.scss";
+import "../index.scss";
 import mask from "./Mask Group.png";
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    // initalizing the state to logout on landing
+    // loginActions.logout();
+
+    this.state = {
+      email: "",
+      password: "",
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e, field) {
+    console.log("submit pressed");
+    const { value } = e.target;
+    this.setState({ [field]: value });
+  }
+
+  handleSubmit(e) {
+    console.log("submit pressed");
+    e.preventDefault();
+    this.props.loginRequested();
+    if (this.state.email && this.state.password) {
+      this.props.login(this.state.email, this.state.password);
+    }
+  }
+
   render() {
     return (
       <Container fluid>
@@ -63,37 +97,57 @@ class Login extends Component {
                   Login using your registered Email and password.
                 </Card.Subtitle>{" "}
                 <br />
-                <Form>
-                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                <Form onSubmit={(e) => this.handleSubmit(e)}>
+                  {/* //{this.handleSubmit}> */}
+                  <Form.Group
+                    as={Row}
+                    controlId="formHorizontalEmail"
+                    role="form"
+                  >
                     <Col sm={8}>
                       <Form.Control
-                        classname="input"
+                        className="input"
                         type="email"
                         placeholder="Email Address"
                         size="lg"
+                        value={this.state.email}
+                        onChange={(e) => this.handleChange(e, "email")}
                       />
                     </Col>
                   </Form.Group>
-
-                  <Form.Group as={Row} controlId="formBasicPassword">
+                  {this.props.isSubmitted && !this.state.email && (
+                    <Form.Text className="alert">Email is required.</Form.Text>
+                  )}
+                  <Form.Group
+                    as={Row}
+                    controlId="formBasicPassword"
+                    role="form"
+                  >
                     <Col sm={8}>
                       <Form.Control
                         classname="input"
                         type="password"
                         placeholder="Password"
                         size="lg"
+                        value={this.state.password}
+                        onChange={(e) => this.handleChange(e, "password")}
                       />
                     </Col>
                   </Form.Group>
+                  {this.props.isSubmitted && !this.state.password && (
+                    <Form.Text className="alert">
+                      Password is required.
+                    </Form.Text>
+                  )}
                 </Form>
                 <Card.Text>
-                  <a href="#">Forgot Password?</a>
+                  <a href="/reset-password">Forgot Password?</a>
                 </Card.Text>
-                <Button variant="primary" size="lg">
+                <Button variant="primary" size="lg" value="submit">
                   Login
                 </Button>
                 <Card.Text className="new-user">
-                  New user? <a href="#">Contact us</a> to register.
+                  New user? <a href="/sign-up">Contact us</a> to register.
                 </Card.Text>
               </Card>
             </div>
@@ -104,4 +158,24 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  isSubmitted: PropTypes.bool.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    isSubmitted: state.isSubmitted,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  loginRequested: () => dispatch(loginActions.loginRequested),
+  login: () => dispatch(loginActions.login),
+  logout: () => dispatch(loginActions.logout),
+
+  // logout: loginActions.logout,
+  // login: loginActions.login,
+  // loginRequested: loginActions.loginRequested,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

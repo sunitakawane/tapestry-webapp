@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Button,
   Form,
@@ -9,20 +10,62 @@ import {
   Image,
   Navbar,
 } from "react-bootstrap";
+import { signUpActions } from "../../../redux/actions/authActions/signUpActions";
 import "./signUp.scss";
+import "../index.scss";
 import mask from "./Mask Group.png";
 
 class SignUp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      firstName: "",
+      lastName: "",
+      labName: "",
+      labLocation: "",
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e, field) {
+    const { value } = e.target;
+    this.setState({ [field]: value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log("submit pressed");
+    this.props.signUpRequested();
+    if (
+      this.state.email &&
+      this.state.firstName &&
+      this.state.lastName &&
+      this.state.labName &&
+      this.state.labLocation
+    ) {
+      this.props.signUp(
+        this.state.email,
+        this.state.firstName,
+        this.state.lastName,
+        this.state.labName,
+        this.state.labLocation
+      );
+    }
+  }
+
   render() {
     return (
       <Container fluid>
         <Row>
-
           {/* Column for background image*/}
           <Col>
             <div className="sign-up-image">
               <Card>
-                <Image src={mask}/>
+                <Image src={mask} />
                 <Card.ImgOverlay>
                   <Card.Text>Tapestry Pooling</Card.Text>
                   <Card.Title>
@@ -45,19 +88,23 @@ class SignUp extends Component {
                   <a className="nav-link"> Develop using our Algorithm</a>
                 </li>
                 <li>
-                  <a className="nav-link" href="#">Contact us</a>
+                  <a className="nav-link" href="#">
+                    Contact us
+                  </a>
                 </li>
                 <li>
-                  <a className="nav-link" href="#">Visit Website</a>
+                  <a className="nav-link" href="#">
+                    Visit Website
+                  </a>
                 </li>
               </ul>
             </Navbar>
-
+            this.state
             <div className="sign-up">
               <Card border="light">
                 <Card.Title>SIGN UP!</Card.Title>
-                
-                <Form>
+
+                <Form onSubmit={this.handleSubmit}>
                   <Form.Group as={Row} controlId="formHorizontalEmail">
                     <Col sm={8}>
                       <Form.Control
@@ -65,20 +112,50 @@ class SignUp extends Component {
                         type="email"
                         placeholder="Email Address"
                         size="lg"
+                        value={this.state.email}
+                        onChange={(e) => this.handleChange(e, "email")}
                       />
                     </Col>
                   </Form.Group>
+                  {this.props.submitted && this.state.email && (
+                    <Form.Text className="alert">Email is required.</Form.Text>
+                  )}
 
                   <Form.Group as={Row} controlId="formHorizontalText">
                     <Col sm={8}>
                       <Form.Control
                         classname="input"
                         type="text"
-                        placeholder="Your Name"
+                        placeholder="First Name"
                         size="lg"
+                        value={this.state.firstName}
+                        onChange={(e) => this.handleChange(e, "text")}
                       />
                     </Col>
                   </Form.Group>
+                  {this.props.submitted && this.state.firstName && (
+                    <Form.Text className="alert">
+                      First Name is required.
+                    </Form.Text>
+                  )}
+
+                  <Form.Group as={Row} controlId="formHorizontalText">
+                    <Col sm={8}>
+                      <Form.Control
+                        classname="input"
+                        type="text"
+                        placeholder="Last Name"
+                        size="lg"
+                        value={this.state.lastName}
+                        onChange={(e) => this.handleChange(e, "text")}
+                      />
+                    </Col>
+                  </Form.Group>
+                  {this.props.submitted && this.state.lastName && (
+                    <Form.Text className="alert">
+                      Last Name is required.
+                    </Form.Text>
+                  )}
 
                   <Form.Group as={Row} controlId="formHorizontalText">
                     <Col sm={8}>
@@ -87,9 +164,16 @@ class SignUp extends Component {
                         type="text"
                         placeholder="Lab Name"
                         size="lg"
+                        value={this.state.labName}
+                        onChange={(e) => this.handleChange(e, "text")}
                       />
                     </Col>
                   </Form.Group>
+                  {this.props.submitted && this.state.labName && (
+                    <Form.Text className="alert">
+                      Lab Name is required.
+                    </Form.Text>
+                  )}
 
                   <Form.Group as={Row} controlId="formHorizontalText">
                     <Col sm={8}>
@@ -100,13 +184,19 @@ class SignUp extends Component {
                       >
                         <option>Lab Location (Select City)</option>
                         <option value="Andhra Pradesh">Andhra Pradesh</option>
-                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Andaman and Nicobar Islands">
+                          Andaman and Nicobar Islands
+                        </option>
+                        <option value="Arunachal Pradesh">
+                          Arunachal Pradesh
+                        </option>
                         <option value="Assam">Assam</option>
                         <option value="Bihar">Bihar</option>
                         <option value="Chandigarh">Chandigarh</option>
                         <option value="Chhattisgarh">Chhattisgarh</option>
-                        <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                        <option value="Dadar and Nagar Haveli">
+                          Dadar and Nagar Haveli
+                        </option>
                         <option value="Daman and Diu">Daman and Diu</option>
                         <option value="Delhi">Delhi</option>
                         <option value="Lakshadweep">Lakshadweep</option>
@@ -114,8 +204,12 @@ class SignUp extends Component {
                         <option value="Goa">Goa</option>
                         <option value="Gujarat">Gujarat</option>
                         <option value="Haryana">Haryana</option>
-                        <option value="Himachal Pradesh">Himachal Pradesh</option>
-                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <option value="Himachal Pradesh">
+                          Himachal Pradesh
+                        </option>
+                        <option value="Jammu and Kashmir">
+                          Jammu and Kashmir
+                        </option>
                         <option value="Jharkhand">Jharkhand</option>
                         <option value="Karnataka">Karnataka</option>
                         <option value="Kerala">Kerala</option>
@@ -138,6 +232,11 @@ class SignUp extends Component {
                       </Form.Control>
                     </Col>
                   </Form.Group>
+                  {this.props.submitted && this.props.labLocation && (
+                    <Form.Text className="alert">
+                      Location is required.
+                    </Form.Text>
+                  )}
                 </Form>
 
                 <Button variant="primary" size="lg">
@@ -145,9 +244,8 @@ class SignUp extends Component {
                 </Button>
 
                 <Card.Text>
-                  Already a user? <a href="#">Sign in</a> here
+                  Already a user? <a href="/login">Sign in</a> here
                 </Card.Text>
-
               </Card>
             </div>
           </Col>
@@ -157,4 +255,15 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+function mapStateToProps(state) {
+  return {
+    isSubmitted: state.isSubmitted,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  signUpRequested: () => dispatch(signUpActions.signUpRequested),
+  signUp: () => dispatch(signUpActions.signUp),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

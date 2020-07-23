@@ -59,7 +59,7 @@ class RequestSent extends Component {
 
                 <Card.Text>
                   We have received your request, our team will get back to you
-                  shortly on your email Anirudha@gmail.com
+                  shortly on your email {this.props.email}
                 </Card.Text>
                 <Card.Text>
                   <a href="#">Visit out website</a> to know more about our
