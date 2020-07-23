@@ -20,8 +20,8 @@ class OngoingTests extends Component {
             {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
         ],
         showtest:false,
+        target : React.createRef()
     };
-    target = React.createRef()
     showTest = () => {
         this.setState({ showtest: true });
     };
@@ -72,11 +72,11 @@ class OngoingTests extends Component {
                                 </Form>
                             </Col>
                             <Col xs={3}>
-                            <Button ref={this.target} bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={this.showTest}>+ New Test</Button>
+                            <Button ref={this.state.target} bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={this.showTest}>+ New Test</Button>
                             {/* <Overlay  target={this.target.current} show={this.state.showtest} placement="center">
                                 <Test handleClose={this.hideTest}/>
                             </Overlay> */}
-                            <Overlay target={this.target.current} show={this.state.showtest} placement="center">
+                            <Overlay target={this.state.target.current} show={this.state.showtest} placement="left">
                                 <Test handleClose={this.hideTest}/>
                             </Overlay>
                             </Col>

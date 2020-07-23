@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container,Row,Col,InputGroup,FormControl} from 'react-bootstrap';
+import {Container,Row,Col,InputGroup,FormControl,Overlay} from 'react-bootstrap';
 
 import './styles.scss'
 import DropdownContent from './dropdown/Dropdown';
@@ -13,18 +13,32 @@ constructor(props){
   this.state ={
     testid:'',
     remarks:'',
-    testconductedby:'Anirudha',
+    testconductedby:['Anirudha'],
     totalsamples:'',
     prevalancerate:'',
-    machine:'Biorad q PCr',
-    kit:'P12 BioTest'
+    machine:["ABGun RT-PCR","In"],
+    kit:["P12 BioTest","ABGun RT-PCR","In"],
+    showtrigger:false,
+    triggercurrent:React.createRef()
   }
   this.handleInput = this.handleInput.bind(this)
+
 }
 
 handleInput(event)
 {
   console.log(this.state)
+  if(event.target.name === "prevalancerate")
+  {
+    if(event.target.value>20)
+    {
+      this.setState({showtrigger:true})
+    }
+    else
+    {
+      this.setState({showtrigger:false})
+    }
+  }
   this.setState({
     [event.target.name]:event.target.value
   })
@@ -53,7 +67,7 @@ render()
           </Row>
           <Row>
             <Col xs lg="2">
-              <DropdownContent name="kit" value={this.state.kit} onChange={this.handleChange} item={["P12 BioTest","ABGun RT-PCR","In"]}/>      
+              <DropdownContent name="kit" value={this.state.kit[0]} onChange={this.handleChange} item={this.state.kit}/>      
             </Col>
           </Row>
           <Row className="justify-content-md-right">
@@ -61,7 +75,7 @@ render()
           </Row>
           <Row>
             <Col xs lg="2">
-              <DropdownContent name="kit" value={this.state.machine} item={["ABGun RT-PCR","In"]}/>      
+              <DropdownContent name="kit" value={this.state.machine[0]} item={this.state.machine}/>      
             </Col>
           </Row>
           <Row>
@@ -76,6 +90,7 @@ render()
                   type="number"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
+                  step="1"
                   min="0"
                   name="totalsamples"   
                   onChange={this.handleInput}             
@@ -94,8 +109,25 @@ render()
                   min="0"
                   name="prevalancerate"
                   onChange={this.handleInput}
+                  ref={this.state.triggercurrent}
                 />
               </InputGroup>
+              <Overlay target={this.state.triggercurrent.current} show={this.state.showtrigger} placement="right">
+                {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                  <div
+                    {...props}
+                    style={{
+                      backgroundColor: 'rgba(255, 100, 100, 0.85)',
+                      padding: '2px 10px',
+                      color: 'white',
+                      borderRadius: 3,
+                      ...props.style,
+                    }}
+                  >
+                    Prevalance Rate should be between 5 to 20 %
+                  </div>
+                )}
+              </Overlay>
             </Col>
           </Row>
         </Container>        
@@ -125,7 +157,7 @@ render()
               TEST Conducted By
             </Col>
             <Col xs lg="2">
-              <DropdownContent value={this.state.testconductedby} item={[]}/>
+              <DropdownContent value={this.state.testconductedby[0]} item={this.state.testconductedby}/>
             </Col>
           </Row>
           <br/>
@@ -146,7 +178,7 @@ render()
             </Col>
             <Col xs lg="6">
               <br/>
-              <button id="downloadbutton" className="downloadpoolingmatrix">Download Pooling matrix</button>
+              <button id="downloadbutton" className="downloadpoolingmatrix disabled">Download Pooling matrix</button>
                               
             </Col>
           </Row>
