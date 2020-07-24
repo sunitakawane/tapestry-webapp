@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Button, Form, FormControl, InputGroup, Row, Col} from 'react-bootstrap';
+import { Container, Button, Form, FormControl, InputGroup, Row, Col, ButtonGroup, ToggleButton} from 'react-bootstrap';
 
 import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
@@ -10,38 +10,72 @@ class OngoingTests extends Component {
     state = {
         userId : 'Anirudha',
         labName: 'Vedanta Memorial Hospitals, Biogen Labs',
+        count: 1,
         onGoingTests: 25,
+        radios : [
+            {name:'All', value:'0'},
+            {name:'Erros', value:'-1'},
+            {name:'In Progress', value:'1'}
+        ],
         jsonoutput: [
-            {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
-            {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
-            {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
-            {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
+            {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 
+            'component_D' : {'type': 'Button', 'text': 'Download pooling matrix', 'color': 'black', 'view': 'Download'}, 
+            'component_U' : {'type': 'Button', 'text': 'Upload qPCR matrix', 'color': 'green', 'view': 'Upload'},
+            'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_OT'},
+            'component_nt' : 'yes'},
+            {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 
+            'component_D' : {'type': 'Button', 'text': 'Download pooling matrix', 'color': 'black', 'view': 'Download'}, 
+            'component_U' : {'type': 'Button', 'text': 'Upload qPCR matrix', 'color': 'green', 'view': 'Upload'},
+            'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_OT'},
+            'component_nt' : 'no'},
+            {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'Error in Parsing!', 
+            'component_D' : {'type': 'Button', 'text': 'Download pooling matrix', 'color': 'black', 'view': 'Download'}, 
+            'component_U' : {'type': 'Button', 'text': 'Re-Upload', 'color': 'green', 'view': 'Upload'},
+            'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_OT'},
+            'component_nt' : 'no'},
+            {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 
+            'component_D' : {'type': 'Button', 'text': 'Download pooling matrix', 'color': 'black', 'view': 'Download'}, 
+            'component_U' : {'type': 'Button', 'text': 'Upload qPCR matrix', 'color': 'green', 'view': 'Upload'},
+            'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_OT'},
+            'component_nt' : 'no'},
         ]
     };
+
     render() {
         return (          
-            <div>
-            <NavBarLanding activepage='/ongoingtests' userId={this.state.userId} labName={this.state.labName}/>
+            <div className='bg-light'>
+            <NavBarLanding activepage='/ongoingtests' userId={this.state.userId} labName={this.state.labName} count={this.state.count}/>
             <Container fluid>
                 <Row className='mt-3'>
-                    <Col xs={6}>
+                    <Col xs={7}>
                         <Row>
-                            <Col xs={4} className='my-auto'>
+                            <Col xs={5} className='my-auto'>
                                 <h5>ONGOING TESTS ({this.state.onGoingTests})</h5>
                             </Col>
-                            <Col xs={8}>
+                            <Col xs={7}>
                                 <Row>
                                     <p className='my-auto'>Filters</p>
-                                    <Button variant='muted' className='ml-3 pl-4 pr-4 border'>All</Button>
-                                    <Button variant='muted' className='ml-3 pl-4 pr-4 border'>Errors</Button>
-                                    <Button variant='muted' className='ml-3 pl-4 pr-4 border'>In Progress</Button>
+                                    <ButtonGroup toggle>
+                                        {this.state.radios.map((radio,idx)=> (
+                                            <ToggleButton
+                                                key={idx}
+                                                type='radio'
+                                                name='radio'
+                                                variant='muted'
+                                                value={radio.value}
+                                                className='ml-3 pl-4 pr-4 border bg-white'
+                                            >
+                                                {radio.name}
+                                            </ToggleButton>
+                                        ))}
+                                    </ButtonGroup>
                                 </Row>
                             </Col>
                         </Row>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={5}>
                         <Row>
-                            <Col xs={{span: 4, offset: 5}}>
+                            <Col xs={{span: 5, offset: 2}} style={{display: 'flex', justifyContent: 'flex-end'}}>
                                 <Form>
                                     <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
                                         Search
@@ -52,12 +86,12 @@ class OngoingTests extends Component {
                                                 {getSVG('search')}
                                             </InputGroup.Text>
                                         </InputGroup.Prepend>
-                                        <FormControl  id="inlineFormInputGroupUsername2" placeholder="Search Pool ID" />
+                                        <FormControl  id="inlineFormInputGroupUsername2" placeholder="Search TEST ID" />
                                     </InputGroup>
                                 </Form>
                             </Col>
-                            <Col xs={3}>
-                            <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn'>+ New Test</Button>
+                            <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn'>+ New Test</Button>
                             </Col>
                         </Row>
                     </Col>

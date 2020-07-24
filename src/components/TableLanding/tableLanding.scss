@@ -1,0 +1,23 @@
+@import '../../constants/colors.scss';
+
+.text-center {
+    text-align: center;
+    align-items: center;
+}
+
+.text-normal {
+    font-weight: normal !important;
+}
+
+.btn-text {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.prim-color {
+    color: $color-background;
+}
+
+#popover-basic .arrow{
+    display: none;
+}

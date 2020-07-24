@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavDropdown, Container, Button, Col, Row } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, Container, Button, Badge } from 'react-bootstrap';
 
 import "./NavBarLanding.scss";
 import getSVG from "../../utils/getSVG"
@@ -15,7 +15,10 @@ class NavBarLanding extends Component {
                         <Nav.Link href="/ongoingtests">Ongoing Tests</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/completedTests">Completed Tests</Nav.Link>
+                        <Nav.Link href="/completedTests">
+                            Completed Tests{'\u00A0'}
+                            <sup><Badge pill variant='light' className='bdg-prim'>{this.props.count ? this.props.count : ''}</Badge></sup>
+                        </Nav.Link>
                     </Nav.Item>
                 </Nav>
                 <Button variant='muted'>
@@ -24,17 +27,8 @@ class NavBarLanding extends Component {
                 <NavDropdown title={this.props.userId} id="user-nav-dropdown" alignRight>
                     {/* Dropdown links to be added */}
                     <NavDropdown.Item >
-                        <Row>
-                        <Col xs={8}>
-                            <h6>{this.props.userId}</h6>
-                            <p className='text-muted'>{this.props.labName}</p>
-                        </Col>
-                        <Col xs={{span:2, offset:2}}>
-                            <Row>
-                                <a href="/ongoingtests">edit</a>
-                            </Row>
-                        </Col>
-                        </Row>
+                        <h6>{this.props.userId}</h6>
+                        <p className='text-muted'>{this.props.labName}</p>
                     </NavDropdown.Item>
                     {/*<NavDropdown.Divider />*/}
                     <hr className='firstline'/>
@@ -52,7 +46,7 @@ class NavBarLanding extends Component {
                         Help and Support
                     </NavDropdown.Item>
                     <hr className='secondline' />
-                    <NavDropdown.Item href="#">
+                    <NavDropdown.Item href="/login">
                         Logout
                     </NavDropdown.Item>
                 </NavDropdown>   
