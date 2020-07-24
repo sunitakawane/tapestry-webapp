@@ -38,6 +38,4 @@ function mapStateToProps (state){
   return {
     currentUser: state.currentUser
   }
-}
-
 export default connect(mapStateToProps, mapDispatchToProps)(App);
