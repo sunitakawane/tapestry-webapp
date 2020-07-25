@@ -1,14 +1,14 @@
-import axios from "axios";
-import authConstants from "../../../constants/authConstants";
 import { createBrowserHistory } from "history";
+import { passwordApi } from "../../../api/authApi/passwordApi";
+import authConstants from "../../../constants/authConstants";
 
 const history = createBrowserHistory();
 
 export const passwordActions = {
   resetPasswordRequested,
+  setPasswordRequested,
   resetPassword,
-  //   changePassword,
-  //   confirmPassword,
+  setPassword,
 };
 
 function resetPasswordRequested() {
@@ -17,30 +17,48 @@ function resetPasswordRequested() {
   };
 }
 
+function setPasswordRequested() {
+  return {
+    type: authConstants.SET_PASSWORD_REQUESTED,
+  };
+}
+
 function resetPassword(email) {
   return (dispatch) => {
-    axios
-      .post(
-        `https://tapestry-pooling-284109.ew.r.appspot.com/swagger/?format=openapi/auth/password/reset`,
-        {
-          email: email,
-        }
-      )
-      .then((response) => response.json())
-      .then(
-        (user) => {
-          dispatch({
-            type: authConstants.RESET_PASSWORD_SUCCESS,
-            payload: user,
-          });
-          history.push("/set-password");
-        },
-        (error) => {
-          dispatch({
-            type: authConstants.RESET_PASSWORD_FAILURE,
-            payload: error,
-          });
-        }
-      );
+    passwordApi.resetPassword(email).then(
+      (user) => {
+        dispatch({
+          type: authConstants.RESET_PASSWORD_SUCCESS,
+          payload: user,
+        });
+        history.push("/set-password");
+      },
+      (error) => {
+        dispatch({
+          type: authConstants.RESET_PASSWORD_FAILURE,
+          payload: error,
+        });
+      }
+    );
+  };
+}
+
+function setPassword(password1, password2) {
+  return (dispatch) => {
+    passwordApi.setPassword(password1, password2).then(
+      (user) => {
+        dispatch({
+          type: authConstants.SET_PASSWORD_SUCCESS,
+          payload: user,
+        });
+        history.push("/set-password");
+      },
+      (error) => {
+        dispatch({
+          type: authConstants.SET_PASSWORD_FAILURE,
+          payload: error,
+        });
+      }
+    );
   };
 }

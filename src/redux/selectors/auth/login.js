@@ -1,0 +1,1 @@
+export const getIsSubmitted = state => state.isSubmitted;

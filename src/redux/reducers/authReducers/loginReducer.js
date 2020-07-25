@@ -5,6 +5,7 @@ const initalState = {};
 export default function login(state = initalState, action) {
   switch (action.type) {
     case authConstants.LOGIN_REQUESTED:
+      console.log("login requested reducer");
       return {
         isSubmitted: true,
         user: action.user
