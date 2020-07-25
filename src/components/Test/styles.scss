@@ -9,16 +9,16 @@
 	background: #1EC491;
 	color: white;
 }
-.modal-main {
-	position:fixed;
-	background:white;
-	width: 100%;
-	height: auto;
-	top:20%;
-	left:50%;
-	font-size:14px;
-	transform: translate(-50%,-50%);
+
+.close {
+	background: #1EC491;
+	color: white;
+	font-weight: bold;
+	border: 0px solid #1EC491;
+	font-size: 36px;
+	text-align: right;
 }
+
 
 .Rectangle1 {
 	position: relative;
@@ -43,9 +43,7 @@
 	padding: 2%;
 	color:black;
 }
-.disabled{
-	background: black;
-}
+
 .downloadpoolingmatrix {
 	background: #1EC491;
 	border: 1px solid #1EC491;
@@ -55,6 +53,13 @@
 	padding: 3%;
 	color: white;
 }
+.downloadpoolingmatrix:disabled,
+.downloadpoolingmatrix[disabled] {
+	border: 1px solid #999999;
+	background: #cccccc;
+	color: #666666;
+}
+
 .endbuttons {
 	border: 1px solid #535353;
 	box-sizing: border-box;
@@ -67,51 +72,3 @@
 		border: 1px solid #1EC491;
 	}
 }
-.normalbuttons {
-	border: 1px solid #535353;
-	box-sizing: border-box;
-	border-radius: 2px;
-	font-size: 16px;
-	padding: 5% 15%;
-	background: #ffffff;
-	&:hover {
-		color: #1EC491;
-		border: 1px solid #1EC491;
-	}
-	&:focus {
-		color: #1EC491;
-		border: 1px solid #1EC491;
-		display: inline-block;
-	}
-	.fa-check {
-		position: relative;
-		top: 5px;
-		right: 10px;
-		color: black;
-		font-weight: normal;
-	}
-}
-.close {
-	background: #1EC491;
-	color: white;
-	font-weight: normal;
-	border: 0px solid #1EC491;
-	font-size: 36px;
-	text-align: right;
-}
-
-.display-block {
-	background: white;
-	height:100%;
-	display: block;
-	top: 10%;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 2;
-
-}
-.display-none {
-	display: none;
-}
-

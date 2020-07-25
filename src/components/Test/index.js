@@ -19,10 +19,29 @@ constructor(props){
     machine:["ABGun RT-PCR","In"],
     kit:["P12 BioTest","ABGun RT-PCR","In"],
     showtrigger:false,
-    triggercurrent:React.createRef()
+    triggercurrent:React.createRef(),
+    downloadpoolingmatrix:false,
+    done:false
   }
   this.handleInput = this.handleInput.bind(this)
+  this.changedownloadpoolingmatrixcolor = this.changedownloadpoolingmatrixcolor.bind(this)
+  this.download = this.download.bind(this)
+}
+download()
+{
 
+  this.setState({done:!this.state.done})
+}
+changedownloadpoolingmatrixcolor()
+{
+  if((this.state.totalsamples === '') || (this.state.prevalancerate === ''))
+  {
+    this.setState({downloadpoolingmatrix:false})
+  }
+  else
+  {
+    this.setState({downloadpoolingmatrix:true})
+  }
 }
 
 handleInput(event)
@@ -42,6 +61,7 @@ handleInput(event)
   this.setState({
     [event.target.name]:event.target.value
   })
+  this.changedownloadpoolingmatrixcolor()
 }
 
 render()
@@ -52,10 +72,10 @@ render()
         <Container>
           <Row className="justify-content-md-center"> 
             <Col xs lg="2"></Col>
-            <Col xs lg="4" className="justify-content-md-center">Test Configuration</Col>
+            <Col xs lg="4" className="justify-content-md-center">New Pool Test</Col>
             <Col xs lg="4"></Col>
             <Col xs lg="2">         
-              <button type="button" class="close" aria-label="Close" onClick={this.handleClose}><span aria-hidden="true">&times;</span></button>
+              <button type="button" className="close" aria-label="Close" onClick={this.handleClose}><span aria-hidden="true">&times;</span></button>
             </Col>
           </Row>
         </Container>
@@ -178,22 +198,11 @@ render()
             </Col>
             <Col xs lg="6">
               <br/>
-              <button id="downloadbutton" className="downloadpoolingmatrix disabled">Download Pooling matrix</button>
-                              
+              <button id="downloadbutton" disabled={!this.state.downloadpoolingmatrix} className="downloadpoolingmatrix" onClick={this.download}>Download Pooling matrix</button>
             </Col>
           </Row>
         </Container>
         <Container>
-          {/* <Grid item xs={1}>
-          </Grid>
-          <Grid item xs={2}>
-            <button className="endbuttons">Close</button>
-          </Grid>
-          <Grid item xs={7}>
-          </Grid>
-          <Grid item xs={2}>
-            <button className="endbuttons">Done</button>
-          </Grid> */}
           <Row className="justify-content-md-center">
             <br/>
             <Col xs lg="2">
@@ -201,7 +210,7 @@ render()
             </Col>
             <Col xs lg="7"></Col>
             <Col xs lg="2">
-              <button className="endbuttons">Done</button>
+              <button className="endbuttons" disabled={!this.state.done}>Start Test</button>
             </Col>
           </Row>
         </Container>
