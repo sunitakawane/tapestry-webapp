@@ -12,6 +12,7 @@ export default function login(state = initalState, action) {
       };
 
     case authConstants.LOGIN_SUCCESS:
+      console.log("login reducer");
       return {
         isLoggedIn: true,
         user: action.user

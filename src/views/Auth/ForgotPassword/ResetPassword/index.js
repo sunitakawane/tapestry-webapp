@@ -20,8 +20,8 @@ const ResetPassword = () => {
 
   const dispatch = useDispatch();
   const resetPasswordRequested = () =>
-    dispatch(passwordActions.resetPasswordRequested);
-  const resetPassword = () => dispatch(passwordActions.resetPassword);
+    dispatch(passwordActions.resetPasswordRequested());
+  const resetPassword = () => dispatch(passwordActions.resetPassword());
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
@@ -99,7 +99,7 @@ const ResetPassword = () => {
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Col sm={8}>
                     <Form.Control
-                      classname="input"
+                      className="input"
                       type="email"
                       placeholder="Email Address"
                       size="lg"

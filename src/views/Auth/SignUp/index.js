@@ -24,8 +24,8 @@ const SignUp = () => {
   const [validated, setValidated] = useState(false);
 
   const dispatch = useDispatch();
-  const signUpRequested = () => dispatch(signUpActions.signUpRequested);
-  const signUp = () => dispatch(signUpActions.signUp);
+  const signUpRequested = () => dispatch(signUpActions.signUpRequested());
+  const signUp = () => dispatch(signUpActions.signUp());
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
@@ -131,7 +131,7 @@ const SignUp = () => {
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Col sm={8}>
                     <Form.Control
-                      classname="input"
+                      className="input"
                       type="email"
                       placeholder="Email Address"
                       size="lg"
@@ -148,7 +148,7 @@ const SignUp = () => {
                 <Form.Group as={Row} controlId="formHorizontalText">
                   <Col sm={8}>
                     <Form.Control
-                      classname="input"
+                      className="input"
                       type="text"
                       placeholder="First Name"
                       size="lg"
@@ -165,7 +165,7 @@ const SignUp = () => {
                 <Form.Group as={Row} controlId="formHorizontalText">
                   <Col sm={8}>
                     <Form.Control
-                      classname="input"
+                      className="input"
                       type="text"
                       placeholder="Last Name"
                       size="lg"
@@ -182,7 +182,7 @@ const SignUp = () => {
                 <Form.Group as={Row} controlId="formHorizontalText">
                   <Col sm={8}>
                     <Form.Control
-                      classname="input"
+                      className="input"
                       type="text"
                       placeholder="Lab Name"
                       size="lg"

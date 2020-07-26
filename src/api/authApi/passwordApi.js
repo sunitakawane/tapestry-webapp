@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseApiUrl from "../../constants/baseApiUrl";
 
 export const passwordApi = {
   resetPassword,
@@ -6,30 +7,26 @@ export const passwordApi = {
 };
 
 function resetPassword(email) {
-  axios
-    .post(
-      `https://tapestry-pooling-284109.ew.r.appspot.com/swagger/?format=openapi/auth/password/reset`,
-      {
+  return () => {
+    axios
+      .post(baseApiUrl.BASE_URL + `/auth/password/reset`, {
         email: email,
-      }
-    )
-    .then((response) => response.json())
-    .then((email) => {
-      return email;
-    });
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
 }
 
 function setPassword(password1, password2) {
-  axios
-    .post(
-      `https://tapestry-pooling-284109.ew.r.appspot.com/swagger/?format=openapi/auth/password/change`,
-      {
+  return () => {
+    axios
+      .post(baseApiUrl.BASE_URL + `/auth/password/change`, {
         password1: password1,
         password2: password2,
-      }
-    )
-    .then((response) => response.json())
-    .then((message) => {
-      return message;
-    });
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
 }

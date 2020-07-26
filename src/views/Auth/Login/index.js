@@ -22,11 +22,12 @@ const Login = () => {
   const [validated, setValidated] = useState(false);
 
   const dispatch = useDispatch();
-  const loginRequested = () => dispatch(loginActions.loginRequested);
-  const login = () => dispatch(loginActions.login);
-  const logout = () => dispatch(loginActions.logout);
+  const loginRequested = () => dispatch(loginActions.loginRequested());
+  const login = () => dispatch(loginActions.login());
+  const logout = () => dispatch(loginActions.logout());
   const isSubmitted = useSelector(getIsSubmitted);
 
+  
   const handleEmailInput = (e) => {
     const { value } = e.target;
 
@@ -127,7 +128,7 @@ const Login = () => {
                 <Form.Group as={Row} controlId="formBasicPassword" role="form">
                   <Col sm={8}>
                     <Form.Control
-                      classname="input"
+                      className="input"
                       type="password"
                       placeholder="Password"
                       size="lg"

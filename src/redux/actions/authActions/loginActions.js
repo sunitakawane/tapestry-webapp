@@ -18,13 +18,13 @@ function loginRequested() {
 }
 
 function login(email, password) {
+  console.log("login action");
   return (dispatch) => {
     loginApi.login(email, password).then(
       (user) => {
-        console.log("yes");
         dispatch({
           type: authConstants.LOGIN_SUCCESS,
-          payload: user,
+          payload: user.data,
         });
         history.push("/onboarding");
       },

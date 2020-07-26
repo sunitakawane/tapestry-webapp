@@ -1,24 +1,22 @@
 import axios from "axios";
+import baseApiUrl from "../../constants/baseApiUrl";
 
 export const signUpApi = {
   signUp,
 };
 
 function signUp(email, firstName, lastName, labName, labLocation) {
-  axios
-    .post(
-      `https://tapestry-pooling-284109.ew.r.appspot.com/swagger/?format=openapi/auth/register`,
-      {
+  return () => {
+    axios
+      .post(baseApiUrl.BASE_URL + `/auth/register`, {
         email: email,
         first_Name: firstName,
         last_Name: lastName,
         lab: labName,
         city: labLocation,
-      }
-    )
-    .then((response) => response.json())
-    .then((currentUser) => {
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      return currentUser;
-    });
+      })
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      });
+  };
 }

@@ -21,8 +21,8 @@ const SetPassword = () => {
 
   const dispatch = useDispatch();
   const setPasswordRequested = () =>
-    dispatch(passwordActions.setPasswordRequested);
-  const setPassword = () => dispatch(passwordActions.setPassword);
+    dispatch(passwordActions.setPasswordRequested());
+  const setPassword = () => dispatch(passwordActions.setPassword());
 
   const handleNewPasswordInput = (e) => {
     const { value } = e.target;
@@ -105,7 +105,7 @@ const SetPassword = () => {
                 <Form.Group as={Row} controlId="formBasicPassword">
                   <Col sm={8}>
                     <Form.Control
-                      classname="input"
+                      className="input"
                       type="password"
                       placeholder="New Password"
                       size="lg"
@@ -119,7 +119,7 @@ const SetPassword = () => {
                 <Form.Group as={Row} controlId="formBasicPassword">
                   <Col sm={8}>
                     <Form.Control
-                      classname="input"
+                      className="input"
                       type="password"
                       placeholder="Confirm Password"
                       size="lg"
