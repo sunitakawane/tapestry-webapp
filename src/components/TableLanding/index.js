@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Table, Container, Row, Button, OverlayTrigger, Popover} from 'react-bootstrap';
 
 import './tableLanding.scss'
 import getSVG from '../../utils/getSVG'
 
-class TableLanding extends Component {
+function TableLanding(props) {
 
-    getKeys = function() {
-        return Object.keys(this.props.jsonoutput[0])
+    const getKeys = () => {
+        return Object.keys(props.jsonoutput[0])
     }
 
-    getHeader = function() {
-        var heads = this.getKeys()
+    const getHeader = () => {
+        var heads = getKeys()
         return heads.map(head => 
         {
             if (head.indexOf('component') === -1) {
@@ -27,17 +27,17 @@ class TableLanding extends Component {
         })
     };
 
-    download = function() {
+    const download = () => {
         return <Popover id="popover-basic">
             <Popover.Title className='text-muted'>DOWNLOAD OPTIONS</Popover.Title>
             <Popover.Content>
-                <Button bsPrefix='btn-text bg-success' style={{width: '100%'}}>{getSVG('download')} Download .xls</Button>
-                <Button bsPrefix='btn-text' style={{width: '100%'}}>{getSVG('download')} Download .xlsx</Button>
+                <Button bsPrefix='btn-text bg-success btn-full'>{getSVG('download')} Download .xls</Button>
+                <Button bsPrefix='btn-text btn-full'>{getSVG('download')} Download .xlsx</Button>
             </Popover.Content>
         </Popover>
     }
 
-    optionsot = function() {
+    const optionsot = () => {
         return <Popover id="popover-basic">
             <Popover.Title className='text-muted'>DATA OPTIONS</Popover.Title>
             <Popover.Content>
@@ -46,15 +46,15 @@ class TableLanding extends Component {
         </Popover>
     }
 
-    optionsct = function() {
+    const optionsct = () => {
         return <Popover id='popover-basic'>
             
         </Popover>
     }
 
-    getBody = function() {
-        var items = this.props.jsonoutput;
-        var keys = this.getKeys();
+    const getBody = () => {
+        var items = props.jsonoutput;
+        var keys = getKeys();
         return items.map((row, index)=>{
             if (row['STATUS'] === 'Error in Parsing!') {
             return (
@@ -82,7 +82,7 @@ class TableLanding extends Component {
                             case 'component_D':
                                 return (
                                     <th key={key} className='text-center'>
-                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={this.download()}>
+                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={download()}>
                                             <Button bsPrefix='btn-text'>{text}</Button>
                                         </OverlayTrigger>
                                     </th>
@@ -96,7 +96,7 @@ class TableLanding extends Component {
                             case 'component_O':
                                 return (
                                     <th key={key} className='text-center'>
-                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={this.optionsot()}>
+                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsot()}>
                                             <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
                                         </OverlayTrigger>                                            
                                     </th>
@@ -137,7 +137,7 @@ class TableLanding extends Component {
                                     case 'component_D':
                                         return (
                                             <th key={key} className='text-center'>
-                                                <OverlayTrigger trigger='focus' placement='bottom' overlay={this.download()}>
+                                                <OverlayTrigger trigger='focus' placement='bottom' overlay={download()}>
                                                     <Button bsPrefix='btn-text'>{text}</Button>
                                                 </OverlayTrigger>
                                             </th>
@@ -157,7 +157,7 @@ class TableLanding extends Component {
                                     case 'component_O':
                                         return (
                                             <th key={key} className='text-center'>
-                                                <OverlayTrigger trigger='focus' placement='bottom' overlay={view === 'Options_OT'? this.optionsot() : this.optionsct()}>
+                                                <OverlayTrigger trigger='focus' placement='bottom' overlay={view === 'Options_OT'? optionsot() : optionsct()}>
                                                     <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
                                                 </OverlayTrigger>                                            
                                             </th>
@@ -172,24 +172,22 @@ class TableLanding extends Component {
         });
     }
 
-    render() { 
-        return (  
-            <Container fluid>
-                <Row>
-                    <Table borderless hover responsive className='border shadow-sm bg-white'>
-                        <thead className='border-bottom bg-light'>
-                            <tr>
-                                {this.getHeader()}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.getBody()}
-                        </tbody>
-                    </Table>
-                </Row>
-            </Container>
-        );
-    }
+    return (  
+        <Container fluid>
+            <Row>
+                <Table borderless hover responsive className='border shadow-sm bg-white'>
+                    <thead className='border-bottom bg-light'>
+                        <tr>
+                            {getHeader()}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {getBody()}
+                    </tbody>
+                </Table>
+            </Row>
+        </Container>
+    );
 }
  
 export default TableLanding;

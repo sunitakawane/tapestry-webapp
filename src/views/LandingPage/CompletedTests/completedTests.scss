@@ -1,6 +1,6 @@
 @import '../../../constants/colors.scss';
 
-.filter-btn {
+.filter-dd {
     background-color: white !important;
     color: $color-background !important;
     border: '1px' !important;
@@ -20,13 +20,19 @@
 }
 
 .border-prim {
+    border-left-style: solid !important;
+    border-left-width: 6px !important;
     border-left-color: $color-background !important;
 }
 
 .border-red {
+    border-left-style: solid !important;
+    border-left-width: 6px !important;
     border-left-color: red !important;
 }
 
 .border-black {
+    border-left-style: solid !important;
+    border-left-width: 6px !important;
     border-left-color: black !important;
 }
