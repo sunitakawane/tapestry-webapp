@@ -1,8 +1,8 @@
 import Wrapper from '../../bootstrap/Wrapper/Wrapper';
 import App from '../../App';
-import Login from '../../views/LoginSetup/Login';
-import SignUp from '../../views/LoginSetup/SignUp';
-import RequestSent from '../../views/LoginSetup/RequestSent';
+import Login from '../../views/Auth/Login';
+import SignUp from '../../views/Auth/SignUp';
+import RequestSent from '../../views/Auth/RequestSent';
 import OngoingTests from '../../views/LandingPage/OngoingTests'
 import CompletedTests from '../../views/LandingPage/CompletedTests';
 

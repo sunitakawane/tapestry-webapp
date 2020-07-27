@@ -32,13 +32,13 @@ class Login extends Component {
           </Form.Group>
         </Form>
         <Card.Text>
-          <a href="#">Forgot Password?</a>
+          <a href="/login#">Forgot Password?</a>
         </Card.Text>
         <Button variant="primary" size="xl">
           Login
         </Button>
         <Card.Text  className = "new-user">
-          New user? <a href="#">Contact us</a> to register.
+          New user? <a href="/login#">Contact us</a> to register.
         </Card.Text>
       </Card>
     );

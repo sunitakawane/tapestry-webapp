@@ -43,13 +43,13 @@ class SignUp extends Component {
           </Form.Group>
         </Form>
         <Card.Text>
-          <a href="#">Forgot Password?</a>
+          <a href="/signup#">Forgot Password?</a>
         </Card.Text>
         <Button variant="primary" size="xl">
           Request Sign up
         </Button>
         <Card.Text>
-          Already a user? <a href="#">Sign in</a> here
+          Already a user? <a href="/signup#">Sign in</a> here
         </Card.Text>
       </Card>
     );
