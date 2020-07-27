@@ -18,24 +18,27 @@ function loginRequested() {
 }
 
 function login(email, password) {
-  console.log("login action");
+  console.log("login action 1");
   return (dispatch) => {
-    loginApi.login(email, password).then(
-      (user) => {
+    console.log("login action 2");
+    loginApi
+      .login(email, password)
+      .then((response) => {
+        console.log("RES: ", response)
+        localStorage.setItem("user", JSON.stringify(response.data));
         dispatch({
           type: authConstants.LOGIN_SUCCESS,
-          payload: user.data,
+          payload: response.data,
         });
         history.push("/onboarding");
-      },
-      (error) => {
-        console.log("no");
+      })
+      .catch((error) => {
+        console.log("ERR: ", error)
         dispatch({
           type: authConstants.LOGIN_FAILURE,
           payload: error.toString(),
         });
-      }
-    );
+      });
   };
 }
 

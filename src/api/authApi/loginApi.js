@@ -7,22 +7,19 @@ export const loginApi = {
 };
 
 function login(email, password) {
-  return () => {
-    axios
-      .post(baseApiUrl.BASE_URL + "/auth/login", {
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      });
-  };
+  console.log("hello ji");
+  return axios
+    .post(baseApiUrl.BASE_URL + "auth/login", {
+      email: email,
+      password: password,
+    })
+    .then((response) => {
+      return response;
+    });
 }
 
 function logout() {
-  return () => {
-    axios.post(baseApiUrl.BASE_URL + "/auth/logout").then((response) => {
-      localStorage.removeItem("user", JSON.stringify(response.data));
-    });
-  };
+  return axios.post(baseApiUrl.BASE_URL + "/auth/logout").then((response) => {
+    return response;
+  });
 }

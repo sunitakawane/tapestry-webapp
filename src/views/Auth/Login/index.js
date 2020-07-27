@@ -27,7 +27,6 @@ const Login = () => {
   const logout = () => dispatch(loginActions.logout());
   const isSubmitted = useSelector(getIsSubmitted);
 
-  
   const handleEmailInput = (e) => {
     const { value } = e.target;
 
@@ -44,18 +43,22 @@ const Login = () => {
     }
   };
 
+  const validate = () => {
+    return email.length > 0 && password.length > 0 && setValidated(true);
+  };
+
   const handleSubmit = (e) => {
     const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    // if (form.checkValidity() === false) {
+    e.preventDefault();
+    e.stopPropagation();
+    // }
 
     loginRequested();
     if (email && password) {
       login(email, password);
+      console.log(email, password);
     }
-
     setValidated(true);
   };
 
@@ -108,7 +111,8 @@ const Login = () => {
                 Login using your registered Email and password.
               </Card.Subtitle>{" "}
               <br />
-              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+              {/* noValidate validated={validated}  */}
+              <Form onSubmit={handleSubmit}>
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Col sm={8}>
                     <Form.Control
