@@ -1,8 +1,8 @@
 import React from 'react';
-import { Nav, Navbar, NavDropdown, Container, Button, Badge } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, Container} from 'react-bootstrap';
 
 import "./NavBarLanding.scss";
-import getSVG from "../../utils/getSVG"
+import "../../index.scss";
 
 function NavBarLanding(props) {
     return (
@@ -15,14 +15,11 @@ function NavBarLanding(props) {
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link href="/completedTests">
-                        Completed Tests{'\u00A0'}
-                        <sup><Badge pill variant='light' className='bdg-prim'>{props.count ? props.count : ''}</Badge></sup>
+                        Completed Tests{/*'\u00A0'
+                        <sup><Badge pill variant='light' className='bdg-prim'>{props.count ? props.count : ''}</Badge></sup>*/}
                     </Nav.Link>
                 </Nav.Item>
             </Nav>
-            <Button variant='muted'>
-                {getSVG('notify')}
-            </Button>
             <NavDropdown title={props.userId} id="user-nav-dropdown" alignRight>
                 {/* Dropdown links to be added */}
                 <NavDropdown.Item >

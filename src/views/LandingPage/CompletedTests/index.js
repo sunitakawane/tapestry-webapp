@@ -6,24 +6,18 @@ import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
 import getSVG from '../../../utils/getSVG'
 import './completedTests.scss'
+import '../../../index.scss'
 
 function CompletedTests() {
+    const testStatus='completed'
     const userId = 'Anirudha'
     const labName = 'Vedanta Memorial Hospitals, Biogen Labs'
-    const count = 0
+    //const count = 0
     const jsonoutput = [
-        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'POSITIVE SAMPLES': 4, 'UNDETERMINED SAMPLES': 2,
-        'component_R' : {'type': 'Button', 'text': 'View results', 'color': 'green', 'view': 'Results'},
-        'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_CT'}},
-        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'POSITIVE SAMPLES': 4, 'UNDETERMINED SAMPLES': 2,
-        'component_R' : {'type': 'Button', 'text': 'View results', 'color': 'green', 'view': 'Results'},
-        'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_CT'}},
-        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'POSITIVE SAMPLES': 4, 'UNDETERMINED SAMPLES': 2,
-        'component_R' : {'type': 'Button', 'text': 'View results', 'color': 'green', 'view': 'Results'},
-        'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_CT'}},
-        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'POSITIVE SAMPLES': 4, 'UNDETERMINED SAMPLES': 2,
-        'component_R' : {'type': 'Button', 'text': 'View results', 'color': 'green', 'view': 'Results'},
-        'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_CT'}},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'POSITIVE SAMPLES': 4, 'UNDETERMINED SAMPLES': 2},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'POSITIVE SAMPLES': 4, 'UNDETERMINED SAMPLES': 2},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'POSITIVE SAMPLES': 4, 'UNDETERMINED SAMPLES': 2},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'POSITIVE SAMPLES': 4, 'UNDETERMINED SAMPLES': 2}
     ]
     const filter_options = [
         {value:'this week', label:'This Week'},
@@ -39,7 +33,7 @@ function CompletedTests() {
 
     return (
         <div className='bg-light'>
-            <NavBarLanding activepage='/completedTests' userId={userId} labName={labName} count={count}/>
+            <NavBarLanding activepage='/completedTests' userId={userId} labName={labName}/>
             <Container fluid>    
                 <Row className='mt-3'>
                     <Col xs={6}>
@@ -123,7 +117,7 @@ function CompletedTests() {
                 </Row>
                 <Row className='mt-3 ml-3 mr-3'>
                     <Col>
-                        <TableLanding jsonoutput={jsonoutput}/>
+                        <TableLanding jsonoutput={jsonoutput} testStatus={testStatus}/>
                     </Col>
                 </Row>
             </Container>

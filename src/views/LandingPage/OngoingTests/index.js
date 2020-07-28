@@ -4,12 +4,14 @@ import { Container, Button, Form, FormControl, InputGroup, Row, Col, ButtonGroup
 import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
 import './ongoingTests.scss'
+import '../../../index.scss'
 import getSVG from "../../../utils/getSVG"
 
 function OngoingTests(props) {
+    const testStatus = 'ongoing'
     const userId = 'Anirudha'
     const labName = 'Vedanta Memorial Hospitals, Biogen Labs'
-    const count = 1
+    //const count = 1
     const onGoingTests = 25
     const [radioValue, setRadioValue] = useState('0');
     const radios = [
@@ -18,31 +20,15 @@ function OngoingTests(props) {
         {name:'In Progress', value:'1'}
     ]
     const jsonoutput = [
-        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 
-        'component_D' : {'type': 'Button', 'text': 'Download pooling matrix', 'color': 'black', 'view': 'Download'}, 
-        'component_U' : {'type': 'Button', 'text': 'Upload qPCR matrix', 'color': 'green', 'view': 'Upload'},
-        'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_OT'},
-        'component_nt' : 'yes'},
-        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 
-        'component_D' : {'type': 'Button', 'text': 'Download pooling matrix', 'color': 'black', 'view': 'Download'}, 
-        'component_U' : {'type': 'Button', 'text': 'Upload qPCR matrix', 'color': 'green', 'view': 'Upload'},
-        'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_OT'},
-        'component_nt' : 'no'},
-        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'Error in Parsing!', 
-        'component_D' : {'type': 'Button', 'text': 'Download pooling matrix', 'color': 'black', 'view': 'Download'}, 
-        'component_U' : {'type': 'Button', 'text': 'Re-Upload', 'color': 'green', 'view': 'Upload'},
-        'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_OT'},
-        'component_nt' : 'no'},
-        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 
-        'component_D' : {'type': 'Button', 'text': 'Download pooling matrix', 'color': 'black', 'view': 'Download'}, 
-        'component_U' : {'type': 'Button', 'text': 'Upload qPCR matrix', 'color': 'green', 'view': 'Upload'},
-        'component_O' : {'type': 'Button', 'text': 'Menu', 'color': 'green', 'view': 'Options_OT'},
-        'component_nt' : 'no'},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#'},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#'},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'Error in Parsing!', 'file': '/ongoingtests#'},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#'},
     ]
 
     return (          
         <div className='bg-light'>
-        <NavBarLanding activepage='/ongoingtests' userId={userId} labName={labName} count={count}/>
+        <NavBarLanding activepage='/ongoingtests' userId={userId} labName={labName}/>
         <Container fluid>
             <Row className='mt-3'>
                 <Col xs={7}>
@@ -76,9 +62,7 @@ function OngoingTests(props) {
                     <Row>
                         <Col xs={{span: 5, offset: 2}} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Form>
-                                <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
-                                    Search
-                                </Form.Label>
+                                <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>Search</Form.Label>
                                 <InputGroup>
                                     <InputGroup.Prepend>
                                         <InputGroup.Text>
@@ -97,7 +81,7 @@ function OngoingTests(props) {
             </Row>    
             <Row className='mt-3 ml-3 mr-3'>
                 <Col>
-                    <TableLanding jsonoutput={jsonoutput}/>
+                    <TableLanding jsonoutput={jsonoutput} testStatus={testStatus} />
                 </Col>
             </Row>
         </Container>

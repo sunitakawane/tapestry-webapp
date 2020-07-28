@@ -18,6 +18,15 @@
     color: $color-background;
 }
 
+.prim-color:hover {
+    color: $color-background;
+    text-decoration: none !important;
+}
+
+.download-link {
+    text-decoration: none !important;
+}
+
 #popover-basic .arrow{
     display: none;
 }

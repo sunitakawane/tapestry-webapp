@@ -6,6 +6,14 @@ import getSVG from '../../utils/getSVG'
 
 function TableLanding(props) {
 
+    const ongoingrows = ['download','upload','options']
+    const completedrows = ['view','options']
+    const rows = props.testStatus === 'ongoing' ? ongoingrows : completedrows
+
+    const emptyHeader = () => {
+        return rows.map(row => <th key={row}></th>)
+    }
+
     const getKeys = () => {
         return Object.keys(props.jsonoutput[0])
     }
@@ -14,28 +22,17 @@ function TableLanding(props) {
         var heads = getKeys()
         return heads.map(head => 
         {
-            if (head.indexOf('component') === -1) {
-                switch(head){
-                    case 'TEST ID': return <th key={head}>{head}</th>;
-                    case 'ASSIGNED TO': return <th key={head}>{head}</th>;
-                    default: return <th key={head} className='text-center'>{head}</th>;
-                }
-                 
-            } else {
-                return <th key={head} className='text-center'></th>
-            }
+            switch(head){
+                case 'TEST ID': return <th key={head}>{head}</th>;
+                case 'NUMBER OF SAMPLES': return <th key={head} className='text-center'>{head}</th>
+                case 'ASSIGNED TO': return <th key={head}>{head}</th>;
+                case 'STATUS': return <th key={head} className='text-center'>{head}</th>;
+                case 'POSITIVE SAMPLES': return <th key={head} className='text-center'>{head}</th>;
+                case 'UNDETERMINED SAMPLES': return <th key={head} className='text-center'>{head}</th>
+                default: return null;
+            }            
         })
     };
-
-    const download = () => {
-        return <Popover id="popover-basic">
-            <Popover.Title className='text-muted'>DOWNLOAD OPTIONS</Popover.Title>
-            <Popover.Content>
-                <Button bsPrefix='btn-text bg-success btn-full'>{getSVG('download')} Download .xls</Button>
-                <Button bsPrefix='btn-text btn-full'>{getSVG('download')} Download .xlsx</Button>
-            </Popover.Content>
-        </Popover>
-    }
 
     const optionsot = () => {
         return <Popover id="popover-basic">
@@ -55,120 +52,88 @@ function TableLanding(props) {
     const getBody = () => {
         var items = props.jsonoutput;
         var keys = getKeys();
-        return items.map((row, index)=>{
-            if (row['STATUS'] === 'Error in Parsing!') {
-            return (
-            <tr key={index} style={{borderLeft: '5px solid red'}}>
-                {keys.map(key => 
-                { 
-                    if (key.indexOf('component') === -1) { /*Normal text*/
-                        switch (key){
-                            case 'TEST ID':
-                                if (row['component_nt'] === 'yes') {
-                                    return <th key={key} className='text-normal text-danger'>{row[key]} <span className='prim-color'>New!</span></th>
-                                } else {
-                                    return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
-                                }
-                            case 'ASSIGNED TO':
-                                return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
-                            default:
-                                return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
-                        }
-                    } else {    /*Buttons*/
-                        const comp = row[key];
-                        const text = comp['text'];
-                        /* Code to parse component */
-                        switch (key) {
-                            case 'component_D':
-                                return (
-                                    <th key={key} className='text-center'>
-                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={download()}>
-                                            <Button bsPrefix='btn-text'>{text}</Button>
-                                        </OverlayTrigger>
-                                    </th>
-                                );
-                            case 'component_U':
-                                return (
-                                    <th key={key} className='text-center'>
-                                        <Button bsPrefix='btn-text'>{text} {getSVG('reupload')}</Button>
-                                    </th>
-                                );
-                            case 'component_O':
-                                return (
+        keys = keys.concat(rows)
+        return items.map((row, index)=>
+        {
+            if (props.testStatus === 'ongoing') {
+                if (row['STATUS'] === 'Error in Parsing!') {
+                    return <tr key={index} style={{borderLeft: '5px solid red'}}>
+                        {keys.map(key =>
+                        {
+                            switch(key) {
+                                case 'TEST ID': return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
+                                case 'NUMBER OF SAMPLES': return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
+                                case 'ASSIGNED TO': return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
+                                case 'STATUS': return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
+                                case 'download': return <th key={key} className='text-normal text-center'>
+                                    <a href={row['file']} className='download-link text-dark'>Download pooling matrix</a>
+                                </th>
+                                case 'upload': return <th key={key} className='text-normal text-center'>
+                                    <a href="/ongoingtests#" className='text-dark prim-color'>Reupload {getSVG('reupload')}</a>
+                                </th>
+                                case 'options': return (
                                     <th key={key} className='text-center'>
                                         <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsot()}>
                                             <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
                                         </OverlayTrigger>                                            
-                                    </th>
-                                );
-                            default :
-                                return null;
-                        }                                                                                                   
-                    }
-                })}      
-            </tr>)
+                                     </th>
+                                )
+                                default: return null;
+                            }    
+                        })}
+                    </tr>
+                } else {
+                    return <tr key={index}>
+                        {keys.map(key =>
+                        {
+                            switch(key) {
+                                case 'TEST ID': return <th key={key} className='text-normal'>{row[key]}</th>;
+                                case 'NUMBER OF SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                                case 'ASSIGNED TO': return <th key={key} className='text-normal'>{row[key]}</th>;
+                                case 'STATUS': return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
+                                case 'download': return <th key={key} className='text-normal text-center'>
+                                    <a href={row['file']} className='download-link text-dark'>Download pooling matrix</a>
+                                </th>
+                                case 'upload': return <th key={key} className='text-normal text-center'>
+                                    <a href="/ongoingtests#" className='prim-color'>Upload qPCR results</a>
+                                </th>
+                                case 'options': return (
+                                    <th key={key} className='text-center'>
+                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsot()}>
+                                            <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
+                                        </OverlayTrigger>                                            
+                                     </th>
+                                )
+                                default: return null;
+                            }    
+                        })}
+                    </tr>    
+                }
             } else {
-                return (
-                    <tr key={index}>
-                        {keys.map(key => 
-                        { 
-                            if (key.indexOf('component') === -1) { /*Normal text*/
-                                switch (key){
-                                    case 'TEST ID':
-                                        if (row['component_nt'] === 'yes') {
-                                            return <th key={key} className='text-normal'>{row[key]} <span className='prim-color'>New!</span></th>
-                                        } else {
-                                            return <th key={key} className='text-normal'>{row[key]}</th>;
-                                        }
-                                    case 'ASSIGNED TO':
-                                        return <th key={key} className='text-normal'>{row[key]}</th>;
-                                    //case 'NUMBER OF SAMPLES' || 'STATUS' || 'POSITIVE SAMPLES' || 'UNDETERMINED SAMPLES':
-                                    default:
-                                        return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                                    //default: 
-                                    //    return null;
-                                }
-                            } else {    /*Buttons*/
-                                const comp = row[key];
-                                const text = comp['text'];
-                                const view = comp['view'];
-                                /* Code to parse component */
-                                switch (key) {
-                                    case 'component_D':
-                                        return (
-                                            <th key={key} className='text-center'>
-                                                <OverlayTrigger trigger='focus' placement='bottom' overlay={download()}>
-                                                    <Button bsPrefix='btn-text'>{text}</Button>
-                                                </OverlayTrigger>
-                                            </th>
-                                        );
-                                    case 'component_U':
-                                        return (
-                                            <th key={key} className='text-center'>
-                                                <Button bsPrefix='btn-text prim-color'>{text}</Button>
-                                            </th>
-                                        );
-                                    case 'component_R':
-                                        return (
-                                            <th key={key} className='text-center'>
-                                                <Button bsPrefix='btn-text prim-color'>{text}</Button>
-                                            </th>
-                                        );
-                                    case 'component_O':
-                                        return (
-                                            <th key={key} className='text-center'>
-                                                <OverlayTrigger trigger='focus' placement='bottom' overlay={view === 'Options_OT'? optionsot() : optionsct()}>
-                                                    <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
-                                                </OverlayTrigger>                                            
-                                            </th>
-                                        );
-                                    default :
-                                        return null;
-                                }                                                                                                   
-                            }
-                        })}      
-                    </tr>)
-            }
+                return <tr key={index}>
+                {keys.map(key =>
+                {
+                    switch(key) {
+                        case 'TEST ID': return <th key={key} className='text-normal'>{row[key]}</th>;
+                        case 'NUMBER OF SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case 'ASSIGNED TO': return <th key={key} className='text-normal'>{row[key]}</th>;
+                        case 'POSITIVE SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case 'UNDETERMINED SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case 'view': return <th key={key} className='text-normal text-center'>
+                            <a href="/completedtests#" className='prim-color'>View results</a>
+                        </th>
+                        case 'options': return (
+                            <th key={key} className='text-center'>
+                                <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsct()}>
+                                    <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
+                                </OverlayTrigger>                                            
+                             </th>
+                        )
+                        default: return null;
+                    }
+                })}
+                </tr>
+            }      
         });
     }
 
@@ -179,6 +144,7 @@ function TableLanding(props) {
                     <thead className='border-bottom bg-light'>
                         <tr>
                             {getHeader()}
+                            {emptyHeader()}                        
                         </tr>
                     </thead>
                     <tbody>
