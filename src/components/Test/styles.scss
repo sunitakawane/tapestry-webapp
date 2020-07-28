@@ -1,10 +1,10 @@
 .RectangleParent {
 	position: relative;
-	width: 80%;
+	width: 100;
 	height: relative;
-	left: 10%;
+	left: 0%;
 	top:20%;
-	padding: 1% 0%;
+	padding: 1% 2%;
 	font-size: 18px;
 	background: #1EC491;
 	color: white;
@@ -22,8 +22,8 @@
 
 .Rectangle1 {
 	position: relative;
-	left: 10%;
-	width: 80%;
+	left: 0%;
+	width: 100%;
 	top:20%;
 	background: #FAFAFA;
 	border: 1px solid #E4E4E4;
@@ -34,10 +34,10 @@
 
 .Rectangle2{
 	position: relative;
-	left: 10%;
-	width: 80%;
+	left: 0%;
+	width: 100%;
 	top:20%;
-	background: #FFFFFF;
+	background: #FAFAFA;
 	border: 1px solid #E4E4E4;
 	box-sizing: border-box;
 	padding: 2%;
@@ -59,13 +59,12 @@
 	background: #cccccc;
 	color: #666666;
 }
-
 .endbuttons {
 	border: 1px solid #535353;
 	box-sizing: border-box;
 	border-radius: 2px;
 	font-size: 16px;
-	padding: 5% 15%;
+	padding:0px;
 	background: #ffffff;
 	&:hover {
 		color: #1EC491;

@@ -1,5 +1,7 @@
 import React from 'react';
 import {Container,Row,Col,InputGroup,FormControl,Overlay} from 'react-bootstrap';
+import Tooltip from 'react-bootstrap/Tooltip';
+import axios from 'axios';
 
 import './styles.scss'
 import DropdownContent from './dropdown/Dropdown';
@@ -11,57 +13,109 @@ constructor(props){
   super(props)
   this.handleClose = props.handleClose;
   this.state ={
-    testid:'',
+    testid:23432,
     remarks:'',
-    testconductedby:['Anirudha'],
+    testconductedlist:['Anirudha',"Prantik","Radha"],
+    testconductedby:'',
     totalsamples:'',
     prevalancerate:'',
-    machine:["ABGun RT-PCR","In"],
-    kit:["P12 BioTest","ABGun RT-PCR","In"],
-    showtrigger:false,
-    triggercurrent:React.createRef(),
-    downloadpoolingmatrix:false,
+    machine:[],
+    kit:[],
+    selectedkit:'',
+    selectedmachine:'',
+    showtriggerprevalancerate:false,
+    showtriggersamples:false,
+    triggerprevalancerate:React.createRef(),
+    triggersamples:React.createRef(),
     done:false
   }
   this.handleInput = this.handleInput.bind(this)
-  this.changedownloadpoolingmatrixcolor = this.changedownloadpoolingmatrixcolor.bind(this)
   this.download = this.download.bind(this)
+  this.downloadpoolingmatrixcolor = this.downloadpoolingmatrixcolor.bind(this)
+  this.handleFocus = this.handleFocus.bind(this)
+  this.evil = this.evil.bind(this)
 }
+componentDidMount() {
+  axios.get('https://tapestry-pooling-284109.ew.r.appspot.com/machine-type/',{
+    headers:{
+        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTU5NDUzNzYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk1OTQxNzc2fQ.NnS9dX6ePOzoyZBDuAfd7uo6cOqtMZ-uxZ1S_dI5Zmc'
+    }
+    })
+    .then(res => {
+      this.setState({machine:res.data.results});
+  
+    })
+  axios.get('https://tapestry-pooling-284109.ew.r.appspot.com/test-kit/',{
+    headers:{
+        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTU5NDUzNzYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk1OTQxNzc2fQ.NnS9dX6ePOzoyZBDuAfd7uo6cOqtMZ-uxZ1S_dI5Zmc'
+    }
+    })
+    .then(res => {
+      this.setState({kit:res.data.results});
+  
+    })
+}
+
+evil(fn)
+{
+  return new Function('return ' + fn)();
+}
+
 download()
 {
-
   this.setState({done:!this.state.done})
+  console.log(this.state.testconductedby)
+  console.log(this.state.totalsamples)
+  console.log(this.state.selectedkit)
+  console.log(this.state.selectedmachine)
+  console.log(this.state.remarks)
+  console.log(this.state.prevalancerate)
+  console.log(this.state.totalsamples)
+  axios.post('https://us-central1-tapestry-pooling-284109.cloudfunctions.net/tapestry-matrix-generation',{
+    nsamples: this.evil(this.state.totalsamples),
+    prevalance: this.evil(this.state.prevalancerate),
+    genes: "orf, rdrp",
+    testid: this.testid,
+    lab_name: "test_lab"
+  },{
+    "Authorization":'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTU5NDUzNzYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk1OTQxNzc2fQ.NnS9dX6ePOzoyZBDuAfd7uo6cOqtMZ-uxZ1S_dI5Zmc'
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 }
-changedownloadpoolingmatrixcolor()
+downloadpoolingmatrixcolor()
 {
-  if((this.state.totalsamples === '') || (this.state.prevalancerate === ''))
-  {
-    this.setState({downloadpoolingmatrix:false})
-  }
-  else
-  {
-    this.setState({downloadpoolingmatrix:true})
-  }
+  return ((this.evil(this.state.totalsamples) > 0) && (this.evil(this.state.prevalancerate) > 0) && (this.evil(this.state.prevalancerate)<100) && (Number.isInteger(this.evil(this.state.totalsamples))))
 }
-
 handleInput(event)
 {
-  console.log(this.state)
-  if(event.target.name === "prevalancerate")
-  {
-    if(event.target.value>20)
-    {
-      this.setState({showtrigger:true})
-    }
-    else
-    {
-      this.setState({showtrigger:false})
-    }
-  }
   this.setState({
     [event.target.name]:event.target.value
   })
-  this.changedownloadpoolingmatrixcolor()
+}
+
+handleFocus(event)
+{
+  if(event.target.name==="prevalancerate")
+  {
+    this.setState({showtriggerprevalancerate:true})
+  }
+  else
+  {
+    this.setState({showtriggerprevalancerate:false})
+  }
+  if(event.target.name==="totalsamples")
+  {
+    this.setState({showtriggersamples:true})
+  }
+  else
+  {
+    this.setState({showtriggersamples:false})
+  }
 }
 
 render()
@@ -70,9 +124,8 @@ render()
     <div>
       <div className="RectangleParent">
         <Container>
-          <Row className="justify-content-md-center"> 
-            <Col xs lg="2"></Col>
-            <Col xs lg="4" className="justify-content-md-center">New Pool Test</Col>
+          <Row> 
+            <Col xs lg="6" className="justify-content-md-center">New Pool Test</Col>
             <Col xs lg="4"></Col>
             <Col xs lg="2">         
               <button type="button" className="close" aria-label="Close" onClick={this.handleClose}><span aria-hidden="true">&times;</span></button>
@@ -82,26 +135,27 @@ render()
       </div>
       <div className="Rectangle1">
         <Container>
-          <Row className="justify-content-md-right">
-            <Col xs lg="2">KIT TYPE</Col>           
+          <Row>
+            <Col xs lg="4">KIT TYPE</Col>           
           </Row>
           <Row>
-            <Col xs lg="2">
-              <DropdownContent name="kit" value={this.state.kit[0]} onChange={this.handleChange} item={this.state.kit}/>      
+            <Col xs lg="4">
+              <DropdownContent name="selectedkit" list={this.state.kit} onChange={this.handleInput} onFocus={this.handleFocus}/>      
             </Col>
           </Row>
-          <Row className="justify-content-md-right">
-            <Col xs lg="2">Machine TYPE</Col>           
+          <br/>
+          <Row>
+            <Col xs lg="4">MACHINE TYPE</Col>           
           </Row>
           <Row>
-            <Col xs lg="2">
-              <DropdownContent name="kit" value={this.state.machine[0]} item={this.state.machine}/>      
+            <Col xs lg="4">
+              <DropdownContent name="selectedmachine" list={this.state.machine} onChange={this.handleInput} onFocus={this.handleFocus}/>      
             </Col>
           </Row>
+          <br/>
           <Row>
             <Col xs lg="2">Total Samples</Col> 
-            <Col xs lg="1"></Col>           
-            <Col xs lg="2">Prevalance Rate</Col>           
+            <Col xs lg="3">Prevalance Rate</Col>           
           </Row>
           <Row>
             <Col xs lg="2">
@@ -113,12 +167,20 @@ render()
                   step="1"
                   min="0"
                   name="totalsamples"   
-                  onChange={this.handleInput}             
+                  onChange={this.handleInput}  
+                  ref={this.state.triggersamples}
+                  onFocus={this.handleFocus}
                 />
               </InputGroup>
+              <Overlay target={this.state.triggersamples.current} show={this.state.showtriggersamples} placement="left">
+                {(props) => (
+                  <Tooltip id="trigger samples" {...props}>
+                    Only the number of samples to be tested against the positive controls.
+                  </Tooltip>
+                )}
+              </Overlay>
             </Col>
-            <Col xs lg="1"></Col>
-            <Col xs lg="2">
+            <Col xs lg="3">
               <InputGroup className="mb-2">
                 <FormControl
                   type="number"
@@ -129,88 +191,82 @@ render()
                   min="0"
                   name="prevalancerate"
                   onChange={this.handleInput}
-                  ref={this.state.triggercurrent}
+                  ref={this.state.triggerprevalancerate}
+                  onFocus={this.handleFocus}
                 />
               </InputGroup>
-              <Overlay target={this.state.triggercurrent.current} show={this.state.showtrigger} placement="right">
-                {({ placement, arrowProps, show: _show, popper, ...props }) => (
-                  <div
-                    {...props}
-                    style={{
-                      backgroundColor: 'rgba(255, 100, 100, 0.85)',
-                      padding: '2px 10px',
-                      color: 'white',
-                      borderRadius: 3,
-                      ...props.style,
-                    }}
-                  >
-                    Prevalance Rate should be between 5 to 20 %
-                  </div>
+              <Overlay target={this.state.triggerprevalancerate.current} show={this.state.showtriggerprevalancerate} placement="right">
+                {(props) => (
+                  <Tooltip id="trigger prevalance rate" {...props}>
+                    Prevalance Rate should be less than 20%
+                  </Tooltip>
                 )}
               </Overlay>
             </Col>
           </Row>
+          <br/>
         </Container>        
       </div>
       <div className="Rectangle2">
         <Container> 
-          <Row className="justify-content-md-center">
-            <Col xs lg="2">
-              TEST ID
-            </Col>
-            <Col xs lg="2">
-              <InputGroup className="mb-2">
-                <FormControl
-                  placeholder="TEST ID"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                  name="testid"
-                  onChange={this.handleInput}
-                />
-              </InputGroup>
-            </Col>
-          </Row>
           <Row>
+            <Col xs lg="3">
+              Test ID
+            </Col>
             <Col xs lg="4">
-            </Col>
-            <Col xs lg="2">
-              TEST Conducted By
-            </Col>
-            <Col xs lg="2">
-              <DropdownContent value={this.state.testconductedby[0]} item={this.state.testconductedby}/>
+              {this.state.testid}
             </Col>
           </Row>
           <br/>
           <Row>
-            <Col xs lg="4">
+            <Col xs lg="3">
+              Test Conducted By
             </Col>
-            <Col xs lg="2">
+            <Col xs lg="3">
+              <DropdownContent name="testconductedby" list={this.state.testconductedlist} onChange={this.handleInput} onFocus={this.handleFocus}/>
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col xs lg="3">
               TEST Remarks
             </Col>
-            <Col xs lg="6">
-              <InputGroup size="lg">
-                <FormControl name="remarks" onChange={this.handleInput} aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
-              </InputGroup>                
+            <Col xs lg="8">
+              <textarea name="remarks" placeholder="Write your remarks here" onChange={this.handleInput} rows="4" cols="50" onFocus={this.handleFocus}></textarea>
             </Col>
           </Row>
-          <Row className="justify-content-md-center">
-            <Col xs lg="4">
-            </Col>
-            <Col xs lg="6">
-              <br/>
-              <button id="downloadbutton" disabled={!this.state.downloadpoolingmatrix} className="downloadpoolingmatrix" onClick={this.download}>Download Pooling matrix</button>
-            </Col>
-          </Row>
+          {(!this.state.done)?
+            <Row>
+              <Col xs lg="3"></Col>
+              <Col xs lg="6">
+                <br/>
+                <button id="downloadbutton" disabled={!this.downloadpoolingmatrixcolor()} className="downloadpoolingmatrix" onClick={this.download} onFocus={this.handleFocus}>Generate Pooling matrix</button>
+              </Col>
+            </Row>:
+            <Row>
+              <Col xs lg="3"></Col>
+              <Col xs lg="6">
+                <br/>
+                <p>&#10004;Files Generated</p>
+              </Col>
+              <Col xs lg="3">
+                <br/>
+                <p style={{color:'#1EC491',font:16,fontFamily:'Source Sans Pro'}}>Available Genes</p>  
+              </Col>
+            </Row>
+          }
         </Container>
+      </div>
+      <div className="Rectangle2">
         <Container>
-          <Row className="justify-content-md-center">
+          <Row>
             <br/>
-            <Col xs lg="2">
+            <Col xs lg="3">
               <button className="endbuttons" onClick={this.handleClose}>Close</button>
             </Col>
-            <Col xs lg="7"></Col>
-            <Col xs lg="2">
-              <button className="endbuttons" disabled={!this.state.done}>Start Test</button>
+            <Col xs lg="6"></Col>
+            <Col xs lg="3">
+              <button className="endbuttons" disabled={!this.state.done}>Save Test</button>
             </Col>
           </Row>
         </Container>

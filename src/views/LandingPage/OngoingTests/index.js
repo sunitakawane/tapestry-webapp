@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Button, Form, FormControl, InputGroup, Row, Col,Overlay} from 'react-bootstrap';
+import { Container, Button, Form, FormControl, InputGroup, Row, Col,Modal} from 'react-bootstrap';
 
 import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
@@ -20,7 +20,6 @@ class OngoingTests extends Component {
             {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
         ],
         showtest:false,
-        target : React.createRef()
     };
     showTest = () => {
         this.setState({ showtest: true });
@@ -72,13 +71,10 @@ class OngoingTests extends Component {
                                 </Form>
                             </Col>
                             <Col xs={3}>
-                            <Button ref={this.state.target} bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={this.showTest}>+ New Test</Button>
-                            {/* <Overlay  target={this.target.current} show={this.state.showtest} placement="center">
+                            <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={this.showTest}>+ New Test</Button>
+                            <Modal size="lg" show={this.state.showtest}>
                                 <Test handleClose={this.hideTest}/>
-                            </Overlay> */}
-                            <Overlay target={this.state.target.current} show={this.state.showtest} placement="left">
-                                <Test handleClose={this.hideTest}/>
-                            </Overlay>
+                            </Modal>
                             </Col>
                         </Row>
                     </Col>
