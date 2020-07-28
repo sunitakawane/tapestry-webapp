@@ -1,85 +1,91 @@
-import Wrapper from '../../bootstrap/Wrapper/Wrapper';
-import App from '../../App';
-import Login from '../../views/Auth/Login';
-import SignUp from '../../views/Auth/SignUp';
-import RequestSent from '../../views/Auth/RequestSent';
-import ResetPassword from '../../views/Auth/ForgotPassword/ResetPassword';
-import PasswordLinkSent from '../../views/Auth/ForgotPassword/PasswordLinkSent';
-import SetPassword from '../../views/Auth/ForgotPassword/SetPassword';
-import Congratulations from '../../views/Auth/ForgotPassword/Congratulations';
-import Onboarding from '../../views/OnboardingPage';
-
+import Wrapper from "../../bootstrap/Wrapper/Wrapper";
+import App from "../../App";
+import Login from "../../views/Auth/Login";
+import SignUp from "../../views/Auth/SignUp";
+import RequestSent from "../../views/Auth/RequestSent";
+import ResetPassword from "../../views/Auth/ForgotPassword/ResetPassword";
+import PasswordLinkSent from "../../views/Auth/ForgotPassword/PasswordLinkSent";
+import SetPassword from "../../views/Auth/SetPassword";
+import ChangePassword from "../../views/Auth/ForgotPassword/ChangePassword";
+import Congratulations from "../../views/Auth/ForgotPassword/Congratulations";
+import Onboarding from "../../views/OnboardingPage";
 
 const routes = [
   {
     component: Wrapper,
     routes: [
       {
-        path: '/',
+        path: "/",
         exact: true,
         strict: true,
-        name: 'Home',
+        name: "Home",
         component: App,
       },
       {
-        path: '/login',
+        path: "/login",
         exact: true,
         strict: true,
-        name: 'login',
+        name: "login",
         component: Login,
       },
       {
-        path: '/sign-up',
+        path: "/sign-up",
         exact: true,
         strict: true,
-        name: 'singUp',
+        name: "singUp",
         component: SignUp,
       },
       {
-        path: '/request-sent',
+        path: "/request-sent",
         exact: true,
         strict: true,
-        name: 'requestSent',
+        name: "requestSent",
         component: RequestSent,
       },
       {
-        path: '/reset-password',
+        path: "/reset-password",
         exact: true,
         strict: true,
-        name: 'resetPassword',
+        name: "resetPassword",
         component: ResetPassword,
       },
       {
-        path: '/password-link-sent',
+        path: "/password-link-sent",
         exact: true,
         strict: true,
-        name: 'passwordLinkSent',
+        name: "passwordLinkSent",
         component: PasswordLinkSent,
       },
       {
-        path: '/set-password',
+        path: "/set-password",
         exact: true,
         strict: true,
-        name: 'SetPassword',
+        name: "SetPassword",
         component: SetPassword,
       },
       {
-        path: '/congratulations',
+        path: "/change-password",
         exact: true,
         strict: true,
-        name: 'Congratulations',
+        name: "ChangePassword",
+        component: ChangePassword,
+      },
+      {
+        path: "/congratulations",
+        exact: true,
+        strict: true,
+        name: "Congratulations",
         component: Congratulations,
       },
       {
-        path: '/onboarding',
+        path: "/onboarding",
         exact: true,
         strict: true,
-        name: 'onboarding',
+        name: "onboarding",
         component: Onboarding,
       },
-	
-    ]
-  }
+    ],
+  },
 ];
 
 export default routes;

@@ -12,33 +12,47 @@ import {
 } from "react-bootstrap";
 import { getIsSubmitted } from "../../../redux/selectors/auth/login";
 import { loginActions } from "../../../redux/actions/authActions/loginActions";
+import { useHistory } from "react-router-dom";
 import "./login.scss";
 import "../index.scss";
-import mask from "./Mask Group.png";
+import mask from "../Mask Group.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
+  let history = useHistory();
 
   const dispatch = useDispatch();
   const loginRequested = () => dispatch(loginActions.loginRequested());
-  const login = () => dispatch(loginActions.login());
+  const login = () => dispatch(loginActions.login(email, password));
   const logout = () => dispatch(loginActions.logout());
-  const isSubmitted = useSelector(getIsSubmitted);
+  const isLoggedIn = useSelector(getIsSubmitted);
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
 
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setEmail(value);
     }
   };
 
+  function validateEmail(value) {
+    let error;
+
+    if (!value) {
+      error = "Required";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+      error = "Invalid email address";
+    }
+
+    return error;
+  }
+
   const handlePasswordInput = (e) => {
     const { value } = e.target;
 
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setPassword(value);
     }
   };
@@ -48,18 +62,22 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    const form = e.currentTarget;
-    // if (form.checkValidity() === false) {
     e.preventDefault();
-    e.stopPropagation();
-    // }
+    // e.stopPropagation();
+
+    // const form = e.currentTarget;
+    //    if (form.checkValidity() === false) {
+    //  }
 
     loginRequested();
     if (email && password) {
       login(email, password);
-      console.log(email, password);
     }
     setValidated(true);
+
+    // if (this.state.login.isLoggedIn) {
+    //   history.push("/onboarding");
+    // }
   };
 
   return (

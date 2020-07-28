@@ -13,7 +13,7 @@ import {
 import { signUpActions } from "../../../redux/actions/authActions/signUpActions";
 import "./signUp.scss";
 import "../index.scss";
-import mask from "./Mask Group.png";
+import mask from "../Mask Group.png";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +25,10 @@ const SignUp = () => {
 
   const dispatch = useDispatch();
   const signUpRequested = () => dispatch(signUpActions.signUpRequested());
-  const signUp = () => dispatch(signUpActions.signUp());
+  const signUp = () =>
+    dispatch(
+      signUpActions.signUp(email, firstName, lastName, labName, labLocation)
+    );
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
@@ -69,10 +72,10 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    // if (form.checkValidity() === false) {
+    e.preventDefault();
+    e.stopPropagation();
+    // }
 
     signUpRequested();
     if (email && firstName && lastName && labName && labLocation) {
@@ -127,7 +130,8 @@ const SignUp = () => {
             <Card border="light">
               <Card.Title>SIGN UP!</Card.Title>
 
-              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
+                {/* noValidate validated={validated} */}
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Col sm={8}>
                     <Form.Control
@@ -202,6 +206,7 @@ const SignUp = () => {
                       as="select"
                       value="Lab Location (Select City)"
                       size="lg"
+                      onSelect={handleLabLocationInput}
                       required
                     >
                       <option>Lab Location (Select City)</option>

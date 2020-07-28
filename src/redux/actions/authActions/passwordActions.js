@@ -7,8 +7,10 @@ const history = createBrowserHistory();
 export const passwordActions = {
   resetPasswordRequested,
   setPasswordRequested,
+  changePasswordRequested,
   resetPassword,
   setPassword,
+  changePassword,
 };
 
 function resetPasswordRequested() {
@@ -23,42 +25,68 @@ function setPasswordRequested() {
   };
 }
 
+function changePasswordRequested() {
+  return {
+    type: authConstants.CHANGE_PASSWORD_REQUESTED,
+  };
+}
+
 function resetPassword(email) {
   return (dispatch) => {
-    passwordApi.resetPassword(email).then(
-      (user) => {
+    passwordApi
+      .resetPassword(email)
+      .then((response) => {
         dispatch({
           type: authConstants.RESET_PASSWORD_SUCCESS,
-          payload: user,
+          payload: response.data,
         });
-        history.push("/set-password");
-      },
-      (error) => {
+        history.push("/change-password");
+      })
+      .catch((error) => {
         dispatch({
           type: authConstants.RESET_PASSWORD_FAILURE,
           payload: error,
         });
-      }
-    );
+      });
   };
 }
 
-function setPassword(password1, password2) {
+function setPassword(password1, password2, uid, token) {
   return (dispatch) => {
-    passwordApi.setPassword(password1, password2).then(
-      (user) => {
+    passwordApi
+      .setPassword(password1, password2, uid, token)
+      .then((response) => {
         dispatch({
           type: authConstants.SET_PASSWORD_SUCCESS,
-          payload: user,
+          payload: response.data,
         });
-        history.push("/set-password");
-      },
-      (error) => {
+        history.push("/onboarding");
+      })
+      .catch((error) => {
         dispatch({
           type: authConstants.SET_PASSWORD_FAILURE,
           payload: error,
         });
-      }
-    );
+      });
+  };
+}
+
+function changePassword(password1, password2) {
+  return (dispatch) => {
+    passwordApi
+      .setPassword(password1, password2)
+      .then((response) => {
+        dispatch({
+          type: authConstants.CHANGE_PASSWORD_SUCCESS,
+          payload: response.data,
+        });
+        history.push("/landing");
+      })
+      .catch((error) => {
+        dispatch({
+          type: authConstants.CHANGE_PASSWORD_FAILURE,
+          payload: error,
+        });
+      });
   };
 }

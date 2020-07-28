@@ -14,19 +14,20 @@ function signUpRequested() {
 
 function signUp(email, firstName, lastName, labName, labLocation) {
   return (dispatch) => {
-    signUpApi.signUp(email, firstName, lastName, labName, labLocation).then(
-      (user) => {
+    signUpApi
+      .signUp(email, firstName, lastName, labName, labLocation)
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response.data));
         dispatch({
           type: authConstants.SIGN_UP_SUCCESS,
-          payload: user,
+          payload: response.data,
         });
-      },
-      (error) => {
+      })
+      .catch((error) => {
         dispatch({
           type: authConstants.SIGN_UP_FAILURE,
           payload: error.toString(),
         });
-      }
-    );
+      });
   };
 }

@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import { passwordActions } from "../../../../redux/actions/authActions/passwordActions";
 import "./resetPassword.scss";
-import mask from "./Mask Group.png";
+import mask from "../../Mask Group.png";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +21,7 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const resetPasswordRequested = () =>
     dispatch(passwordActions.resetPasswordRequested());
-  const resetPassword = () => dispatch(passwordActions.resetPassword());
+  const resetPassword = () => dispatch(passwordActions.resetPassword(email));
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
@@ -33,10 +33,10 @@ const ResetPassword = () => {
 
   const handleSubmit = (e) => {
     const form = e.currentTarget;
-    if (form.checkValidity() === false) {
+    // if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
-    }
+    // }
 
     resetPasswordRequested();
     if (email) {
@@ -95,7 +95,8 @@ const ResetPassword = () => {
                 Enter your registered mail ID to reset password
               </Card.Subtitle>{" "}
               <br />
-              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
+              {/* noValidate validated={validated}  */}
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Col sm={8}>
                     <Form.Control

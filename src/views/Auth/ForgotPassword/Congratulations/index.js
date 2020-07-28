@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Col, Row, Card, Container, Image, Navbar } from "react-bootstrap";
 import "./congratulations.scss";
-import mask from "./Mask Group.png";
+import mask from "../../Mask Group.png";
 
 class Congratulations extends Component {
   constructor(props) {

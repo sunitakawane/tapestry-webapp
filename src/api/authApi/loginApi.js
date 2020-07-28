@@ -1,5 +1,5 @@
 import axios from "axios";
-import baseApiUrl from "../../constants/baseApiUrl";
+import url from "../../constants/url";
 
 export const loginApi = {
   login,
@@ -7,9 +7,8 @@ export const loginApi = {
 };
 
 function login(email, password) {
-  console.log("hello ji");
   return axios
-    .post(baseApiUrl.BASE_URL + "auth/login", {
+    .post(url.BASE_API_URL + "auth/login/", {
       email: email,
       password: password,
     })
@@ -19,7 +18,7 @@ function login(email, password) {
 }
 
 function logout() {
-  return axios.post(baseApiUrl.BASE_URL + "/auth/logout").then((response) => {
+  return axios.post(url.BASE_API_URL + "auth/logout").then((response) => {
     return response;
   });
 }

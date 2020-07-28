@@ -8,7 +8,7 @@ import {
   Navbar,
 } from "react-bootstrap";
 import "./passwordLinkSent.scss";
-import mask from "./Mask Group.png";
+import mask from "../../Mask Group.png";
 
 class PasswordLinkSent extends Component {
   render() {

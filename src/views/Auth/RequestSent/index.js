@@ -8,7 +8,7 @@ import {
   Navbar,
 } from "react-bootstrap";
 import "./requestSent.scss";
-import mask from "./Mask Group.png";
+import mask from "../Mask Group.png";
 
 class RequestSent extends Component {
   render() {
