@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import './styles.scss'
 import DropdownContent from './dropdown/Dropdown';
+// import Machine from './dropdown/Machine';
 
 
 export default class Test extends React.Component{
@@ -38,16 +39,16 @@ constructor(props){
 componentDidMount() {
   axios.get('https://tapestry-pooling-284109.ew.r.appspot.com/machine-type/',{
     headers:{
-        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTU5NDUzNzYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk1OTQxNzc2fQ.NnS9dX6ePOzoyZBDuAfd7uo6cOqtMZ-uxZ1S_dI5Zmc'
+        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTYwMTA2NjMsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk2MDA3MDYzfQ.exeWzXCMNG6OOTnmQWYvEW-CPkKs7RMM3WoJidSTmM4'
     }
     })
     .then(res => {
-      this.setState({machine:res.data.results});
-  
+      this.setState({machine:["96wells osmething"]});
+      this.setState({machine:["96wells osmething"]});  
     })
   axios.get('https://tapestry-pooling-284109.ew.r.appspot.com/test-kit/',{
     headers:{
-        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTU5NDUzNzYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk1OTQxNzc2fQ.NnS9dX6ePOzoyZBDuAfd7uo6cOqtMZ-uxZ1S_dI5Zmc'
+        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTYwMTA2NjMsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk2MDA3MDYzfQ.exeWzXCMNG6OOTnmQWYvEW-CPkKs7RMM3WoJidSTmM4'
     }
     })
     .then(res => {
@@ -78,7 +79,7 @@ download()
     testid: this.testid,
     lab_name: "test_lab"
   },{
-    "Authorization":'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTU5NDUzNzYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk1OTQxNzc2fQ.NnS9dX6ePOzoyZBDuAfd7uo6cOqtMZ-uxZ1S_dI5Zmc'
+    "Authorization":'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTYwMDYyMjcsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk2MDAyNjI3fQ.v9BZPb6X4Z1_7HzwiBGPi-4D3_Wxf58HjwFRZqrQWpY'
   })
   .then(function (response) {
     console.log(response);

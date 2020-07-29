@@ -3,10 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './style.css'
 
-
-
-
-function DropdownContent(props) {
+export default function DropdownContent(props) {
   // {/* <p>{wells[index]}</p> */}
   const name = props.name
   const list= props.list
@@ -14,7 +11,7 @@ function DropdownContent(props) {
   return (
     <div>
       <form>
-        <select class="dropdowncontent" name={name} onChange={props.onChange} onFocus={props.onFocus}>
+        <select className="dropdowncontent" name={name} onChange={props.onChange} onFocus={props.onFocus}>
           {list.map(item=>
             <option value={item}>{item}</option>
           )}
@@ -24,4 +21,6 @@ function DropdownContent(props) {
   );
 }
 
-export default DropdownContent;
+
+
+
