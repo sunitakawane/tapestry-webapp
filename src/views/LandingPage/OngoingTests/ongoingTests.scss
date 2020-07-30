@@ -5,3 +5,14 @@
     border-color: $color-background !important;
 }
 
+.filter-btn {
+    color: black !important;
+    border-color: black !important;
+}
+
+.filter-btn.active {
+    color: $color-background !important;
+    border-color: $color-background !important;
+    outline: none !important;
+    box-shadow: none !important;
+}

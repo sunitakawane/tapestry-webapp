@@ -23,11 +23,12 @@ render(){
                     <Col xs lg="4">
                         Upload Successful
                     </Col>:
-                    <Col xs lg="4">
+                    <Col xs lg="2">
                         Uploading Files
                     </Col>
                     }
-                    <Col xs lg="4">
+                    <Col xs lg="6"></Col>
+                    <Col xs lg="2">
                         <button type="button" class="close" aria-label="Close"><span class="spantimes" aria-hidden="true">&times;</span></button>
                     </Col>
                 </Row>
@@ -38,16 +39,14 @@ render(){
                 {   
                 this.state.download?
                 <Row className="justify-content-md-center">
-                    <Col xs lg="10">
+                    <Col xs lg="12">
                         <br/>
-                        <br/>
-                        &#10004;152PoolingMatrix.xls<br/>
-                        <i>View test details in "Completed test section"</i>
+                        <span style={{color : "#1EC491"}}>&#10003;</span>152PoolingMatrix.xls<br/>
+                        <span style={{color : "#828282"}}>An email will be sent to you once the results are ready. You can chack the results in the completed test section.</span>
                     </Col>
                 </Row>:
                 <Row className="justify-content-md-center">
                 <Col xs lg="8">
-                    <br/>
                     <br/>
                     <Spinner animation="border" variant="primary" />152PoolingMatrix.xls
                 </Col>
@@ -56,20 +55,14 @@ render(){
                 {
                 this.state.download?
                 <Row>
-                    <Col xs lg="6">
+                    <Col xs lg="10">
                         <br/>
                         <br/>
-                        Files being uploaded
                     </Col>
                     <Col xs lg="2">
                         <br/>
+                        <button class="endbuttons">Done</button>
                         <br/>
-                        <button class="endbuttons">Close</button>
-                    </Col>
-                    <Col xs lg="4">
-                        <br/>
-                        <br/>
-                        <button class="endbuttons">View Results</button>
                     </Col>                    
                 </Row>:
                 <Row className="justify-content-md-right">
@@ -78,11 +71,11 @@ render(){
                         <br/>
                         File uploading
                     </Col>
-                    <Col xs lg="2">
+                    <Col xs lg="3">
                         <br/>
                         <br/>
                     </Col>
-                    <Col xs lg="4">
+                    <Col xs lg="3">
                         <br/>
                         <br/>
                         <button class="endbuttons">Cancel</button>

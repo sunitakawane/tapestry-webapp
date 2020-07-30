@@ -1,8 +1,8 @@
 .Upload{
     position: relative;
-    width: 30%;
+    width: 100%;
     height: relative;
-    left: 30%;
+    left: 0;
     font-size: 18px;
     background: #1ec491;
     color: white;
@@ -10,9 +10,9 @@
 }
 .Content{
     position: relative;
-    width: 30%;
+    width: 100%;
     height: relative;
-    left: 30%;
+    left: 0;
     font-size: 20px;
     background: #FFFFFF;
     color: black;

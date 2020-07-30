@@ -1,94 +1,99 @@
-import React, { Component } from 'react';
-import { Container, Button, Form, FormControl, InputGroup, Row, Col,Modal} from 'react-bootstrap';
+import React, {useState} from 'react';
+import { Container, Button, Form, FormControl, InputGroup, Row, Col,Modal,ToggleButton,ButtonGroup} from 'react-bootstrap';
 
 import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
 import './ongoingTests.scss'
+import '../../../index.scss'
 import getSVG from "../../../utils/getSVG"
 import Test from '../../../components/Test';
+import useTestModal from '../../../components/Test/showmodal';
 
+function OngoingTests(props) {
+    const testStatus = 'ongoing'
+    const userId = 'Anirudha'
+    const labName = 'Vedanta Memorial Hospitals, Biogen Labs'
+    const {showtest, toggletest} = useTestModal();
+    
+    //const count = 1
+    const onGoingTests = 25
+    const [radioValue, setRadioValue] = useState('0');
+    const radios = [
+        {name:'All', value:'0'},
+        {name:'Errors', value:'-1'},
+        {name:'In Progress', value:'1'}
+    ]
+    const jsonoutput = [
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#'},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#'},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'Error in Parsing!', 'file': '/ongoingtests#'},
+        {'TEST ID': 27435, 'NUMBER OF SAMPLES': 487, 'ASSIGNED TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#'},
+    ]
 
-class OngoingTests extends Component {
-    state = {
-        userId : 'Anirudha',
-        labName: 'Vedanta Memorial Hospitals, Biogen Labs',
-        onGoingTests: 25,
-        jsonoutput: [
-            {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
-            {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
-            {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
-            {'Test ID': 27435, 'Number of Samples': 487, 'Assigned To': 'Harmen Potter', 'Status': 'In progress'},
-        ],
-        showtest:false,
-    };
-    showTest = () => {
-        this.setState({ showtest: true });
-    };
-    
-    hideTest = () => {
-    this.setState({ showtest: false });
-    };
-    
-    
-
-    render() {
-        // let target = useRef(null);
-        return (          
-            <div>
-            <NavBarLanding activepage='/ongoingtests' userId={this.state.userId} labName={this.state.labName}/>
-            <Container fluid>
-                <Row className='mt-3'>
-                    <Col xs={6}>
-                        <Row>
-                            <Col xs={4} className='my-auto'>
-                                <h5>ONGOING TESTS ({this.state.onGoingTests})</h5>
-                            </Col>
-                            <Col xs={8}>
-                                <Row>
-                                    <p className='my-auto'>Filters</p>
-                                    <Button variant='muted' className='ml-3 pl-4 pr-4 border'>All</Button>
-                                    <Button variant='muted' className='ml-3 pl-4 pr-4 border'>Errors</Button>
-                                    <Button variant='muted' className='ml-3 pl-4 pr-4 border'>In Progress</Button>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </Col>
-                    <Col xs={6}>
-                        <Row>
-                            <Col xs={{span: 4, offset: 5}}>
-                                <Form>
-                                    <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
-                                        Search
-                                    </Form.Label>
-                                    <InputGroup>
-                                        <InputGroup.Prepend>
-                                            <InputGroup.Text>
-                                                {getSVG('search')}
-                                            </InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <FormControl  id="inlineFormInputGroupUsername2" placeholder="Search Pool ID" />
-                                    </InputGroup>
-                                </Form>
-                            </Col>
-                            <Col xs={3}>
-                            <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={this.showTest}>+ New Test</Button>
-                            <Modal size="lg" show={this.state.showtest}>
-                                <Test handleClose={this.hideTest}/>
+    return (          
+        <div className='bg-light'>
+        <NavBarLanding activepage='/ongoingtests' userId={userId} labName={labName}/>
+        <Container fluid>
+            <Row className='mt-3'>
+                <Col xs={7}>
+                    <Row>
+                        <Col xs={5} className='my-auto'>
+                            <h5>ONGOING TESTS ({onGoingTests})</h5>
+                        </Col>
+                        <Col xs={7}>
+                            <Row>
+                                <p className='my-auto'>Filters</p>
+                                    {radios.map((radio, idx) => (
+                                    <ButtonGroup toggle>
+                                        <ToggleButton
+                                            key={idx}
+                                            type="radio"
+                                            name="status"
+                                            value={radio.value}
+                                            className= 'ml-3 pr-4 pl-4 filter-btn bg-white'
+                                            checked={radioValue === radio.value}
+                                            onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                        >
+                                            {radio.name}
+                                        </ToggleButton>
+                                    </ButtonGroup>
+                                    ))}
+                            </Row>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col xs={5}>
+                    <Row>
+                        <Col xs={{span: 5, offset: 2}} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                            <Form>
+                                <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>Search</Form.Label>
+                                <InputGroup>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text>
+                                            {getSVG('search')}
+                                        </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl  id="inlineFormInputGroupUsername2" placeholder="Search TEST ID" />
+                                </InputGroup>
+                            </Form>
+                        </Col>
+                        <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                            <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
+                            <Modal size="lg" show={showtest}>
+                                <Test handleClose={toggletest}/>
                             </Modal>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>    
-                <Row className='mt-3 ml-3 mr-3'>
-                    <Col>
-                        <TableLanding jsonoutput={this.state.jsonoutput}/>
-
-                    </Col>
-                </Row>
-            </Container>
-        </div>
-        );
-    }
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>    
+            <Row className='mt-3 ml-3 mr-3'>
+                <Col>
+                    <TableLanding jsonoutput={jsonoutput} testStatus={testStatus} />
+                </Col>
+            </Row>
+        </Container>
+    </div>
+    );
 }
 
 export default OngoingTests;
