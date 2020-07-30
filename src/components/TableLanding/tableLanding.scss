@@ -1,0 +1,36 @@
+@import '../../constants/colors.scss';
+
+.text-center {
+    text-align: center;
+    align-items: center;
+}
+
+.text-normal {
+    font-weight: normal !important;
+}
+
+.btn-text {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.prim-color {
+    color: $color-background;
+}
+
+.prim-color:hover {
+    color: $color-background;
+    text-decoration: none !important;
+}
+
+.download-link {
+    text-decoration: none !important;
+}
+
+#popover-basic .arrow{
+    display: none;
+}
+
+.btn-full {
+    width: 100% !important;
+}

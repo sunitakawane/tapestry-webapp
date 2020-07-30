@@ -1,0 +1,38 @@
+@import '../../../constants/colors.scss';
+
+.filter-dd {
+    background-color: white !important;
+    color: $color-background !important;
+    border: '1px' !important;
+    border-color: $color-background !important;
+}
+
+.text-red {
+    color: red;
+}
+
+.text-prim {
+    color: $color-background;
+}
+
+.text-bld {
+    font-weight: bolder !important;
+}
+
+.border-prim {
+    border-left-style: solid !important;
+    border-left-width: 6px !important;
+    border-left-color: $color-background !important;
+}
+
+.border-red {
+    border-left-style: solid !important;
+    border-left-width: 6px !important;
+    border-left-color: red !important;
+}
+
+.border-black {
+    border-left-style: solid !important;
+    border-left-width: 6px !important;
+    border-left-color: black !important;
+}
