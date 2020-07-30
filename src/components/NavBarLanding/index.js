@@ -20,14 +20,14 @@ function NavBarLanding(props) {
                     </Nav.Link>
                 </Nav.Item>
             </Nav>
-            <NavDropdown title={props.userId} id="user-nav-dropdown" alignRight>
+            <NavDropdown title={props.userName} id="user-nav-dropdown" alignRight>
                 {/* Dropdown links to be added */}
                 <NavDropdown.Item >
-                    <h6>{props.userId}</h6>
+                    <h6>{props.userName}</h6>
                     <p className='text-muted'>{props.labName}</p>
                 </NavDropdown.Item>
                 <hr className='firstline'/>
-                <NavDropdown.Item href="#">
+                <NavDropdown.Item href="/onboarding">
                     Default Settings
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#">
