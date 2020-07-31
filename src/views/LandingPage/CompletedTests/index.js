@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Container, Row, Col, Form, InputGroup, FormControl, Button, Card, FormGroup } from 'react-bootstrap';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
@@ -9,6 +9,7 @@ import './completedTests.scss'
 import '../../../index.scss'
 
 import {gettestList} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
+import {testActions} from '../../../redux/actions/testActions/testActions'
 import {getsummary} from '../../../redux/selectors/landingPageSelectors/summarySelectors'
 
 function CompletedTests() {
@@ -27,6 +28,9 @@ function CompletedTests() {
     
 
     // Redux states
+    const dispatch = useDispatch()
+    const testList = () => dispatch(testActions.test_listAll())
+
     const currentUserId = 12345
     const user = useSelector(state => state.users.users.find(user => user.userId === currentUserId))
     const userName = user.userName
@@ -36,6 +40,7 @@ function CompletedTests() {
     const summary = useSelector(getsummary)
 
     // Tests redux
+    testList()
     const tests_json = useSelector(gettestList);
 
 
@@ -43,10 +48,9 @@ function CompletedTests() {
     useEffect(() => {
         const getTestdetails = () => {
             let tests_temp = []
-            tests_json.map(({TEST_ID, NUMBER_OF_SAMPLES, ASSIGNED_TO, STATUS, POSITIVE_SAMPLES, UNDETERMINED_SAMPLES}, index) => {
-                //return ({'TEST ID': TEST_ID, 'NUMBER OF SAMPLES': NUMBER_OF_SAMPLES, 'ASSIGNED TO' : ASSIGNED_TO, 'POSITIVE SAMPLES': POSITIVE_SAMPLES, 'UNDETERMINED SAMPLES': UNDETERMINED_SAMPLES})
-                if (STATUS === 'Completed') {
-                    return tests_temp.push({TEST_ID, NUMBER_OF_SAMPLES, ASSIGNED_TO, STATUS, POSITIVE_SAMPLES, UNDETERMINED_SAMPLES})
+            tests_json.map(({id, samples, assigned_to, status, positive_samples, undetermined_samples}, index) => {
+                if (status === 'Completed') {
+                    return tests_temp.push({id, samples, assigned_to, status, positive_samples, undetermined_samples})
                 } else {
                     return null
                 }
@@ -58,7 +62,7 @@ function CompletedTests() {
         const filter_json = jsoninput => {
             if (search !== '') {
                 return jsoninput.filter( intest => {
-                    if (intest.TEST_ID.toString().includes(search)) {
+                    if (intest.id.toString().includes(search)) {
                         return intest
                     } else {
                         return null

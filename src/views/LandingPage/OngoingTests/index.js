@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import NavBarLanding from '../../../components/NavBarLanding'
 import TableLanding from '../../../components/TableLanding'
+import getSVG from "../../../utils/getSVG"
+//import testConstants from '../../../constants/testConstants'
 import './ongoingTests.scss'
 import '../../../index.scss'
-import getSVG from "../../../utils/getSVG"
 
 import {gettestList} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
 import {testActions} from '../../../redux/actions/testActions/testActions'
@@ -27,7 +28,7 @@ function OngoingTests(props) {
 
     // Redux
     const dispatch = useDispatch();
-    const testList = () => dispatch(testActions.test_list())
+    const testList = () => dispatch(testActions.test_listAll())
 
     // Users redux
     const currentUserId = 12345
@@ -36,19 +37,23 @@ function OngoingTests(props) {
     const labName = user.labName
 
     // Tests redux
-    testList();
+    //testList();
     const tests_json = useSelector(gettestList);
 
     useEffect (()=>{        
         const getTestdetails = () => {
             let tests_temp = []
-            tests_json.map(({TEST_ID, NUMBER_OF_SAMPLES, ASSIGNED_TO, STATUS, file}) => {
-                if (STATUS !== 'Completed') { 
-                    return tests_temp.push({TEST_ID, NUMBER_OF_SAMPLES, ASSIGNED_TO, STATUS, file})
-                } else {
-                    return null
-                }
-            })
+            if (tests_json) {
+                tests_json.map(({id, samples, assigned_to, status, file}) => {
+                    if (status !== 'Completed') { 
+                        return tests_temp.push({id, samples, assigned_to, status, file})
+                    } else {
+                        return null
+                    }
+                })
+            } else {
+                return []
+            }
             return tests_temp
         }
         const jsoninput = getTestdetails()
@@ -57,7 +62,7 @@ function OngoingTests(props) {
             if (search !== '') {
                 setRadioValue('0')
                 return jsoninput.filter( intest => {
-                    if (intest.TEST_ID.toString().includes(search)) {
+                    if (intest.id.toString().includes(search)) {
                         return intest
                     } else {
                         return null
@@ -66,11 +71,11 @@ function OngoingTests(props) {
             } else {
                 if (radioValue === '-1') {
                     return jsoninput.filter( intest => {                        
-                        return intest.STATUS === 'Error in Parsing!'
+                        return intest.status === 'Error in Parsing!'
                     })
                 } else if (radioValue === '1') {
                     return jsoninput.filter( intest => {
-                        return intest.STATUS === 'In progress'
+                        return intest.status === 'In progress'
                     })
                 } else {
                     return jsoninput
@@ -91,12 +96,19 @@ function OngoingTests(props) {
         setSearch(e.target.value)
     }
 
+    const api_call = () => {
+        testList()
+    }
+
     //Render
     return (          
         <div id='body' className='bg-light'>
         <NavBarLanding activepage='/ongoingtests' userName={userName} labName={labName}/>
         
         <Container fluid>
+            <Row className='mt-3'>
+                <Button onClick={api_call}>API CALL</Button>
+            </Row>
             <Row className='mt-3'> {/* Control bar */}
                 <Col xs={7}>
                     <Row>
