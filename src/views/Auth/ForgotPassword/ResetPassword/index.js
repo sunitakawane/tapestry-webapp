@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Button,
   Form,
@@ -9,15 +10,29 @@ import {
   Container,
   Image,
   Navbar,
+  Spinner,
 } from "react-bootstrap";
 import { passwordActions } from "../../../../redux/actions/authActions/passwordActions";
-import "./resetPassword.scss";
 import mask from "../../Mask Group.png";
+import "./resetPassword.scss";
 
 const ResetPassword = () => {
-  const [email, setEmail] = useState("");
-  const [validated, setValidated] = useState(false);
+  const history = useHistory();
 
+  // state variables
+  const [email, setEmail] = useState("");
+  // const [validated, setValidated] = useState(false);
+
+  // selectors (used in password reducer)
+  const isSubmitted = useSelector((state) => state.password.isSubmitted);
+  const isResetPasswordSuccess = useSelector(
+    (state) => state.password.isResetPasswordSuccess
+  );
+  const isInvalid = useSelector(
+    (state) => state.password.isResetPasswordFailure
+  );
+
+  // dispatch (used in defining reset password function)
   const dispatch = useDispatch();
   const resetPasswordRequested = () =>
     dispatch(passwordActions.resetPasswordRequested());
@@ -25,26 +40,28 @@ const ResetPassword = () => {
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
-
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setEmail(value);
     }
   };
 
   const handleSubmit = (e) => {
-    const form = e.currentTarget;
-    // if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    // }
+    // const form = e.currentTarget;
+    // if (form.checkValidity() === false) {}
+    e.preventDefault();
+    e.stopPropagation();
 
     resetPasswordRequested();
+
     if (email) {
       resetPassword(email);
     }
-
-    setValidated(true);
+    // setValidated(true);
   };
+
+  if (isResetPasswordSuccess) {
+    history.push("/password-link-sent");
+  }
 
   return (
     <Container fluid>
@@ -96,7 +113,7 @@ const ResetPassword = () => {
               </Card.Subtitle>{" "}
               <br />
               <Form onSubmit={handleSubmit}>
-              {/* noValidate validated={validated}  */}
+                {/* noValidate validated={validated}  */}
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Col sm={8}>
                     <Form.Control
@@ -111,8 +128,22 @@ const ResetPassword = () => {
                   </Col>
                 </Form.Group>
                 <Button variant="primary" size="lg" type="submit">
+                  {isSubmitted && (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
                   Reset Password
                 </Button>
+                {isInvalid && (
+                  <Card.Text>
+                    Reset Password failed. Please try again!
+                  </Card.Text>
+                )}
               </Form>
               <Card.Text>Back to Login?</Card.Text>
             </Card>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import {
   Button,
   Form,
@@ -9,18 +10,32 @@ import {
   Container,
   Image,
   Navbar,
+  Spinner,
 } from "react-bootstrap";
 import { passwordActions } from "../../../redux/actions/authActions/passwordActions";
-import { token } from "../../../utils/token";
-import "./setPassword.scss";
 import mask from "../Mask Group.png";
+import "./setPassword.scss";
 
 const SetPassword = () => {
+  let history = useHistory();
+  let match = useRouteMatch();
+
+  // state variables
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const uid = useState("");
-  const [validated, setValidated] = useState(false);
+  // const [validated, setValidated] = useState(false);
 
+  const uid = match.params.uid;
+  const token = match.params.token;
+
+  // selectors (used in password reducer)
+  const isInvalid = useSelector((state) => state.password.isInvalid);
+  const isSetPasswordSuccess = useSelector(
+    (state) => state.password.isSetPasswordSuccess
+  );
+  const isSubmitted = useSelector((state) => state.password.isSubmitted);
+
+  // dispatch (used for defining set password function)
   const dispatch = useDispatch();
   const setPasswordRequested = () =>
     dispatch(passwordActions.setPasswordRequested());
@@ -32,7 +47,7 @@ const SetPassword = () => {
   const handleNewPasswordInput = (e) => {
     const { value } = e.target;
 
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setNewPassword(value);
     }
   };
@@ -40,25 +55,28 @@ const SetPassword = () => {
   const handleConfirmPasswordInput = (e) => {
     const { value } = e.target;
 
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setConfirmPassword(value);
     }
   };
 
   const handleSubmit = (e) => {
-    const form = e.currentTarget;
-    // if (form.checkValidity() === false) {
+    // const form = e.currentTarget;
+    // if (form.checkValidity() === false) {}
+
     e.preventDefault();
     e.stopPropagation();
-    // }
 
     setPasswordRequested();
     if (newPassword && confirmPassword && newPassword === confirmPassword) {
       setPassword(newPassword, confirmPassword, uid, token);
     }
-
-    setValidated(true);
+    // setValidated(true);
   };
+
+  if (isSetPasswordSuccess) {
+    history.push("/onboarding");
+  }
 
   return (
     <Container fluid>
@@ -136,8 +154,23 @@ const SetPassword = () => {
                   </Col>
                 </Form.Group>
                 <Button variant="primary" size="lg" type="submit">
+                  {isSubmitted && (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
                   Create Password
                 </Button>
+                {newPassword !== confirmPassword && (
+                  <Card.Text>Passwords dont match. Please try again!</Card.Text>
+                )}
+                {isInvalid && (
+                  <Card.Text>Request failed. Please try again!</Card.Text>
+                )}
               </Form>
               <Card.Text>Back to Login?</Card.Text>
               <Card.Text className="new-user">

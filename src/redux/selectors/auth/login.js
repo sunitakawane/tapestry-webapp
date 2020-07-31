@@ -1,1 +1,0 @@
-export const getIsSubmitted = state => state.isLoggedIn;

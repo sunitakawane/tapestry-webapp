@@ -1,6 +1,8 @@
 import authConstants from "../../../constants/authConstants";
 
-const initalState = {};
+const initalState = {
+  isSubmitted: false,
+};
 
 export default function signUpReducer(state = initalState, action) {
   switch (action.type) {
@@ -11,11 +13,13 @@ export default function signUpReducer(state = initalState, action) {
 
     case authConstants.SIGN_UP_SUCCESS:
       return {
-        isRegisterd: true,
+        isRegistered: true,
       };
 
     case authConstants.SIGN_UP_FAILURE:
-      return {};
+      return {
+        isInvalid: true,
+      };
 
     default:
       return state;

@@ -57,7 +57,7 @@ const routes = [
         component: PasswordLinkSent,
       },
       {
-        path: "/set-password",
+        path: "/reset/:uid/:token/",
         exact: true,
         strict: true,
         name: "SetPassword",

@@ -10,11 +10,13 @@ export default function passwordReducer(state = initalState, action) {
       };
 
     case authConstants.RESET_PASSWORD_SUCCESS:
-      return {};
+      return {
+        isResetPasswordSuccess: true,
+      };
 
     case authConstants.RESET_PASSWORD_FAILURE:
       return {
-        inInValid: true,
+        isInvalid: true,
       };
 
     case authConstants.SET_PASSWORD_REQUESTED:
@@ -23,11 +25,13 @@ export default function passwordReducer(state = initalState, action) {
       };
 
     case authConstants.SET_PASSWORD_SUCCESS:
-      return {};
+      return {
+        isSetPasswordSuccess: true,
+      };
 
     case authConstants.SET_PASSWORD_FAILURE:
       return {
-        inInValid: true,
+        isInvalid: true,
       };
 
     case authConstants.CHANGE_PASSWORD_REQUESTED:
@@ -36,11 +40,13 @@ export default function passwordReducer(state = initalState, action) {
       };
 
     case authConstants.CHANGE_PASSWORD_SUCCESS:
-      return {};
+      return {
+        isChangePasswordSuccess: true,
+      };
 
     case authConstants.CHANGE_PASSWORD_FAILURE:
       return {
-        inInValid: true,
+        isChangePasswordFailure: true,
       };
     default:
       return state;

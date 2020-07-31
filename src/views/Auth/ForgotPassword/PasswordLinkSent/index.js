@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import {
-  Col,
-  Row,
-  Card,
-  Container,
-  Image,
-  Navbar,
-} from "react-bootstrap";
-import "./passwordLinkSent.scss";
+import { Col, Row, Card, Container, Image, Navbar } from "react-bootstrap";
 import mask from "../../Mask Group.png";
+import "./passwordLinkSent.scss";
 
 class PasswordLinkSent extends Component {
   render() {
@@ -58,15 +51,14 @@ class PasswordLinkSent extends Component {
                 <Card.Title>Password Reset Link Sent!</Card.Title>
 
                 <Card.Subtitle>
-                We have sent a password reset link to your email 
-                {this.props.email}. Follow the link to reset password.
-                                </Card.Subtitle>
+                  We have sent a password reset link to your email. Follow the
+                  link to reset password.
+                </Card.Subtitle>
                 <Card.Text>
-                  <a href="#">Visit out website</a> to know more about our product.
+                  <a href="#">Visit out website</a> to know more about our
+                  product.
                 </Card.Text>
-                <Card.Text>
-                    Back to Login
-                </Card.Text>
+                <Card.Text>Back to Login</Card.Text>
                 <Card.Text className="new-user">
                   New user? <a href="/sign-up">Contact us</a> to register.
                 </Card.Text>

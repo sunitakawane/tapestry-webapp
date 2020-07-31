@@ -9,21 +9,36 @@ import {
   Container,
   Image,
   Navbar,
+  Spinner
 } from "react-bootstrap";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { passwordActions } from "../../../../redux/actions/authActions/passwordActions";
 import "./changePassword.scss";
 import mask from "../../Mask Group.png";
 
 const ChangePassword = () => {
+  let history = useHistory();
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
   const [validated, setValidated] = useState(false);
+
+  const isSubmitted = useSelector((state) => state.password.isSubmitted);
+  const isChangePasswordSuccess = useSelector(
+    (state) => state.password.isChangePasswordSuccess
+  );
+  const isChangePasswordFailure = useSelector(
+    (state) => state.password.isChangePasswordFailure
+  );
 
   const dispatch = useDispatch();
   const changePasswordRequested = () =>
     dispatch(passwordActions.changePasswordRequested());
   const changePassword = () =>
-    dispatch(passwordActions.changePassword(newPassword, confirmPassword));
+    dispatch(
+      passwordActions.changePassword(oldPassword, newPassword, confirmPassword)
+    );
 
   const handleNewPasswordInput = (e) => {
     const { value } = e.target;
@@ -41,6 +56,14 @@ const ChangePassword = () => {
     }
   };
 
+  const handleOldPasswordInput = (e) => {
+    const { value } = e.target;
+
+    if (value.length > 0) {
+      setOldPassword(value);
+    }
+  };
+
   const handleSubmit = (e) => {
     const form = e.currentTarget;
     // if (form.checkValidity() === false) {
@@ -49,12 +72,21 @@ const ChangePassword = () => {
     // }
 
     changePasswordRequested();
-    if (newPassword && confirmPassword && newPassword === confirmPassword) {
-      changePassword(newPassword, confirmPassword);
+    if (
+      oldPassword &&
+      newPassword &&
+      confirmPassword &&
+      newPassword === confirmPassword
+    ) {
+      changePassword(oldPassword, newPassword, confirmPassword);
     }
 
     setValidated(true);
   };
+
+  if (isChangePasswordSuccess) {
+    history.push("/onboarding");
+  }
 
   return (
     <Container fluid>
@@ -112,6 +144,20 @@ const ChangePassword = () => {
                     <Form.Control
                       className="input"
                       type="password"
+                      placeholder="Old Password"
+                      size="lg"
+                      value={oldPassword}
+                      onChange={handleOldPasswordInput}
+                      required
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formBasicPassword">
+                  <Col sm={8}>
+                    <Form.Control
+                      className="input"
+                      type="password"
                       placeholder="New Password"
                       size="lg"
                       value={newPassword}
@@ -135,8 +181,23 @@ const ChangePassword = () => {
                   </Col>
                 </Form.Group>
                 <Button variant="primary" size="lg" type="submit">
-                  Changes Password
+                  {isSubmitted && (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
+                  Change Password
                 </Button>
+                {newPassword !== confirmPassword && (
+                  <Card.Text>Passwords dont match. Please try again!</Card.Text>
+                )}
+                {isChangePasswordFailure && (
+                  <Card.Text>Request failed. Please try again!</Card.Text>
+                )}
               </Form>
               <Card.Text>Back to Login?</Card.Text>
               <Card.Text className="new-user">

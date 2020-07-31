@@ -17,7 +17,7 @@ function signUp(email, firstName, lastName, labName, labLocation) {
     signUpApi
       .signUp(email, firstName, lastName, labName, labLocation)
       .then((response) => {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("register", JSON.stringify(response.data));
         dispatch({
           type: authConstants.SIGN_UP_SUCCESS,
           payload: response.data,

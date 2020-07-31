@@ -10,11 +10,11 @@ import {
   Button,
   ListGroupItem,
 } from "react-bootstrap";
-import "./onboarding.scss";
 import machine1 from "./machine1.png";
 import machine2 from "./machine2.png";
 import machine3 from "./machine3.png";
 import machine4 from "./machine4.png";
+import "./onboarding.scss";
 
 class Onboarding extends Component {
   render() {
@@ -23,7 +23,7 @@ class Onboarding extends Component {
         <div className="onboarding">
           <Card border="light">
             <Card.Body>
-              <Card.Title>Welcome Anirudha!</Card.Title>
+              <Card.Title>Welcome user!</Card.Title>
               <Card.Subtitle>
                 Vevanta Memorial Hospitals, Biogen Labs
               </Card.Subtitle>

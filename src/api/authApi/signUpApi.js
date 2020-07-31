@@ -7,7 +7,7 @@ export const signUpApi = {
 
 function signUp(email, firstName, lastName, labName, labLocation) {
   return axios
-    .post(url.BASE_API_URL + `/auth/register/`, {
+    .post(url.BASE_API_URL + `auth/register/`, {
       email: email,
       first_name: firstName,
       last_name: lastName,

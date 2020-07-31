@@ -19,7 +19,7 @@ function resetPassword(email) {
 
 function setPassword(password1, password2, uid, token) {
   return axios
-    .post(url.BASE_API_URL + `auth/password/reset/confirm`, {
+    .post(url.BASE_API_URL + `auth/password/reset/confirm/`, {
       new_password1: password1,
       new_password2: password2,
       uid: uid,
@@ -30,9 +30,10 @@ function setPassword(password1, password2, uid, token) {
     });
 }
 
-function changePassword(password1, password2) {
+function changePassword(oldPassword, password1, password2) {
   return axios
-    .post(url.BASE_API_URL + `auth/password/change`, {
+    .post(url.BASE_API_URL + `auth/password/change/`, {
+      old_password: oldPassword,
       new_password1: password1,
       new_password2: password2,
     })

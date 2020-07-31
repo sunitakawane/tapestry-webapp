@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Button,
   Form,
@@ -9,76 +10,59 @@ import {
   Container,
   Image,
   Navbar,
+  Spinner,
 } from "react-bootstrap";
-import { getIsSubmitted } from "../../../redux/selectors/auth/login";
 import { loginActions } from "../../../redux/actions/authActions/loginActions";
-import { useHistory } from "react-router-dom";
-import "./login.scss";
-import "../index.scss";
 import mask from "../Mask Group.png";
+import "./login.scss";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [validated, setValidated] = useState(false);
   let history = useHistory();
 
+  // state variables
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const [validated, setValidated] = useState(false);
+
+  //selectors (used inside reducers)
+  const isSubmitted = useSelector((state) => state.login.isSubmitted);
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const isInvailed = useSelector((state) => state.login.isInvailed);
+
+  //dispatch (used to define login functions)
   const dispatch = useDispatch();
   const loginRequested = () => dispatch(loginActions.loginRequested());
   const login = () => dispatch(loginActions.login(email, password));
-  const logout = () => dispatch(loginActions.logout());
-  const isLoggedIn = useSelector(getIsSubmitted);
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
-
     if (value.length >= 0) {
       setEmail(value);
     }
   };
 
-  function validateEmail(value) {
-    let error;
-
-    if (!value) {
-      error = "Required";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-      error = "Invalid email address";
-    }
-
-    return error;
-  }
-
   const handlePasswordInput = (e) => {
     const { value } = e.target;
-
     if (value.length >= 0) {
       setPassword(value);
     }
   };
 
-  const validate = () => {
-    return email.length > 0 && password.length > 0 && setValidated(true);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // e.stopPropagation();
-
-    // const form = e.currentTarget;
-    //    if (form.checkValidity() === false) {
-    //  }
+    e.stopPropagation();
 
     loginRequested();
+
     if (email && password) {
       login(email, password);
     }
-    setValidated(true);
-
-    // if (this.state.login.isLoggedIn) {
-    //   history.push("/onboarding");
-    // }
+    // setValidated(true);
   };
+
+  if (isLoggedIn) {
+    history.push("/onboarding");
+  }
 
   return (
     <Container fluid>
@@ -129,8 +113,8 @@ const Login = () => {
                 Login using your registered Email and password.
               </Card.Subtitle>{" "}
               <br />
-              {/* noValidate validated={validated}  */}
               <Form onSubmit={handleSubmit}>
+                {/* noValidate validated={validated}  */}
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Col sm={8}>
                     <Form.Control
@@ -164,8 +148,18 @@ const Login = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Button variant="primary" size="lg" type="submit">
+                  {isSubmitted && (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
                   Login
                 </Button>
+                {isInvailed && <Card.Text>Login Failure</Card.Text>}
               </Form>
               <Card.Text>
                 <a href="/reset-password">Forgot Password?</a>

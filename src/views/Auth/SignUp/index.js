@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Button,
   Form,
@@ -8,21 +9,30 @@ import {
   Card,
   Container,
   Image,
+  Spinner,
   Navbar,
 } from "react-bootstrap";
 import { signUpActions } from "../../../redux/actions/authActions/signUpActions";
-import "./signUp.scss";
-import "../index.scss";
 import mask from "../Mask Group.png";
+import "./signUp.scss";
 
 const SignUp = () => {
+  let history = useHistory();
+
+  // state variables
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [labName, setLabName] = useState("");
   const [labLocation, setLabLocation] = useState("");
-  const [validated, setValidated] = useState(false);
+  // const [validated, setValidated] = useState(false);
 
+  // selectors (used inside reducers)
+  const isSubmitted = useSelector((state) => state.signUp.isSubmitted);
+  const isRegisterd = useSelector((state) => state.signUp.isRegistered);
+  const isInvalid = useSelector((state) => state.signUp.isInvalid);
+
+  // dispatch (used to define sign-up function)
   const dispatch = useDispatch();
   const signUpRequested = () => dispatch(signUpActions.signUpRequested());
   const signUp = () =>
@@ -32,58 +42,56 @@ const SignUp = () => {
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
-
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setEmail(value);
     }
   };
 
   const handleFirstNameInput = (e) => {
     const { value } = e.target;
-
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setFirstName(value);
     }
   };
 
   const handleLastNameInput = (e) => {
     const { value } = e.target;
-
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setLastName(value);
     }
   };
 
   const handleLabNameInput = (e) => {
     const { value } = e.target;
-
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setLabName(value);
     }
   };
 
   const handleLabLocationInput = (e) => {
     const { value } = e.target;
-
-    if (value.length > 0) {
+    if (value.length >= 0) {
       setLabLocation(value);
     }
   };
 
   const handleSubmit = (e) => {
-    const form = e.currentTarget;
-    // if (form.checkValidity() === false) {
+    // const form = e.currentTarget;
+    // if (form.checkValidity() === false) {}
     e.preventDefault();
     e.stopPropagation();
-    // }
 
     signUpRequested();
+
     if (email && firstName && lastName && labName && labLocation) {
       signUp(email, firstName, lastName, labName, labLocation);
     }
-
-    setValidated(true);
+    // setValidated(true);
   };
+
+  if (isRegisterd) {
+    history.push("/request-sent");
+  }
 
   return (
     <Container fluid>
@@ -203,13 +211,14 @@ const SignUp = () => {
                 <Form.Group as={Row} controlId="formHorizontalText">
                   <Col sm={8}>
                     <Form.Control
+                      type="text"
                       as="select"
-                      value="Lab Location (Select City)"
                       size="lg"
-                      onSelect={handleLabLocationInput}
+                      value={labLocation.value}
+                      onChange={handleLabLocationInput}
                       required
                     >
-                      <option>Lab Location (Select City)</option>
+                      <option value="">Lab Location (Select City)</option>
                       <option value="Andhra Pradesh">Andhra Pradesh</option>
                       <option value="Andaman and Nicobar Islands">
                         Andaman and Nicobar Islands
@@ -262,8 +271,22 @@ const SignUp = () => {
                 </Form.Group>
 
                 <Button variant="primary" size="lg" type="submit">
+                  {isSubmitted && (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
                   Request Sign up
                 </Button>
+                {isInvalid && (
+                  <Card.Text>
+                    Sign up failed due to some reason. Please try again!
+                  </Card.Text>
+                )}
               </Form>
 
               <Card.Text>

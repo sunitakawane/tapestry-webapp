@@ -1,8 +1,6 @@
 import authConstants from "../../../constants/authConstants";
-import {getIsSubmitted} from '../../selectors/auth/login'
 
 const initalState = {
-  isLoggedIn: false,
   isSubmitted: false,
 };
 
@@ -23,7 +21,9 @@ export default function login(state = initalState, action) {
       };
 
     case authConstants.LOGIN_FAILURE:
-      return {};
+      return {
+        isInvailed: true,
+      };
 
     case authConstants.LOGOUT:
       return {

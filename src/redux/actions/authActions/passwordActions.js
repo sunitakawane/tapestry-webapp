@@ -40,7 +40,6 @@ function resetPassword(email) {
           type: authConstants.RESET_PASSWORD_SUCCESS,
           payload: response.data,
         });
-        history.push("/change-password");
       })
       .catch((error) => {
         dispatch({
@@ -60,7 +59,6 @@ function setPassword(password1, password2, uid, token) {
           type: authConstants.SET_PASSWORD_SUCCESS,
           payload: response.data,
         });
-        history.push("/onboarding");
       })
       .catch((error) => {
         dispatch({
@@ -71,10 +69,10 @@ function setPassword(password1, password2, uid, token) {
   };
 }
 
-function changePassword(password1, password2) {
+function changePassword(oldPassword, password1, password2) {
   return (dispatch) => {
     passwordApi
-      .setPassword(password1, password2)
+      .setPassword(oldPassword, password1, password2)
       .then((response) => {
         dispatch({
           type: authConstants.CHANGE_PASSWORD_SUCCESS,

@@ -6,7 +6,7 @@ import "./App.css";
 
 export const App = () => {
   return (
-    console.log(this.props),
+    // console.log(this.props),
     (
       <div className="App">
         <header className="App-header">

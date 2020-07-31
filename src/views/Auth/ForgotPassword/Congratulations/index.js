@@ -1,21 +1,10 @@
 import React, { Component } from "react";
 import { Col, Row, Card, Container, Image, Navbar } from "react-bootstrap";
-import "./congratulations.scss";
 import mask from "../../Mask Group.png";
+import "./congratulations.scss";
 
 class Congratulations extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      email: "",
-      submitted: false,
-    };
-  }
-
   render() {
-    const { email, submitted } = this.state;
-
     return (
       <Container fluid>
         <Row>
