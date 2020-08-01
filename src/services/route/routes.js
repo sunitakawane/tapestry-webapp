@@ -84,6 +84,20 @@ const routes = [
         name: "onboarding",
         component: Onboarding,
       },
+      {
+        path: '/ongoingtests',
+        exact: true,
+        strict: true,
+        name: 'ongoingTests',
+        component: OngoingTests,
+      },
+      {
+        path: '/completedtests',
+        exact: true,
+        strict: true,
+        name: 'completedTests',
+        component: CompletedTests,
+      },
     ],
   },
 ];
