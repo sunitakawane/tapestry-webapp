@@ -9,6 +9,8 @@ import SetPassword from "../../views/Auth/SetPassword";
 import ChangePassword from "../../views/Auth/ForgotPassword/ChangePassword";
 import Congratulations from "../../views/Auth/ForgotPassword/Congratulations";
 import Onboarding from "../../views/OnboardingPage";
+import OngoingTests from "../../views/LandingPage/OngoingTests";
+import CompletedTests from "../../views/LandingPage/CompletedTests";
 
 const routes = [
   {
@@ -85,17 +87,17 @@ const routes = [
         component: Onboarding,
       },
       {
-        path: '/ongoingtests',
+        path: "/ongoingtests",
         exact: true,
         strict: true,
-        name: 'ongoingTests',
+        name: "ongoingTests",
         component: OngoingTests,
       },
       {
-        path: '/completedtests',
+        path: "/completedtests",
         exact: true,
         strict: true,
-        name: 'completedTests',
+        name: "completedTests",
         component: CompletedTests,
       },
     ],
