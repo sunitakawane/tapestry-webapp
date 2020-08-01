@@ -1,0 +1,12 @@
+@import "src/constants/color.scss";
+
+.alert {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+
+  /* identical to box height */
+
+  color: $color-alert;
+}
