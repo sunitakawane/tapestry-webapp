@@ -6,7 +6,15 @@ import './style.css'
 export default function DropdownContent(props) {
   // {/* <p>{wells[index]}</p> */}
   const name = props.name
-  const list= props.list
+  let list= props.list
+  if(props.currentvalue !== undefined)
+  {
+    var index = list.indexOf(props.currentvalue)
+    if (index !== -1) {
+      list.splice(index,1)
+    }
+    list = [props.currentvalue].concat(list)
+  }
   
   return (
     <div>

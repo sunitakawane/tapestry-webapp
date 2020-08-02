@@ -26,12 +26,12 @@ function TableLanding(props) {
         return heads.map(head => 
         {
             switch(head){
-                case 'TEST ID': return <th key={head}>{head}</th>;
-                case 'NUMBER OF SAMPLES': return <th key={head} className='text-center'>{head}</th>
-                case 'ASSIGNED TO': return <th key={head}>{head}</th>;
-                case 'STATUS': return <th key={head} className='text-center'>{head}</th>;
-                case 'POSITIVE SAMPLES': return <th key={head} className='text-center'>{head}</th>;
-                case 'UNDETERMINED SAMPLES': return <th key={head} className='text-center'>{head}</th>
+                case 'TEST_ID': return <th key={head}>TEST ID</th>;
+                case 'NUMBER_OF_SAMPLES': return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
+                case 'ASSIGNED_TO': return <th key={head}>ASSIGNED TO</th>;
+                case 'STATUS': return <th key={head} className='text-center'>STATUS</th>;
+                case 'POSITIVE_SAMPLES': return <th key={head} className='text-center'>POSITIVE SAMPLES</th>;
+                case 'UNDETERMINED_SAMPLES': return <th key={head} className='text-center'>UNDETERMINED SAMPLES</th>
                 default: return null;
             }            
         })
@@ -64,9 +64,9 @@ function TableLanding(props) {
                         {keys.map(key =>
                         {
                             switch(key) {
-                                case 'TEST ID': return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
-                                case 'NUMBER OF SAMPLES': return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
-                                case 'ASSIGNED TO': return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
+                                case 'TEST_ID': return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
+                                case 'NUMBER_OF_SAMPLES': return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
+                                case 'ASSIGNED_TO': return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
                                 case 'STATUS': return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
                                     <a href={row['file']} className='download-link text-dark'>Download pooling matrix</a>
@@ -91,15 +91,15 @@ function TableLanding(props) {
                         {keys.map(key =>
                         {
                             switch(key) {
-                                case 'TEST ID': return <th key={key} className='text-normal'>{row[key]}</th>;
-                                case 'NUMBER OF SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                                case 'ASSIGNED TO': return <th key={key} className='text-normal'>{row[key]}</th>;
+                                case 'TEST_ID': return <th key={key} className='text-normal'>{row[key]}</th>;
+                                case 'NUMBER_OF_SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                                case 'ASSIGNED_TO': return <th key={key} className='text-normal'>{row[key]}</th>;
                                 case 'STATUS': return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
                                     <a href={row['file']} className='download-link text-dark'>Download pooling matrix</a>
                                 </th>
                                 case 'upload': return <th key={key} className='text-normal text-center'>
-                                    <a onClick={toggleupload} className='prim-color'>Upload qPCR results</a>
+                                    <span onClick={toggleupload} className='prim-color'>Upload qPCR results</span>
                                     <Modal size="lg" show={showupload}>
                                         <Upload handleClose={toggleupload}/>
                                     </Modal>
@@ -121,11 +121,11 @@ function TableLanding(props) {
                 {keys.map(key =>
                 {
                     switch(key) {
-                        case 'TEST ID': return <th key={key} className='text-normal'>{row[key]}</th>;
-                        case 'NUMBER OF SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                        case 'ASSIGNED TO': return <th key={key} className='text-normal'>{row[key]}</th>;
-                        case 'POSITIVE SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                        case 'UNDETERMINED SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case 'TEST_ID': return <th key={key} className='text-normal'>{row[key]}</th>;
+                        case 'NUMBER_OF_SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case 'ASSIGNED_TO': return <th key={key} className='text-normal'>{row[key]}</th>;
+                        case 'POSITIVE_SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case 'UNDETERMINED_SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
                         case 'view': return <th key={key} className='text-normal text-center'>
                             <a href="/completedtests#" className='prim-color'>View results</a>
                         </th>
@@ -147,17 +147,24 @@ function TableLanding(props) {
     return (  
         <Container fluid>
             <Row>
-                <Table borderless hover responsive className='border shadow-sm bg-white'>
-                    <thead className='border-bottom bg-light'>
-                        <tr>
-                            {getHeader()}
-                            {emptyHeader()}                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {getBody()}
-                    </tbody>
-                </Table>
+                {props.jsonoutput.length ?
+                    <Table borderless hover responsive className='border shadow-sm bg-white'>
+                        <thead className='border-bottom bg-light'>
+                            <tr>    
+                                {getHeader()}
+                                {emptyHeader()}                        
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {getBody()}
+                        </tbody>
+                    </Table> : 
+                    <div className='empty-message'>
+                        <header className='empty-header'>
+                            <h1>No tests available</h1>
+                        </header>
+                    </div>
+                }
             </Row>
         </Container>
     );
