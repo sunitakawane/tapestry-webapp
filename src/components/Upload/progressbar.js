@@ -1,23 +1,17 @@
 import React from 'react'
 import {Container,Row,Col} from 'react-bootstrap';
 
-import './style.css'
 const ProgressBar = (props) => {
     const { value, completed,bgcolor,handleClose } = props;
   
     const containerStyles = {
-      width: '100%',
+      height:"40px",
+      width: '${completed}%',
       borderRadius: '3px',
-      background: '#F4F4F4'
-    }
-  
-    const fillerStyles = {
-      height: '100%',
-      borderRadius: 'inherit',
-      width: `${completed}%`,
       background: bgcolor,
+      padding:"10px 10px"
     }
-  
+
     const labelStyles = {
       fontsize:'20px',
       color: 'white',
@@ -26,28 +20,41 @@ const ProgressBar = (props) => {
 
     const close = {
       fontsize: '30px',
-      padding:'15px 10px',
-      top:'10px',
+      padding:'20px 10px',
+      height:'100%',
+      top:'20px',
       color: 'black',
       fontWeight: 'bold'
     }
 
-    return (
-      <div style={containerStyles}>
-        <div className="twocolordiv">
+    return (      
+      <div>
+        {(completed>90)?
+          <div style={containerStyles}>
             <Container>
               <Row>
-                <Col xs lg="6">
-                  <span style={labelStyles}>{`${value}`}</span>
+                <Col xs lg="11">
+                    <span style={labelStyles}>{`${value}`}</span>
                 </Col>
-                <Col xs lg="4">
-                </Col>
-                <Col xs lg="2">
+                <Col xs lg="1">
                   <span style={close} onClick={handleClose}>&times;</span>
                 </Col>
               </Row>
             </Container>
-        </div>
+          </div>:
+          <Container>
+            <Row>
+              <Col xs lg="11">
+                <div style={containerStyles}>
+                  <span style={labelStyles}>{`${value}`}</span>
+                </div>
+              </Col>
+              <Col xs lg="1">
+                <span style={close} onClick={handleClose}>&times;</span>
+              </Col>
+            </Row>
+          </Container>
+        }
       </div>
     );
   };

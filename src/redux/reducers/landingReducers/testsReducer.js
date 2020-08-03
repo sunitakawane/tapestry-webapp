@@ -24,17 +24,17 @@ const initialState = {
 export default function testReducer(state=initialState, action) {
     axios.get('https://tapestry-pooling-284109.ew.r.appspot.com/machine-type/',{
     headers:{
-        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJ1c2VybmFtZSI6ImFkbWluQHRlc3QuY29tIiwiZXhwIjoxNTk2MzE0MjI3LCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwib3JpZ19pYXQiOjE1OTYzMTA2Mjd9.l1hoW6TzEIBsmATgMGfhfRiOEVmwUtJBN6mjKl9E4u0'
+        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJ1c2VybmFtZSI6ImFkbWluQHRlc3QuY29tIiwiZXhwIjoxNTk2NDY2MjY4LCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwib3JpZ19pYXQiOjE1OTY0NjI2Njh9.fFNdJOyTve5YdnxPLZeMeXFlNyL9IpR5teomHrF0nVE'
     }
     }).then(res => {
-      state.machine = res.data.results.map(item=>item['name']);
+      state.machine = res.data.results.map(item=>item['no_of_wells']+'wells(' + item['dim_x'] + 'x' + item['dim_y'] + ') ' + item['name']);
     })
     axios.get('https://tapestry-pooling-284109.ew.r.appspot.com/test-kit/',{
     headers:{
-        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJ1c2VybmFtZSI6ImFkbWluQHRlc3QuY29tIiwiZXhwIjoxNTk2MzE0MjI3LCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwib3JpZ19pYXQiOjE1OTYzMTA2Mjd9.l1hoW6TzEIBsmATgMGfhfRiOEVmwUtJBN6mjKl9E4u0'
+        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJ1c2VybmFtZSI6ImFkbWluQHRlc3QuY29tIiwiZXhwIjoxNTk2NDY2MjY4LCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwib3JpZ19pYXQiOjE1OTY0NjI2Njh9.fFNdJOyTve5YdnxPLZeMeXFlNyL9IpR5teomHrF0nVE'
     }
     }).then(res => {
-      state.kit = res.data.results.map(item=>item['name']);      
+      state.kit = res.data.results.map(item=>"("+item['gene_type'].join(' ')+") "+item['name']);      
     })
     switch(action.type){
         case testConstants.TEST_LIST: 

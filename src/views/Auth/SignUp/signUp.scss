@@ -1,33 +1,105 @@
-@import 'src/constants/color.scss';
+@import "src/constants/color.scss";
 
-.card {
-  position: relative;
-  left: 60%;
-  width: 30%;
-  transform: translateY(45%);
+.col {
+  padding-left: 0em !important;
 }
 
-.card-title {
-  font-style: normal;
-  font-weight: bold !important;
-  font-size: 24px;
-  line-height: 74px;
-  /* identical to box height, or 308% */
+.sign-up {
+  .card {
+    position: relative;
+    left: 20%;
+    width: 60%;
+    transform: translateY(45%);
+  }
 
-  letter-spacing: 0.225px;
-  text-transform: uppercase;
+  .card-title {
+    font-style: normal;
+    font-weight: bold !important;
+    font-size: 24px;
+    line-height: 74px;
 
-  color: $color-text;
+    letter-spacing: 0.225px;
+    text-transform: uppercase;
+
+    color: $color-text;
+  }
+
+  .card-text {
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-size: 14px !important;
+    line-height: 18px !important;
+    /* identical to box height */
+
+    color: $color-text !important;
+  }
+
+  a:active {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px !important;
+    line-height: 18px !important;
+
+    /* identical to box height */
+
+    color: $color-background;
+  }
 }
 
-.card-subtitle {
+.sign-up-image {
+  .card {
+    position: relative;
+  }
+
+  .card-title {
+    transform: translateY(250%);
+    margin-left: 10%;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 61px;
+    letter-spacing: 0.5625px;
+
+    color: $color-image-overlay;
+  }
+
+  .card-subtitle {
+    transform: translateY(700%);
+    margin-left: 10%;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+    letter-spacing: 1.29375px;
+
+    color: $color-image-overlay;
+  }
+
+  .card-text {
+    margin-left: 7%;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+
+    letter-spacing: 1.29375px;
+    text-transform: uppercase;
+
+    color: $color-image-overlay;
+  }
+}
+
+.navbar-nav.ml-auto li a {
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 16px;
-  /* identical to box height, or 133% */
+  font-size: 14px;
+  line-height: 18px;
+  transform: translateY(50%);
 
-  color: $color-primary;
+  color: $color-text;
 }
 
 .btn.btn-primary,
@@ -46,30 +118,13 @@
   text-align: center;
   letter-spacing: 0.15px;
   margin-bottom: 70px;
-
 }
 
-.card-text,
-.card-text a {
+.form-control-lg {
   font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 18px;
-  /* identical to box height */
-
-  color: $color-primary;
-}
-
-a:hover {
-  color: $color-background;
-}
-
-.input {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 20px;
+  font-weight: normal !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
   letter-spacing: 1.15px;
-
-  color: $color-primary;
+  color: #535353 !important;
 }

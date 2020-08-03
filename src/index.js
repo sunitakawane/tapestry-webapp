@@ -7,8 +7,8 @@ import routes from './services/route/routes';
 import * as routeService from './services/route/routeService';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.scss';
 import store from './redux/store/index'
+import './index.scss';
 
 ReactDOM.render( 
     <React.StrictMode>

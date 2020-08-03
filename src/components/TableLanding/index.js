@@ -5,6 +5,8 @@ import './tableLanding.scss'
 import getSVG from '../../utils/getSVG'
 import Upload from '../../components/Upload';
 import useUploadModal from '../../components/Upload/showmodal';
+import Test from '../../components/Test';
+import useTestModal from '../../components/Test/showmodal';
 
 function TableLanding(props) {
 
@@ -42,6 +44,9 @@ function TableLanding(props) {
             <Popover.Title className='text-muted'>DATA OPTIONS</Popover.Title>
             <Popover.Content>
                 <Button bsPrefix='btn-text'>{getSVG('options')} Edit Pool Test</Button>
+                {/* <Modal size="lg" show={showtest}>
+                    <Test userName={userName} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                </Modal> */}
             </Popover.Content>
         </Popover>
     }

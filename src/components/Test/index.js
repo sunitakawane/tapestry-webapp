@@ -12,17 +12,20 @@ export default class Test extends React.Component{
 constructor(props){
   super(props)
   this.handleClose = props.handleClose;
+  console.log(localStorage.getItem("user"))
+  console.log(localStorage.getItem("labid"))
   this.state ={
+    wells:props.wells,
     machine:props.machine,
     kit:props.kit,
     testconductedlist:props.testconductedlist,
-    remarks:'',
-    testid:'',    
-    totalsamples:'',
-    prevalancerate:'',
+    remarks:props.remarks,
+    testid:props.testid,    
+    totalsamples:props.totalsamples,
+    prevalancerate:props.prevalancerate,
     testconductedby:props.userName,
-    selectedkit:'',
-    selectedmachine:'',
+    selectedkit:props.selectedkit,
+    selectedmachine:props.selectedmachine,
     showtriggerprevalancerate:false,
     showtriggersamples:false,
     triggerprevalancerate:React.createRef(),
@@ -46,9 +49,9 @@ download()
     prevalance: this.evil(this.state.prevalancerate),
     genes: "orf, rdrp",
     // testid: this.testid,
-    lab_name: "test_lab"
+    lab_name: "1234"
   },{
-    "Authorization":'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1OTYwMDYyMjcsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTk2MDAyNjI3fQ.v9BZPb6X4Z1_7HzwiBGPi-4D3_Wxf58HjwFRZqrQWpY'
+    "Authorization":'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJ1c2VybmFtZSI6ImFkbWluQHRlc3QuY29tIiwiZXhwIjoxNTk2NDQzODQwLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwib3JpZ19pYXQiOjE1OTY0NDAyNDB9.rJAGREe2PnTMWf2ldiSgtyYjE9WoA0Zr1C-WO7rXz38'
   })
   .then(function (response) {
     console.log(response);
@@ -194,7 +197,6 @@ render()
             </Col>
             <Col xs lg="3">
               {this.state.testconductedby}
-              {/* <DropdownContent name="testconductedby" currentvalue= list={this.state.testconductedlist} onChange={this.handleInput} onFocus={this.handleFocus}/> */}
             </Col>
           </Row>
           <br/>

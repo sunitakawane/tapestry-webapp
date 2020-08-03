@@ -20,6 +20,12 @@ function OngoingTests(props) {
     // const userId = 'Anirudha'
     // const labName = 'Vedanta Memorial Hospitals, Biogen Labs'
     const {showtest, toggletest} = useTestModal();
+    const remarks = ''
+    const testid = ''
+    const totalsamples = 0
+    const prevalancerate = 0
+    const selectedkit = ''
+    const selectedmachine = ''
     
     //const count = 1
     // const onGoingTests = 25
@@ -162,7 +168,7 @@ function OngoingTests(props) {
                         <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                             <Modal size="lg" show={showtest}>
-                                <Test userName={userName} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                                <Test testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} userName={userName} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
                             </Modal>
                         </Col>
                     </Row>

@@ -9,7 +9,7 @@ export default class Upload extends React.Component{
 constructor(props){
     super(props)
     this.state = {
-        download : false,
+        download : true,
         completed:40,
         files:props.files
     }
@@ -75,7 +75,7 @@ render(){
     <div>
         {
         this.state.download?
-        <ProgressBar value={"File Uploaded"} completed={100} bgcolor={ '#1ec491'}  />:
+        <ProgressBar value={"File uploaded successfully"} completed={100} bgcolor={ '#1ec491'}  />:
         <ProgressBar value={"Uploading File"} completed={this.state.completed} bgcolor={'#33B6FF'} handleClose={this.props.handleClose}  />
         }
         <div class="Content">
@@ -83,11 +83,13 @@ render(){
                 {   
                 this.state.download?
                 <Row className="justify-content-md-center">
-                    <Col xs lg="12">
+                    <Col xs lg="2"></Col>
+                    <Col xs lg="8">
                         <br/>
                         <span style={{color : "#1EC491"}}>&#10003;</span>152PoolingMatrix.xls<br/>
                         <span style={{color : "#828282"}}>An email will be sent to you once the results are ready. You can chack the results in the completed test section.</span>
                     </Col>
+                    <Col xs lg="2"></Col>
                 </Row>:
                 <Row className="justify-content-md-center">
                 <Col xs lg="8">
@@ -106,6 +108,7 @@ render(){
                     <Col xs lg="2">
                         <br/>
                         <button class="endbuttons" onClick={this.handleClose}>Done</button>
+                        <br/>
                         <br/>
                     </Col>                    
                 </Row>:
