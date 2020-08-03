@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Container, Button, Form, FormControl, InputGroup, Row, Col, ButtonGroup, ToggleButton,Modal} from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux";
 
-import NavBarLanding from '../../../components/NavBarLanding'
+import NavBarLanding from '../../../components/NavBar'
 import TableLanding from '../../../components/TableLanding'
 import './ongoingTests.scss'
 import '../../../index.scss'
