@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Form, InputGroup, FormControl, Button, Card, FormGroup } from 'react-bootstrap';
 /*import Select from 'react-select'*/
 
-import NavBarLanding from '../../../components/NavBarLanding'
+import NavBarLanding from '../../../components/NavBar'
 import TableLanding from '../../../components/TableLanding'
 import getSVG from '../../../utils/getSVG'
 import './completedTests.scss'

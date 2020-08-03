@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Container, Button, Form, FormControl, InputGroup, Row, Col, ButtonGroup, ToggleButton} from 'react-bootstrap';
 
-import NavBarLanding from '../../../components/NavBarLanding'
+import NavBarLanding from '../../../components/NavBar'
 import TableLanding from '../../../components/TableLanding'
 import './ongoingTests.scss'
 import '../../../index.scss'
