@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './style.css'
+import './style.scss'
 
 export default function DropdownContent(props) {
   // {/* <p>{wells[index]}</p> */}

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Table, Container, Row, Button, OverlayTrigger, Popover,Modal} from 'react-bootstrap';
+import { useSelector } from "react-redux";
 
 import './tableLanding.scss'
 import getSVG from '../../utils/getSVG'
@@ -7,6 +8,8 @@ import Upload from '../../components/Upload';
 import useUploadModal from '../../components/Upload/showmodal';
 import Test from '../../components/Test';
 import useTestModal from '../../components/Test/showmodal';
+import {gettestconductedlist,getmachine,getkit} from '../../redux/selectors/landingPageSelectors/testsSelectors'
+
 
 function TableLanding(props) {
 
@@ -14,6 +17,17 @@ function TableLanding(props) {
     const completedrows = ['view','options']
     const rows = props.testStatus === 'ongoing' ? ongoingrows : completedrows
     const {showupload, toggleupload} = useUploadModal();
+    const {showtest, toggletest} = useTestModal();const remarks = ''
+    const testid = ''
+    const totalsamples = 0
+    const prevalancerate = 0
+    const selectedkit = ''
+    const selectedmachine = ''
+
+    const machine = useSelector(getmachine)
+    const kit = useSelector(getkit)
+    const testconductedlist = useSelector(gettestconductedlist)
+
 
     const emptyHeader = () => {
         return rows.map(row => <th key={row}></th>)
@@ -43,10 +57,8 @@ function TableLanding(props) {
         return <Popover id="popover-basic">
             <Popover.Title className='text-muted'>DATA OPTIONS</Popover.Title>
             <Popover.Content>
-                <Button bsPrefix='btn-text'>{getSVG('options')} Edit Pool Test</Button>
-                {/* <Modal size="lg" show={showtest}>
-                    <Test userName={userName} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
-                </Modal> */}
+                <Button bsPrefix='btn-text' onClick={toggletest}>{getSVG('options')} Edit Pool Test</Button>
+                
             </Popover.Content>
         </Popover>
     }
@@ -171,6 +183,9 @@ function TableLanding(props) {
                     </div>
                 }
             </Row>
+            <Modal size="lg" show={showtest}>
+                <Test testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+            </Modal>
         </Container>
     );
 }

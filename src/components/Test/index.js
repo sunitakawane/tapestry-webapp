@@ -5,15 +5,13 @@ import axios from 'axios';
 
 import './styles.scss'
 import DropdownContent from './dropdown/Dropdown';
-
+import url from "../../constants/url";
 
 export default class Test extends React.Component{
 
 constructor(props){
   super(props)
   this.handleClose = props.handleClose;
-  console.log(localStorage.getItem("user"))
-  console.log(localStorage.getItem("labid"))
   this.state ={
     wells:props.wells,
     machine:props.machine,
@@ -23,7 +21,7 @@ constructor(props){
     testid:props.testid,    
     totalsamples:props.totalsamples,
     prevalancerate:props.prevalancerate,
-    testconductedby:props.userName,
+    testconductedby:JSON.parse(localStorage.getItem("user"))['user']['username'],
     selectedkit:props.selectedkit,
     selectedmachine:props.selectedmachine,
     showtriggerprevalancerate:false,
@@ -44,14 +42,43 @@ evil(fn)
 
 download()
 {
-  axios.post('https://us-central1-tapestry-pooling-284109.cloudfunctions.net/tapestry-matrix-generation',{
-    nsamples: this.evil(this.state.totalsamples),
-    prevalance: this.evil(this.state.prevalancerate),
-    genes: "orf, rdrp",
-    // testid: this.testid,
-    lab_name: "1234"
+  axios.post(url["BASE_API_URL"]+'test',{
+    data:{
+      type:"test",
+      attributes:{
+        labId : 1,
+        nsamples : 1,
+        prevalance : 1.0
+      },
+      relationships:{
+        assignedTo:{
+          data:{
+            type:"user",
+            id:"7"
+          }
+        },
+        status:{
+          data:{
+            type:"status",
+            id:"3",
+          }
+        },
+        testKit:{
+          data:{
+            type:'testKit',
+            id:"1",
+          }
+        },
+        machineType:{
+          data:{
+            type:'machineType',
+            id:"1",
+          }
+        }
+      }
+    }
   },{
-    "Authorization":'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJ1c2VybmFtZSI6ImFkbWluQHRlc3QuY29tIiwiZXhwIjoxNTk2NDQzODQwLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwib3JpZ19pYXQiOjE1OTY0NDAyNDB9.rJAGREe2PnTMWf2ldiSgtyYjE9WoA0Zr1C-WO7rXz38'
+    "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
   })
   .then(function (response) {
     console.log(response);

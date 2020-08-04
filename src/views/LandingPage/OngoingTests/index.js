@@ -55,9 +55,7 @@ function OngoingTests(props) {
     const machine = useSelector(getmachine)
     const kit = useSelector(getkit)
     const testconductedlist = useSelector(gettestconductedlist)
-    console.log(kit)
-    console.log(machine)
-    console.log(testconductedlist)
+    
 
     useEffect (()=>{        
         const getTestdetails = () => {
@@ -168,7 +166,7 @@ function OngoingTests(props) {
                         <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                             <Modal size="lg" show={showtest}>
-                                <Test testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} userName={userName} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                                <Test testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
                             </Modal>
                         </Col>
                     </Row>

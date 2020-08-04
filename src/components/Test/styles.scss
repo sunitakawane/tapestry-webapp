@@ -1,3 +1,5 @@
+@import "src/constants/color.scss";
+
 .RectangleParent {
 	position: relative;
 	width: 100;
@@ -6,15 +8,15 @@
 	top:20%;
 	padding: 1% 2%;
 	font-size: 18px;
-	background: #1EC491;
-	color: white;
+	background: $color-background !important;
+	color:$color-white;
 }
 
 .close {
-	background: #1EC491;
-	color: white;
+	background: $color-background !important;
+	color:$color-white;
 	font-weight: bold;
-	border: 0px solid #1EC491;
+	border: 0px solid $color-background !important;
 	font-size: 36px;
 	text-align: right;
 }
@@ -25,11 +27,11 @@
 	left: 0%;
 	width: 100%;
 	top:20%;
-	background: #FAFAFA;
-	border: 1px solid #E4E4E4;
+	background: $color-secondary-background;
+	border: 1px solid $color-rectangle-border;
 	box-sizing: border-box;
 	padding: 2%;
-	color:black;
+	color:$color-black;
 }
 
 .Rectangle2{
@@ -37,37 +39,37 @@
 	left: 0%;
 	width: 100%;
 	top:20%;
-	background: #FAFAFA;
-	border: 1px solid #E4E4E4;
+	background: $color-secondary-background;
+	border: 1px solid $color-rectangle-border;
 	box-sizing: border-box;
 	padding: 2%;
-	color:black;
+	color:$color-black;
 }
 
 .downloadpoolingmatrix {
-	background: #1EC491;
-	border: 1px solid #1EC491;
+	background: $color-background !important;
+	border: 1px solid $color-background !important;
 	box-sizing: border-box;
 	border-radius: 2px;
 	font-size: 16px;
 	padding: 3px;
-	color: white;
+	color:$color-white;
 }
 .downloadpoolingmatrix:disabled,
 .downloadpoolingmatrix[disabled] {
-	border: 1px solid #999999;
+	border: 1px solid $color-disabled-border;
 	background: #cccccc;
-	color: #666666;
+	color: $color-disabled-writing;
 }
 .endbuttons {
-	border: 1px solid #535353;
+	border: 1px solid $color-endbutton-border;
 	box-sizing: border-box;
 	border-radius: 2px;
 	font-size: 16px;
-	padding:0px;
-	background: #ffffff;
+	padding:4px;
+	background: $color-white;
 	&:hover {
-		color: #1EC491;
-		border: 1px solid #1EC491;
+		color: $color-background !important;
+		border: 1px solid $color-background;
 	}
 }

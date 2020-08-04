@@ -113,7 +113,7 @@ function CompletedTests() {
                     <Col xs={{span:2, offset:4}}>
                         <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                         <Modal size="lg" show={showtest}>
-                            <Test userName={userName} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                            <Test handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
                         </Modal>
                     </Col>
                 </Row>
