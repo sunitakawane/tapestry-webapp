@@ -1,17 +1,17 @@
 import testConstants from '../../../constants/testConstants'
 
 const initialState = {
-    count: 8,
-    results: [
-        {'id': 27435, 'samples': 487, 'assigned_to': 'Harmen Potter', 'status': 'In progress', 'file': '/ongoingtests#', 'positive_samples': 4, 'inconclusive_samples': 2},
-        {'id': 27435, 'samples': 487, 'assigned_to': 'Harmen Potter', 'status': 'In progress', 'file': '/ongoingtests#', 'positive_samples': 4, 'inconclusive_samples': 2},
-        {'id': 27436, 'samples': 487, 'assigned_to': 'Harmen Potter', 'status': 'Error in Parsing!', 'file': '/ongoingtests#', 'positive_samples': 4, 'inconclusive_samples': 2},
-        {'id': 27437, 'samples': 487, 'assigned_to': 'Harmen Potter', 'status': 'In progress', 'file': '/ongoingtests#', 'positive_samples': 4, 'inconclusive_samples': 2},
-        {'id': 27432, 'samples': 487, 'assigned_to': 'Harmen Potter', 'status': 'Completed', 'file': '/ongoingtests#', 'positive_samples': 4, 'inconclusive_samples': 2},
-        {'id': 27432, 'samples': 487, 'assigned_to': 'Harmen Potter', 'status': 'Completed', 'file': '/ongoingtests#', 'positive_samples': 4, 'inconclusive_samples': 2},
-        {'id': 27433, 'samples': 487, 'assigned_to': 'Harmen Potter', 'status': 'Completed', 'file': '/ongoingtests#', 'positive_samples': 4, 'inconclusive_samples': 2},
-        {'id': 27444, 'samples': 487, 'assigned_to': 'Harmen Potter', 'status': 'Completed', 'file': '/ongoingtests#', 'positive_samples': 4, 'inconclusive_samples': 2},
-    ]
+    // count: 8,
+    // results: [
+    //     {'id': 27435, 'samples': 487, 'assignedTo': 'Harmen Potter', 'status': 'In progress', 'file': '/ongoingtests#', 'npositive': 4, 'ninconclusive': 2},
+    //     {'id': 27435, 'samples': 487, 'assignedTo': 'Harmen Potter', 'status': 'In progress', 'file': '/ongoingtests#', 'npositive': 4, 'ninconclusive': 2},
+    //     {'id': 27436, 'samples': 487, 'assignedTo': 'Harmen Potter', 'status': 'Error in Parsing!', 'file': '/ongoingtests#', 'npositive': 4, 'ninconclusive': 2},
+    //     {'id': 27437, 'samples': 487, 'assignedTo': 'Harmen Potter', 'status': 'In progress', 'file': '/ongoingtests#', 'npositive': 4, 'ninconclusive': 2},
+    //     {'id': 27432, 'samples': 487, 'assignedTo': 'Harmen Potter', 'status': 'Completed', 'file': '/ongoingtests#', 'npositive': 4, 'ninconclusive': 2},
+    //     {'id': 27432, 'samples': 487, 'assignedTo': 'Harmen Potter', 'status': 'Completed', 'file': '/ongoingtests#', 'npositive': 4, 'ninconclusive': 2},
+    //     {'id': 27433, 'samples': 487, 'assignedTo': 'Harmen Potter', 'status': 'Completed', 'file': '/ongoingtests#', 'npositive': 4, 'ninconclusive': 2},
+    //     {'id': 27444, 'samples': 487, 'assignedTo': 'Harmen Potter', 'status': 'Completed', 'file': '/ongoingtests#', 'npositive': 4, 'ninconclusive': 2},
+    // ]
 };
 
 export default function testReducer(state=initialState, action) {

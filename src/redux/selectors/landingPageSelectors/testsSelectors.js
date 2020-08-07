@@ -1,2 +1,2 @@
-export const gettestList = state => state.tests.results
-export const getcount = state => state.tests.count
+export const gettestList = state => state.tests.data;
+export const getcount = state => state.tests.meta

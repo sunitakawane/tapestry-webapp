@@ -11,7 +11,8 @@ function testCreate(test) {
     return axios
         .post(url.BASE_URL + 'test/', test, {
             headers:{
-                'Authorization': token
+                'Authorization': token,
+                Accept : 'application/vnd.api+json'
             }
         })
         .then((response) => {

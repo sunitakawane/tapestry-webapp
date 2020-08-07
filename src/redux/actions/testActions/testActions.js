@@ -11,10 +11,10 @@ export const testActions = {
     test_pupdate
 };
 
-function test_listAll() {
+function test_listAll(filterOptions) {
     console.log('Before API call')
     return (dispatch) => {
-        testListApi.testListAll()
+        testListApi.testListAll(filterOptions)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({

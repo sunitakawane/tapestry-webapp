@@ -7,6 +7,7 @@ import testConstants from '../../constants/testConstants'
 
 function TableLanding(props) {
 
+    const statusMap = {'3': 'qPCR result pending', '4': 'Tapestry results pending', '5': 'Error in Parsing!'}
     const ongoingrows = ['download','upload','options']
     const completedrows = ['view','options']
     const rows = props.testStatus === 'ongoing' ? ongoingrows : completedrows
@@ -23,14 +24,24 @@ function TableLanding(props) {
         var heads = getKeys()
         return heads.map(head => 
         {
-            switch(head){
-                case testConstants.TEST_ID: return <th key={head}>TEST ID</th>;
-                case testConstants.SAMPLES: return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
-                case testConstants.ASSIGNED: return <th key={head}>ASSIGNED TO</th>;
-                case testConstants.STATUS: return <th key={head} className='text-center'>STATUS</th>;
-                case testConstants.POS_SAMPLES: return <th key={head} className='text-center'>POSITIVE SAMPLES</th>;
-                case testConstants.UNDET_SAMPLES: return <th key={head} className='text-center'>UNDETERMINED SAMPLES</th>
-                default: return null;
+            if (props.testStatus === 'ongoing') {
+                switch(head){
+                    case testConstants.TEST_ID: return <th key={head}>TEST ID</th>;
+                    case testConstants.SAMPLES: return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
+                    case testConstants.ASSIGNED: return <th key={head}>ASSIGNED TO</th>;
+                    case testConstants.STATUS: return <th key={head} className='text-center'>STATUS</th>;
+                    default: return null;
+                }
+            } else {
+                switch(head){
+                    case testConstants.TEST_ID: return <th key={head}>TEST ID</th>;
+                    case testConstants.SAMPLES: return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
+                    case testConstants.ASSIGNED: return <th key={head}>ASSIGNED TO</th>;
+                    case testConstants.PREVALENCE: return <th key={head} className='text-center'>PREVALENCE</th>
+                    case testConstants.POS_SAMPLES: return <th key={head} className='text-center'>POSITIVE SAMPLES</th>;
+                    case testConstants.UNDET_SAMPLES: return <th key={head} className='text-center'>UNDETERMINED SAMPLES</th>
+                    default: return null;
+                }
             }            
         })
     };
@@ -57,7 +68,7 @@ function TableLanding(props) {
         return items.map((row, index)=>
         {
             if (props.testStatus === 'ongoing') {
-                if (row[testConstants.STATUS] === 'Error in Parsing!') {
+                if (row[testConstants.STATUS] === '5') {
                     return <tr key={index} style={{borderLeft: '5px solid red'}}>
                         {keys.map(key =>
                         {
@@ -65,7 +76,7 @@ function TableLanding(props) {
                                 case testConstants.TEST_ID: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
                                 case testConstants.SAMPLES: return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
                                 case testConstants.ASSIGNED: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
-                                case testConstants.STATUS: return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
+                                case testConstants.STATUS: return <th key={key} className='text-normal text-center text-danger'>{statusMap[row[key]]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
                                     <a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>
                                 </th>
@@ -118,8 +129,9 @@ function TableLanding(props) {
                         case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
                         case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
                         case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
-                        case testConstants.POS_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                        case testConstants.UNDET_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case testConstants.PREVALENCE: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>
+                        case testConstants.POS_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
+                        case testConstants.UNDET_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
                         case 'view': return <th key={key} className='text-normal text-center'>
                             <a href="/completedtests#" className='prim-color'>View results</a>
                         </th>
