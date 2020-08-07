@@ -32,7 +32,7 @@ function OngoingTests(props) {
         {name:'Errors', value:'-1'},
         {name:'In Progress', value:'1'}
     ]
-    const filterMap = {'0': 'filter[status.in]=3,4,5', '1': 'filter[status.in]=4', '-1': 'filter[status.in]=5'}
+    const filterMap = {'0': 'filter[status.in]=3,4,5', '1': 'filter[status.in]=3,4', '-1': 'filter[status.in]=5'}
 
     // Redux
     const dispatch = useDispatch();
@@ -55,6 +55,7 @@ function OngoingTests(props) {
         console.log('First render')
         var options = filterMap['0'] + '&page[number]=1'
         testList(options)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect( () => {
@@ -71,6 +72,7 @@ function OngoingTests(props) {
             setPage(1)
             setRadioValue('0')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchOn])
 
     useEffect( () => {
@@ -88,6 +90,7 @@ function OngoingTests(props) {
             setPage(1)
             setRadioValue('0')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[search])
 
     useEffect( () => {
@@ -108,6 +111,7 @@ function OngoingTests(props) {
                 testList(options)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
     useEffect( () => {
@@ -125,6 +129,7 @@ function OngoingTests(props) {
             setSearchOn(false)
             setPage(1)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [radioValue])
 
     useEffect( () => {

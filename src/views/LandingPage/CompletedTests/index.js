@@ -18,7 +18,7 @@ function CompletedTests() {
     // Local states
     const testStatus='completed'
     var pages = 1
-    const filter = 'filter[status.in]=3,4,5,6'
+    const filter = 'filter[status.in]=6'
 
     const [search,setSearch] = useState('')
     const [jsonoutput, setJsonOutput] = useState([])
@@ -52,6 +52,7 @@ function CompletedTests() {
         var options = filter + '&page[number]=1'
         console.log(options)
         testList(options)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // Button state
@@ -68,6 +69,7 @@ function CompletedTests() {
             })) // Reset page and keep track that button is clicked
             setPage(1)
         }  
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchOn])
 
     // Search state
@@ -85,6 +87,7 @@ function CompletedTests() {
             setSearchOn(false)
             setPage(1)
         }   
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search])
 
     useEffect( () => {
@@ -107,6 +110,7 @@ function CompletedTests() {
                 testList(options)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
     useEffect( () => {

@@ -9,7 +9,7 @@ const token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJ1c
 
 function testCreate(test) {
     return axios
-        .post(url.BASE_URL + 'test/', test, {
+        .post(url.BASE_API_URL + 'test/', test, {
             headers:{
                 'Authorization': token,
                 Accept : 'application/vnd.api+json'
