@@ -1,0 +1,25 @@
+@import "src/constants/color.scss";
+
+.dropdowncontent {
+	background: $color-secondary-background;
+	border: 1px solid $color-dropdowncontentbackground-border;  
+	padding: 5% 10%;
+	box-sizing: border-box;
+	border-radius: 3px;
+}
+.greeninput {
+	font-family: Source Sans Pro;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 18px;
+	color: $color-background;
+}
+.whiteinput {
+	font-family: Source Sans Pro;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 18px;
+	color: $color-black;
+}
