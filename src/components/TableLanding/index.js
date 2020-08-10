@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Table, Container, Row, Button, OverlayTrigger, Popover,Modal} from 'react-bootstrap';
-import { useSelector } from "react-redux";
+import axios from 'axios';
+import { useSelector, useDispatch } from "react-redux";
 
 import './tableLanding.scss'
 import getSVG from '../../utils/getSVG'
@@ -8,7 +9,12 @@ import Upload from '../../components/Upload';
 import useUploadModal from '../../components/Upload/showmodal';
 import Test from '../../components/Test';
 import useTestModal from '../../components/Test/showmodal';
+import url from "../../constants/url";
+
 import {gettestconductedlist,getmachine,getkit} from '../../redux/selectors/landingPageSelectors/testsSelectors'
+import {testActions} from '../../redux/actions/testActions/testActions'
+
+
 
 
 function TableLanding(props) {
@@ -17,16 +23,91 @@ function TableLanding(props) {
     const completedrows = ['view','options']
     const rows = props.testStatus === 'ongoing' ? ongoingrows : completedrows
     const {showupload, toggleupload} = useUploadModal();
-    const {showtest, toggletest} = useTestModal();const remarks = ''
-    const testid = ''
-    const totalsamples = 0
-    const prevalancerate = 0
-    const selectedkit = ''
-    const selectedmachine = ''
+    const {showtest, toggletest} = useTestModal();
+    const [testid,settestid] = useState('')
+    const [totalsamples,settotalsamples] = useState(0)
+    const [user,setuser] = useState('')
+    const [prevalancerate,setprevalancerate] = useState(0)
+    const [selectedkit,setselectedkit] = useState('')
+    const [selectedmachine,setselectedmachine] = useState('')
+    const [completed,setcompleted] = useState(30)
+    const [download,setdownload] = useState(false)
+    
 
+    const remarks = ''
+
+    // Redux
+    const dispatch = useDispatch();
+    const testList = () => dispatch(testActions.test_list())
+
+    testList();
     const machine = useSelector(getmachine)
     const kit = useSelector(getkit)
     const testconductedlist = useSelector(gettestconductedlist)
+
+    // async uploadFiles() {
+    //     this.setState({ uploadProgress: {}});
+    //     const promises = [];
+    //     promises.push(this.sendRequest());
+    //     try {
+    //       await Promise.all(promises);
+      
+    //       this.setState({ download:true });
+    //     } catch (e) {
+    //       // Not Production ready! Do some error handling here instead...
+    //       this.setState({ download: false });
+    //     }
+    // }
+    
+    const sendRequest = () =>{
+        // return new Promise((resolve, reject) => {
+        toggleupload()
+        console.log(JSON.parse(localStorage.getItem("user"))['token'])
+        axios.post(url["BASE_API_URL"]+'upload/',{
+            "test_id": 7,
+            "file_name": "string.xlsx"
+        },{
+        headers:{
+            "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'],
+            'Content-Type':'application/json'
+        }})
+        .then(res=>{ 
+            const upload_url = res.data['upload_url']
+            console.log(upload_url)
+            let config = {
+                onUploadProgress: function(progressEvent){
+                    setcompleted(Math.round((progressEvent.loaded * 100) / progressEvent.total));
+                    console.log(completed)
+                }
+            }
+            const obj = {hello: 'world'};
+            const blob = new Blob([JSON.stringify(obj, null, 2)], {type : 'application/json'});
+
+            const formData = new FormData();
+            formData.append("file",blob,"string.xlsx");
+        
+            axios.put(upload_url,formData,config)
+            .then("load", event => {
+                setdownload(true)
+                console.log("Successful")
+            })
+            .catch(error=>{
+                console.log(error.message)
+            })
+        })
+        .catch(err=>console.log(err))
+        
+        // req.upload.addEventListener("progress", event => {
+        // if (event.lengthComputable) {
+        // this.setState({ completed: (event.loaded / event.total) * 100});
+        // }
+        // });
+
+        
+        
+    }
+    
+
 
 
     const emptyHeader = () => {
@@ -36,6 +117,34 @@ function TableLanding(props) {
     const getKeys = () => {
         return Object.keys(props.jsonoutput[0])
     }
+
+    const onClick = (row) =>{
+        axios.get(url["BASE_API_URL"]+'test/'+row["TEST_ID"]+"/",{
+        headers:{
+            'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+        }
+        }).then(res => {
+            settestid(row['TEST_ID'])
+            settotalsamples(res.data['nsamples'])
+            setuser(res.data['assigned_to']['id'])
+            setselectedkit(res.data['test_kit']['id'])
+            setselectedmachine(res.data['machine_type']['id'])
+            setprevalancerate(res.data['prevalence'])
+            toggletest()
+        })
+        .catch(function (error) {
+            settestid(row['TEST_ID'])
+            settotalsamples(row['NUMBER_OF_SAMPLES'])
+            setuser('')
+            setselectedkit('')
+            setselectedmachine('')
+            setprevalancerate(null)
+            toggletest()
+        });
+    }
+
+    
+    
 
     const getHeader = () => {
         var heads = getKeys()
@@ -53,11 +162,11 @@ function TableLanding(props) {
         })
     };
 
-    const optionsot = () => {
+    const optionsot = (props) => {
         return <Popover id="popover-basic">
             <Popover.Title className='text-muted'>DATA OPTIONS</Popover.Title>
             <Popover.Content>
-                <Button bsPrefix='btn-text' onClick={toggletest}>{getSVG('options')} Edit Pool Test</Button>
+                <Button bsPrefix='btn-text' onClick={()=>onClick(props)}>{getSVG('options')} Edit Pool Test</Button>
                 
             </Popover.Content>
         </Popover>
@@ -94,7 +203,7 @@ function TableLanding(props) {
                                 </th>
                                 case 'options': return (
                                     <th key={key} className='text-center'>
-                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsot()}>
+                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsot(row)}>
                                             <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
                                         </OverlayTrigger>                                            
                                      </th>
@@ -116,14 +225,14 @@ function TableLanding(props) {
                                     <a href={row['file']} className='download-link text-dark'>Download pooling matrix</a>
                                 </th>
                                 case 'upload': return <th key={key} className='text-normal text-center'>
-                                    <span onClick={toggleupload} className='prim-color'>Upload qPCR results</span>
+                                    <span onClick={()=>sendRequest()} className='prim-color'>Upload qPCR results</span>
                                     <Modal size="lg" show={showupload}>
-                                        <Upload handleClose={toggleupload}/>
+                                        <Upload download={download} completed={completed} handleClose={toggleupload}/>
                                     </Modal>
                                 </th>
                                 case 'options': return (
                                     <th key={key} className='text-center'>
-                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsot()}>
+                                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsot(row)}>
                                             <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
                                         </OverlayTrigger>                                            
                                      </th>

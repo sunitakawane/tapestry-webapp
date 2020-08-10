@@ -2,11 +2,12 @@ import axios from 'axios';
 
 import testConstants from '../../../constants/testConstants'
 import url from "../../../constants/url";
+import { waitForDomChange } from '@testing-library/react';
 
 const initialState = {
     count: 8,
     tests: [
-        {'TEST_ID': 27435, 'NUMBER_OF_SAMPLES': 487, 'ASSIGNED_TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#', 'POSITIVE_SAMPLES': 4, 'UNDETERMINED_SAMPLES': 2},
+        {'TEST_ID': 7, 'NUMBER_OF_SAMPLES': 487, 'ASSIGNED_TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#', 'POSITIVE_SAMPLES': 4, 'UNDETERMINED_SAMPLES': 2},
         {'TEST_ID': 27435, 'NUMBER_OF_SAMPLES': 487, 'ASSIGNED_TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#', 'POSITIVE_SAMPLES': 4, 'UNDETERMINED_SAMPLES': 2},
         {'TEST_ID': 27436, 'NUMBER_OF_SAMPLES': 487, 'ASSIGNED_TO': 'Harmen Potter', 'STATUS': 'Error in Parsing!', 'file': '/ongoingtests#', 'POSITIVE_SAMPLES': 4, 'UNDETERMINED_SAMPLES': 2},
         {'TEST_ID': 27437, 'NUMBER_OF_SAMPLES': 487, 'ASSIGNED_TO': 'Harmen Potter', 'STATUS': 'In progress', 'file': '/ongoingtests#', 'POSITIVE_SAMPLES': 4, 'UNDETERMINED_SAMPLES': 2},
@@ -23,23 +24,52 @@ const initialState = {
     
 
 export default function testReducer(state=initialState, action) {
-    axios.get(url["BASE_API_URL"]+'machine-type/',{
-    headers:{
-        'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
-    }
-    }).then(res => {
-      state.machine = res.data.results.map(item=>item['no_of_wells']+'wells(' + item['dim_x'] + 'x' + item['dim_y'] + ') ' + item['name']);
-    })
-    axios.get(url["BASE_API_URL"]+'test-kit/',{
-    headers:{
-        'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
-    }
-    }).then(res => {
-      state.kit = res.data.results.map(item=>"("+item['gene_type'].join(' ')+") "+item['name']);      
-    })
+    if(localStorage.getItem("user") !== null)
+    {
+        axios.get(url["BASE_API_URL"]+'machine-type/',{
+            headers:{
+                'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+            }
+            }).then(res => {
+                state.machine = res.data.results
+            }).catch(err=>{
+                console.log(err)
+            }
+            )
+
+        
+        axios.get(url["BASE_API_URL"]+'test-kit/',{
+            headers:{
+                'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+            }
+            }).then(res => {
+                state.kit = res.data.results     
+            }).catch(err=>{
+                console.log(err)
+            }
+            )
+        
+        axios.get(url["BASE_API_URL"]+'user/',{
+            headers:{
+                'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+            }
+            }).then(res => {
+                state.testconductedlist = res.data.results     
+            }).catch(err=>{
+                console.log(err)
+            }
+            )
+        }
+        else
+        {
+            if(window.location.href !== url["BASE_URL"] + 'login')
+            {
+                window.location.href = url["BASE_URL"] + 'login'
+            }
+        }
+
     switch(action.type){
         case testConstants.TEST_LIST: 
-            console.log(state.kittype);
             return state
 
         case testConstants.TEST_CREATE:

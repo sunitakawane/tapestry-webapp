@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Container, Row, Col, Form, InputGroup, FormControl, Button, Card, FormGroup,Modal } from 'react-bootstrap';
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 
 import NavBarLanding from '../../../components/NavBar'
 import TableLanding from '../../../components/TableLanding'
@@ -12,9 +12,17 @@ import useTestModal from '../../../components/Test/showmodal';
 
 import {gettestList,gettestconductedlist,getmachine,getkit} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
 import {getsummary} from '../../../redux/selectors/landingPageSelectors/summarySelectors'
+import {testActions} from '../../../redux/actions/testActions/testActions'
+
 
 function CompletedTests() {
     const {showtest, toggletest} = useTestModal();
+    const remarks = ''
+    const testid = ''
+    const totalsamples = 0
+    const prevalancerate = 0
+    const selectedkit = 1
+    const selectedmachine = 1
     
     // Local states
     const testStatus='completed'
@@ -27,14 +35,16 @@ function CompletedTests() {
         {value:'this month', label:'This Month'},
         {value:'today', label: 'Today'}
     ]
+
+
+    // Redux
+    const dispatch = useDispatch();
+    const testList = () => dispatch(testActions.test_list())
     
 
     // Redux states
     const currentUserId = 12345
     const user = useSelector(state => state.users.users.find(user => user.userId === currentUserId))
-    const machine = useSelector(getmachine)
-    const kit = useSelector(getkit)
-    const testconductedlist = useSelector(gettestconductedlist)
     const userName = user.userName
     const labName = user.labName
     
@@ -42,7 +52,12 @@ function CompletedTests() {
     const summary = useSelector(getsummary)
 
     // Tests redux
+    testList()
     const tests_json = useSelector(gettestList);
+    const machine = useSelector(getmachine)
+    const kit = useSelector(getkit)
+    const testconductedlist = useSelector(gettestconductedlist)
+    console.log(testconductedlist)
 
 
     // useEffect functions
@@ -113,7 +128,7 @@ function CompletedTests() {
                     <Col xs={{span:2, offset:4}}>
                         <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                         <Modal size="lg" show={showtest}>
-                            <Test handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                            <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
                         </Modal>
                     </Col>
                 </Row>

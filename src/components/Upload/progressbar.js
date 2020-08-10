@@ -3,14 +3,16 @@ import {Container,Row,Col} from 'react-bootstrap';
 
 const ProgressBar = (props) => {
     const { value, completed,bgcolor,handleClose } = props;
-  
+    console.log(completed)
+    console.log(value)
+    console.log(bgcolor)
+    console.log(handleClose)
     const containerStyles = {
       height:"40px",
-      width: '${completed}%',
+      width: ''+completed+'%',
       borderRadius: '3px',
       background: bgcolor,
-      padding:"10px 10px"
-    }
+      }
 
     const labelStyles = {
       fontsize:'20px',
@@ -27,30 +29,22 @@ const ProgressBar = (props) => {
       fontWeight: 'bold'
     }
 
-    return (      
-      <div>
-        {(completed>90)?
-          <div style={containerStyles}>
-            <Container>
-              <Row>
-                <Col xs lg="11">
-                    <span style={labelStyles}>{`${value}`}</span>
-                </Col>
-                <Col xs lg="1">
-                  <span style={close} onClick={handleClose}>&times;</span>
-                </Col>
-              </Row>
-            </Container>
-          </div>:
+
+    return (  
+      <div style={containerStyles}>            
+        {(100>90)?
           <Container>
             <Row>
-              <Col xs lg="11">
-                <div style={containerStyles}>
-                  <span style={labelStyles}>{`${value}`}</span>
-                </div>
+              <span style={close} onClick={handleClose}><span style={labelStyles}>{`${value}`} </span>&times;</span>
+            </Row>
+          </Container>:
+          <Container>
+            <Row>
+              <Col xs lg="10">
+                <span style={labelStyles}>{`${value}`}</span>
               </Col>
-              <Col xs lg="1">
-                <span style={close} onClick={handleClose}>&times;</span>
+              <Col xs lg="2">
+              <span style={close} onClick={handleClose}>&times;</span>
               </Col>
             </Row>
           </Container>

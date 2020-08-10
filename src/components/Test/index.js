@@ -13,27 +13,30 @@ constructor(props){
   super(props)
   this.handleClose = props.handleClose;
   this.state ={
-    wells:props.wells,
     machine:props.machine,
     kit:props.kit,
     testconductedlist:props.testconductedlist,
+    testconductedby:JSON.parse(localStorage.getItem("user"))['user']['pk'],
     remarks:props.remarks,
     testid:props.testid,    
     totalsamples:props.totalsamples,
     prevalancerate:props.prevalancerate,
-    testconductedby:JSON.parse(localStorage.getItem("user"))['user']['username'],
     selectedkit:props.selectedkit,
     selectedmachine:props.selectedmachine,
     showtriggerprevalancerate:false,
     showtriggersamples:false,
     triggerprevalancerate:React.createRef(),
     triggersamples:React.createRef(),
+    labId :null,
+    showspinner:false
   }
   this.handleInput = this.handleInput.bind(this)
   this.download = this.download.bind(this)
   this.downloadpoolingmatrixcolor = this.downloadpoolingmatrixcolor.bind(this)
   this.handleFocus = this.handleFocus.bind(this)
+  this.handleClose = this.handleClose.bind(this)  
   this.evil = this.evil.bind(this)
+  console.log(localStorage.getItem("user"))
 }
 evil(fn)
 {
@@ -42,48 +45,62 @@ evil(fn)
 
 download()
 {
-  axios.post(url["BASE_API_URL"]+'test',{
-    data:{
-      type:"test",
-      attributes:{
-        labId : 1,
-        nsamples : 1,
-        prevalance : 1.0
-      },
-      relationships:{
-        assignedTo:{
-          data:{
-            type:"user",
-            id:"7"
-          }
-        },
-        status:{
-          data:{
-            type:"status",
-            id:"3",
-          }
-        },
-        testKit:{
-          data:{
-            type:'testKit',
-            id:"1",
-          }
-        },
-        machineType:{
-          data:{
-            type:'machineType',
-            id:"1",
-          }
-        }
-      }
-    }
+  console.log(this.state.selectedkit)
+  console.log(this.state.selectedmachine)
+  console.log(this.state.totalsamples)
+  console.log(this.state.prevalancerate)
+  console.log(this.state.testconductedby)
+  this.setState({showspinner:true})
+  axios.post(url["BASE_API_URL"]+'test/',{
+    "data":{
+                "type": "test",
+                "attributes": {
+                    "labId": 1,
+                    "nsamples": this.evil(this.state.totalsamples),
+                    "prevalence": this.evil(this.state.prevalancerate)
+                },
+                "relationships": {
+                    "assignedTo": {
+                        "data": {
+                            "type": "user",
+                            "id": ""+this.state.testconductedby
+                        }
+                    },
+                    "status": {
+                        "data": {
+                            "type": "status",
+                            "id": "3"
+                        }
+                    },
+                    "testKit": {
+                        "data": {
+                            "type": "testKit",
+                            "id": this.state.selectedkit
+                        }
+                    },
+                    "machineType": {
+                        "data": {
+                            "type": "machineType",
+                            "id": this.state.selectedmachine,
+                        }
+                    }
+                }
+            }
   },{
-    "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
+  headers:{
+    "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'],
+    'Content-Type': 'application/vnd.api+json'
+  }})
+  .then(response => {
+    const link = document.createElement('a');
+    link.href = response.data["pooling_matrix_download_url"];
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    this.handleClose()
+  }).then(
+    )
+    .catch(function (error) {
     console.log(error);
   });
 }
@@ -118,6 +135,38 @@ handleFocus(event)
   }
 }
 
+componentDidMount()
+{
+  // window.addEventListener('resize',()=>{
+  //   // console.log(d)
+  //   document.getElementById('remarks').cols = window.innerWidth/20;
+  // });
+  axios.get(url["BASE_API_URL"]+'user/'+this.state.testconductedby+'/',{headers:{
+    'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+  }
+  }).then(res => {
+    console.log(res.data)
+    this.setState({labId:res.data['id']})
+  }).catch(function(error){
+    console.log(error)
+  })
+  // axios.get(url["BASE_API_URL"]+'machine-type/',{
+  // headers:{
+  //     'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+  // }
+  // }).then(res => {
+  //   this.setState({machine:res.data.results})
+  // })
+
+  // axios.get(url["BASE_API_URL"]+'test-kit/',{
+  // headers:{
+  //     'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+  // }
+  // }).then(res => {
+  //   this.setState({kit:res.data})   
+  // })
+}
+
 render()
 {
   return (
@@ -140,7 +189,7 @@ render()
           </Row>
           <Row>
             <Col xs lg="4">
-              <DropdownContent name="selectedkit" list={this.state.kit} onChange={this.handleInput} onFocus={this.handleFocus}/>      
+              <DropdownContent name="selectedkit" list={this.state.kit} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.selectedkit}/>      
             </Col>
           </Row>
           <br/>
@@ -149,7 +198,7 @@ render()
           </Row>
           <Row>
             <Col xs lg="4">
-              <DropdownContent name="selectedmachine" list={this.state.machine} onChange={this.handleInput} onFocus={this.handleFocus}/>      
+              <DropdownContent name="selectedmachine" list={this.state.machine} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.selectedmachine}/>      
             </Col>
           </Row>
           <br/>
@@ -170,6 +219,7 @@ render()
                   onChange={this.handleInput}  
                   ref={this.state.triggersamples}
                   onFocus={this.handleFocus}
+                  value={(this.state.totalsamples === 0)?null:this.state.totalsamples}
                 />
               </InputGroup>
               <Overlay target={this.state.triggersamples.current} show={this.state.showtriggersamples} placement="left">
@@ -193,12 +243,13 @@ render()
                   onChange={this.handleInput}
                   ref={this.state.triggerprevalancerate}
                   onFocus={this.handleFocus}
+                  value={(this.state.prevalancerate === 0)?null:this.state.prevalancerate}
                 />
               </InputGroup>
               <Overlay target={this.state.triggerprevalancerate.current} show={this.state.showtriggerprevalancerate} placement="right">
                 {(props) => (
                   <Tooltip id="trigger prevalance rate" {...props}>
-                    Prevalance Rate should be less than 20%
+                    Prevalance Rate should be less than 20% <a href="mailto:algorithmicbiologics@gmail.com">Contact Us</a>
                   </Tooltip>
                 )}
               </Overlay>
@@ -223,7 +274,7 @@ render()
               Test Conducted By
             </Col>
             <Col xs lg="3">
-              {this.state.testconductedby}
+              <DropdownContent name="testconductedby" list={this.state.testconductedlist} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.testconductedby}/>
             </Col>
           </Row>
           <br/>
@@ -231,8 +282,11 @@ render()
             <Col xs lg="3">
               Test Remarks
             </Col>
-            <Col xs lg="8">
-              <textarea name="remarks" placeholder="Write your remarks here" onChange={this.handleInput} rows="4" cols="50" onFocus={this.handleFocus}></textarea>
+            <Col xs lg="9">
+              {/* <div style={{float: "left",width: "100%;"}}>
+                <textarea style={{width:"100%",maxwidth:"100%"}} name="remarks" placeholder="Write your remarks here" onChange={this.handleInput} rows="4" onFocus={this.handleFocus}></textarea>
+              </div> */}
+              <textarea id="remarks" name="remarks" placeholder="Write your remarks here" onChange={this.handleInput} rows={5} cols={window.innerWidth/30} onFocus={this.handleFocus}></textarea>
             </Col>
           </Row>
         </Container>
@@ -246,7 +300,13 @@ render()
             </Col>
             <Col xs lg="5"></Col>
             <Col xs lg="4">
-              <button className="downloadpoolingmatrix" onClick={this.download} disabled={!this.downloadpoolingmatrixcolor()}>Save Test and Download Matrix</button>
+              {(this.state.showspinner)?
+              <button className="downloadpoolingmatrix" type="button">
+                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Download will start soon...
+              </button>:
+              <button className="downloadpoolingmatrix" onFocus={this.handleFocus} onClick={this.download} disabled={!this.downloadpoolingmatrixcolor()}>Save Test and Download Matrix</button>
+              }
             </Col>
           </Row>
         </Container>

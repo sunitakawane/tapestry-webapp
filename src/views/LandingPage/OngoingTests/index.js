@@ -24,8 +24,9 @@ function OngoingTests(props) {
     const testid = ''
     const totalsamples = 0
     const prevalancerate = 0
-    const selectedkit = ''
-    const selectedmachine = ''
+    const selectedkit = 1
+    const selectedmachine = 1
+    // JSON.parse(localStorage.getItem("user"))['user']['username']
     
     //const count = 1
     // const onGoingTests = 25
@@ -55,6 +56,7 @@ function OngoingTests(props) {
     const machine = useSelector(getmachine)
     const kit = useSelector(getkit)
     const testconductedlist = useSelector(gettestconductedlist)
+    console.log(testconductedlist)
     
 
     useEffect (()=>{        
@@ -108,6 +110,8 @@ function OngoingTests(props) {
     const handleSearch = (e) => {
         setSearch(e.target.value)
     }
+
+    
 
     //Render
     return (          
@@ -166,7 +170,7 @@ function OngoingTests(props) {
                         <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                             <Modal size="lg" show={showtest}>
-                                <Test testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                                <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
                             </Modal>
                         </Col>
                     </Row>
@@ -174,7 +178,7 @@ function OngoingTests(props) {
             </Row>    
             <Row className='mt-3 ml-3 mr-3'>
                 <Col>                    
-                    <TableLanding jsonoutput={jsonoutput} testStatus={testStatus} />
+                    <TableLanding jsonoutput={jsonoutput} testStatus={testStatus}/>
                 </Col>
             </Row>
         </Container>
