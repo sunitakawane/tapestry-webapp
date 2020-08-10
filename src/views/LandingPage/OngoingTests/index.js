@@ -132,8 +132,14 @@ function OngoingTests(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [radioValue])
 
-    useEffect( () => {
-        setJsonOutput(tableJsonMap(tests_json))
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await tableJsonMap(tests_json)
+            console.log(result)
+            setJsonOutput(result)
+        }
+        fetchData();
+        //setJsonOutput(tableJsonMap(tests_json))
     }, [tests_json])
 
     const handleRadio = (e) => {
@@ -199,7 +205,7 @@ function OngoingTests(props) {
     return (
         <div id='body' className='bg-light'>
         {console.log('Render')}
-
+        {console.log(jsonoutput)}
         <NavBarLanding activepage='/ongoingtests' userName={userName} labName={labName}/>
         
         <Container fluid>
