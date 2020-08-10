@@ -2,7 +2,7 @@ import {userListApi} from '../api/userApi/userListApi'
 
 function tableJsonMap(jsoninput) {
 
-    let userlist = {}
+    /*let userlist = {}
     var userid = ''
     if(jsoninput) {
         jsoninput.map((test) => {
@@ -28,27 +28,70 @@ function tableJsonMap(jsoninput) {
                 console.log('Api call error' + error.toString())
                 userlist[[key]] = key
             })        
-    });
+    });*/
+
+    /*async function username(id) {
+        var userinfo = {}
+        var res = await userListApi.userListId(id)
+        userinfo = res.data.data
+        console.log(userinfo)
+        return userinfo[0].attributes.firstName
+    }*/
+
+    async function jsonMap(jsoninput) {
+        let jsonreturn = []
+        let res = {}
+        let userinfo = {}
+        let name = ''
+        if(jsoninput) {
+            jsoninput.map((test) => {
+                res = await userListApi.userListId(test.relationships.assignedTo.data.id)
+                userinfo = res.data.data
+                name = userinfo[0].attributes.firstName
+                jsontemp = {
+                    'id': test.id, 
+                    'samples': test.attributes.nsamples, 
+                    'assignedTo': name, //Will need to setup api call for obtaining name 
+                    'prevalence': test.attributes.prevalence,
+                    'status': test.relationships.status.data.id, 
+                    'file': test.attributes.poolingschemeFilename, 
+                    'npositive': test.attributes.npositive, 
+                    'ninconclusive': test.attributes.ninconclusive}
+                return jsonreturn.push(jsontemp)
+            })
+        }
+        return jsonreturn
+    }
 
     // Take in the json stored in redux store and modify it into a simple json as used so far.
     let jsonoutput = []
-    let jsontemp = []
-
-    if(jsoninput) {
+    jsonMap(jsoninput)
+        .then((response) => {
+            jsonoutput = response
+        })
+        .catch((error) => {
+            console.log('Error in parsing' + error.toString())
+        })
+    //let jsontemp = []
+    //let name = ''
+    /*if(jsoninput) {
         jsoninput.map((test) => {
-            jsontemp = {
+            return username(test.relationships.assignedTo.data.id).then((response) => {
+                name = response
+                jsontemp = {
                 'id': test.id, 
                 'samples': test.attributes.nsamples, 
-                'assignedTo': userlist[[test.relationships.assignedTo.data.id]], //Will need to setup api call for obtaining name 
+                'assignedTo': name, //Will need to setup api call for obtaining name 
                 'prevalence': test.attributes.prevalence,
                 'status': test.relationships.status.data.id, 
                 'file': test.attributes.poolingschemeFilename, 
                 'npositive': test.attributes.npositive, 
                 'ninconclusive': test.attributes.ninconclusive}
-            return jsonoutput.push(jsontemp) 
+                return jsonoutput.push(jsontemp)
+            })
         })
-    }
-    return jsonoutput
+    }*/
+    
 }
 
 export default tableJsonMap
