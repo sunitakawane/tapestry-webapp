@@ -1,17 +1,22 @@
 import React from 'react';
 import {Container,Row,Col,InputGroup,FormControl,Overlay} from 'react-bootstrap';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios';
 
 import './styles.scss'
 import DropdownContent from './dropdown/Dropdown';
 import url from "../../constants/url";
+// import {testdataApi} from "../../api/testApi/testdata";
+
+import {testActions} from '../../redux/actions/testActions/testActions'
 
 export default class Test extends React.Component{
 
 constructor(props){
   super(props)
   this.handleClose = props.handleClose;
+  console.log(props.testconductedlist)
   this.state ={
     machine:props.machine,
     kit:props.kit,
@@ -30,13 +35,13 @@ constructor(props){
     labId :null,
     showspinner:false
   }
+  
   this.handleInput = this.handleInput.bind(this)
   this.download = this.download.bind(this)
   this.downloadpoolingmatrixcolor = this.downloadpoolingmatrixcolor.bind(this)
   this.handleFocus = this.handleFocus.bind(this)
   this.handleClose = this.handleClose.bind(this)  
   this.evil = this.evil.bind(this)
-  console.log(localStorage.getItem("user"))
 }
 evil(fn)
 {
@@ -137,10 +142,7 @@ handleFocus(event)
 
 componentDidMount()
 {
-  // window.addEventListener('resize',()=>{
-  //   // console.log(d)
-  //   document.getElementById('remarks').cols = window.innerWidth/20;
-  // });
+  
   axios.get(url["BASE_API_URL"]+'user/'+this.state.testconductedby+'/',{headers:{
     'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
   }
@@ -150,21 +152,9 @@ componentDidMount()
   }).catch(function(error){
     console.log(error)
   })
-  // axios.get(url["BASE_API_URL"]+'machine-type/',{
-  // headers:{
-  //     'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
-  // }
-  // }).then(res => {
-  //   this.setState({machine:res.data.results})
-  // })
-
-  // axios.get(url["BASE_API_URL"]+'test-kit/',{
-  // headers:{
-  //     'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
-  // }
-  // }).then(res => {
-  //   this.setState({kit:res.data})   
-  // })
+  // this.setState({machine:testdataApi.machine()})
+  // this.setState({kit:testdataApi.kit()})
+  // this.setState({testconductedlist:testdataApi.userlist()})
 }
 
 render()

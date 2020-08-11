@@ -1,22 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import { Container, Button, Form, FormControl, InputGroup, Row, Col, ButtonGroup, ToggleButton,Modal} from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux";
+import ReactPaginate from 'react-paginate'
 
 import NavBarLanding from '../../../components/NavBar'
 import TableLanding from '../../../components/TableLanding'
+import tableJsonMap from '../../../utils/tableJsonMap'
 import './ongoingTests.scss'
 import '../../../index.scss'
 import getSVG from "../../../utils/getSVG"
 import Test from '../../../components/Test';
 import useTestModal from '../../../components/Test/showmodal';
 
-import {gettestList,gettestconductedlist,getmachine,getkit} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
+import {gettestList,gettestconductedlist,getmachine,getkit,getcount} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
+
 import {testActions} from '../../../redux/actions/testActions/testActions'
 
 function OngoingTests(props) {
 
     // // Local state
-    const testStatus = 'ongoing'
     // const userId = 'Anirudha'
     // const labName = 'Vedanta Memorial Hospitals, Biogen Labs'
     const {showtest, toggletest} = useTestModal();
@@ -30,19 +32,29 @@ function OngoingTests(props) {
     
     //const count = 1
     // const onGoingTests = 25
+    // Local state
+    var pages = 1
+    const testStatus = 'ongoing'
+
     const [radioValue, setRadioValue] = useState('0');
     const [search,setSearch] = useState('')
     const [jsonoutput, setJsonOutput] = useState([])
+    const [page, setPage] = useState(1)
+    const [searchOn, setSearchOn] = useState(false)
+    const [prevState, setPrevState] = useState({'search': '', 'searchOn': false, 'page': 1, 'radioValue': '0'})
+
+
     const onGoingTests = jsonoutput.length
     const radios = [
         {name:'All', value:'0'},
         {name:'Errors', value:'-1'},
         {name:'In Progress', value:'1'}
     ]
+    const filterMap = {'0': 'filter[status.in]=3,4,5', '1': 'filter[status.in]=3,4', '-1': 'filter[status.in]=5'}
 
     // Redux
     const dispatch = useDispatch();
-    const testList = () => dispatch(testActions.test_list())
+    const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions))
 
     // Users redux
     const currentUserId = "Anirudha"
@@ -51,71 +63,170 @@ function OngoingTests(props) {
     const labName = user.labName
 
     // Tests redux
-    testList();
     const tests_json = useSelector(gettestList);
+
     const machine = useSelector(getmachine)
     const kit = useSelector(getkit)
     const testconductedlist = useSelector(gettestconductedlist)
-    console.log(testconductedlist)
     
+    const pageinfo = useSelector(getcount)
+    if(pageinfo) {
+        pages = pageinfo.pagination.pages
+    } 
 
-    useEffect (()=>{        
-        const getTestdetails = () => {
-            let tests_temp = []
-            tests_json.map(({TEST_ID, NUMBER_OF_SAMPLES, ASSIGNED_TO, STATUS, file}) => {
-                if (STATUS !== 'Completed') { 
-                    return tests_temp.push({TEST_ID, NUMBER_OF_SAMPLES, ASSIGNED_TO, STATUS, file})
-                } else {
-                    return null
-                }
-            })
-            return tests_temp
-        }
-        const jsoninput = getTestdetails()
+    useEffect( () => {
+        console.log('First render')
+        var options = filterMap['0'] + '&page[number]=1'
+        testList(options)
         
-        const filter_json = jsoninput => {
-            if (search !== '') {
-                setRadioValue('0')
-                return jsoninput.filter( intest => {
-                    if (intest.TEST_ID.toString().includes(search)) {
-                        return intest
-                    } else {
-                        return null
-                    }
-                })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect( () => {
+        if (searchOn) {
+            console.log('Search operation')
+            var options = filterMap['0'] + '&search=' + search + '&page[number]=1'
+            testList(options)
+            setPrevState(prev => ({
+                ...prev,
+                'searchOn': true,
+                'page': 1,
+                'radioValue': '0'
+            }))
+            setPage(1)
+            setRadioValue('0')
+            
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchOn])
+
+    useEffect( () => {
+        if(searchOn) {
+            console.log('Search operation removed')
+            var options = filterMap['0'] + '&page[number]=1'
+            testList(options)
+            setPrevState(prev => ({
+                ...prev,
+                'searchOn': false,
+                'page': 1,
+                'radioValue': '0'
+            }))
+            setSearchOn(false)
+            setPage(1)
+            setRadioValue('0')
+        }
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[search])
+
+    useEffect( () => {
+        var options = ''
+        if (prevState.page !== 1 || page !== 1) {
+            if(!searchOn) {
+                console.log('New page')
+                options = options.concat(filterMap[radioValue] + '&page[number]=' + page)
+                testList(options)
+                setPrevState(prev => ({
+                    ...prev,
+                    'search': search
+                })) // Clear search entry
+                setSearch('')
             } else {
-                if (radioValue === '-1') {
-                    return jsoninput.filter( intest => {                        
-                        return intest.STATUS === 'Error in Parsing!'
-                    })
-                } else if (radioValue === '1') {
-                    return jsoninput.filter( intest => {
-                        return intest.STATUS === 'In progress'
-                    })
-                } else {
-                    return jsoninput
-                }
+                console.log('Page changed in search mode')
+                options = options.concat(filterMap['0'] + '&search=' + search + '&page[number]=' + page)
+                testList(options)
             }
         }
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page])
 
-        setJsonOutput(
-            filter_json(jsoninput)
-        )
-    }, [search, radioValue, tests_json, dispatch])
+    useEffect( () => {
+        if (prevState.radioValue !== '0' || radioValue !== '0') {
+            console.log('Status filter changed')
+            var options = filterMap[radioValue] + '&page[number]=' + page
+            testList(options)
+            setPrevState(prev => ({
+                ...prev,
+                'search': search,
+                'searchOn': false,
+                'page': 1
+            })) // Clear search entry
+            setSearch('')
+            setSearchOn(false)
+            setPage(1)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [radioValue])
+
+    useEffect( () => {
+        setJsonOutput(tableJsonMap(tests_json))
+        console.log(machine)
+    }, [tests_json])
 
     const handleRadio = (e) => {
+        setPrevState(prev => ({
+            ...prev,
+            'radioValue': radioValue
+        }))   
         setRadioValue(e.target.value)
     }
 
     const handleSearch = (e) => {
+        setPrevState(prev => ({
+            ...prev,
+            'search': search 
+        }))
         setSearch(e.target.value)
     }
 
-    
+    const handleClick = (e) => {
+        if (search !== '') {
+            setPrevState(prev => ({
+                ...prev,
+                'searchOn': false
+            }))
+            setSearchOn(true)
+        }
+    }
+
+    const handlePageChange = (e) => {
+        setPrevState(prev => ({
+            ...prev,
+            'page': page
+        }))
+        setPage(e.selected + 1)
+    }
+
+    const paginateTable = () => {
+        if (onGoingTests !== 0) {
+            return ( 
+            <Row className='mt-3 justify-content-center'>
+                <ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={pages}
+                    initialPage={page - 1}
+                    forcePage={page -1}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                />
+            </Row>)
+        } else {
+            return null
+        }
+    }
 
     //Render
-    return (          
+    return (
         <div id='body' className='bg-light'>
+
         <NavBarLanding activepage='/ongoingtests' userName={userName} labName={labName}/>
         
         <Container fluid>
@@ -153,17 +264,18 @@ function OngoingTests(props) {
                             <Form>
                                 <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>Search</Form.Label>
                                 <InputGroup>
-                                    <InputGroup.Prepend>
-                                        <InputGroup.Text>
-                                            {getSVG('search')}
-                                        </InputGroup.Text>
-                                    </InputGroup.Prepend>
                                     <FormControl  
                                         id="inlineFormInputGroupUsername2" 
+                                        type="number"
                                         placeholder="Search TEST ID" 
                                         value={search}
                                         onChange={handleSearch}
                                     />
+                                    <InputGroup.Append>
+                                        <Button variant='outline-secondary' onClick={handleClick}>
+                                            {getSVG('search')}
+                                        </Button>
+                                    </InputGroup.Append>
                                 </InputGroup>
                             </Form>
                         </Col>
@@ -181,6 +293,7 @@ function OngoingTests(props) {
                     <TableLanding jsonoutput={jsonoutput} testStatus={testStatus}/>
                 </Col>
             </Row>
+            {paginateTable()}
         </Container>
     </div>
     );

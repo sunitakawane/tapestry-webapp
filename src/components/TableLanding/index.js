@@ -16,9 +16,11 @@ import {testActions} from '../../redux/actions/testActions/testActions'
 
 
 
+import testConstants from '../../constants/testConstants'
 
 function TableLanding(props) {
 
+    const statusMap = {'3': 'qPCR result pending', '4': 'Tapestry results pending', '5': 'Error in Parsing!'}
     const ongoingrows = ['download','upload','options']
     const completedrows = ['view','options']
     const rows = props.testStatus === 'ongoing' ? ongoingrows : completedrows
@@ -38,7 +40,7 @@ function TableLanding(props) {
 
     // Redux
     const dispatch = useDispatch();
-    const testList = () => dispatch(testActions.test_list())
+    const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions))
 
     testList();
     const machine = useSelector(getmachine)
@@ -119,12 +121,12 @@ function TableLanding(props) {
     }
 
     const onClick = (row) =>{
-        axios.get(url["BASE_API_URL"]+'test/'+row["TEST_ID"]+"/",{
+        axios.get(url["BASE_API_URL"]+'test/'+row[testConstants.TEST_ID]+"/",{
         headers:{
             'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
         }
         }).then(res => {
-            settestid(row['TEST_ID'])
+            settestid(row[testConstants.TEST_ID])
             settotalsamples(res.data['nsamples'])
             setuser(res.data['assigned_to']['id'])
             setselectedkit(res.data['test_kit']['id'])
@@ -133,8 +135,8 @@ function TableLanding(props) {
             toggletest()
         })
         .catch(function (error) {
-            settestid(row['TEST_ID'])
-            settotalsamples(row['NUMBER_OF_SAMPLES'])
+            settestid(row[testConstants.TEST_ID])
+            settotalsamples(row[testConstants.SAMPLES])
             setuser('')
             setselectedkit('')
             setselectedmachine('')
@@ -150,14 +152,24 @@ function TableLanding(props) {
         var heads = getKeys()
         return heads.map(head => 
         {
-            switch(head){
-                case 'TEST_ID': return <th key={head}>TEST ID</th>;
-                case 'NUMBER_OF_SAMPLES': return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
-                case 'ASSIGNED_TO': return <th key={head}>ASSIGNED TO</th>;
-                case 'STATUS': return <th key={head} className='text-center'>STATUS</th>;
-                case 'POSITIVE_SAMPLES': return <th key={head} className='text-center'>POSITIVE SAMPLES</th>;
-                case 'UNDETERMINED_SAMPLES': return <th key={head} className='text-center'>UNDETERMINED SAMPLES</th>
-                default: return null;
+            if (props.testStatus === 'ongoing') {
+                switch(head){
+                    case testConstants.TEST_ID: return <th key={head}>TEST ID</th>;
+                    case testConstants.SAMPLES: return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
+                    case testConstants.ASSIGNED: return <th key={head}>ASSIGNED TO</th>;
+                    case testConstants.STATUS: return <th key={head} className='text-center'>STATUS</th>;
+                    default: return null;
+                }
+            } else {
+                switch(head){
+                    case testConstants.TEST_ID: return <th key={head}>TEST ID</th>;
+                    case testConstants.SAMPLES: return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
+                    case testConstants.ASSIGNED: return <th key={head}>ASSIGNED TO</th>;
+                    case testConstants.PREVALENCE: return <th key={head} className='text-center'>PREVALENCE</th>
+                    case testConstants.POS_SAMPLES: return <th key={head} className='text-center'>POSITIVE SAMPLES</th>;
+                    case testConstants.UNDET_SAMPLES: return <th key={head} className='text-center'>UNDETERMINED SAMPLES</th>
+                    default: return null;
+                }
             }            
         })
     };
@@ -185,17 +197,17 @@ function TableLanding(props) {
         return items.map((row, index)=>
         {
             if (props.testStatus === 'ongoing') {
-                if (row['STATUS'] === 'Error in Parsing!') {
+                if (row[testConstants.STATUS] === '5') {
                     return <tr key={index} style={{borderLeft: '5px solid red'}}>
                         {keys.map(key =>
                         {
                             switch(key) {
-                                case 'TEST_ID': return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
-                                case 'NUMBER_OF_SAMPLES': return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
-                                case 'ASSIGNED_TO': return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
-                                case 'STATUS': return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
+                                case testConstants.TEST_ID: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
+                                case testConstants.SAMPLES: return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
+                                case testConstants.ASSIGNED: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
+                                case testConstants.STATUS: return <th key={key} className='text-normal text-center text-danger'>{statusMap[row[key]]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
-                                    <a href={row['file']} className='download-link text-dark'>Download pooling matrix</a>
+                                    <a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>
                                 </th>
                                 case 'upload': return <th key={key} className='text-normal text-center'>
                                     <a className='text-dark prim-color'>Reupload {getSVG('reupload')}</a>
@@ -217,12 +229,12 @@ function TableLanding(props) {
                         {keys.map(key =>
                         {
                             switch(key) {
-                                case 'TEST_ID': return <th key={key} className='text-normal'>{row[key]}</th>;
-                                case 'NUMBER_OF_SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                                case 'ASSIGNED_TO': return <th key={key} className='text-normal'>{row[key]}</th>;
-                                case 'STATUS': return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
+                                case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
+                                case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                                case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
+                                case testConstants.STATUS: return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
-                                    <a href={row['file']} className='download-link text-dark'>Download pooling matrix</a>
+                                    <a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>
                                 </th>
                                 case 'upload': return <th key={key} className='text-normal text-center'>
                                     <span onClick={()=>sendRequest()} className='prim-color'>Upload qPCR results</span>
@@ -247,11 +259,12 @@ function TableLanding(props) {
                 {keys.map(key =>
                 {
                     switch(key) {
-                        case 'TEST_ID': return <th key={key} className='text-normal'>{row[key]}</th>;
-                        case 'NUMBER_OF_SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                        case 'ASSIGNED_TO': return <th key={key} className='text-normal'>{row[key]}</th>;
-                        case 'POSITIVE_SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                        case 'UNDETERMINED_SAMPLES': return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
+                        case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                        case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
+                        case testConstants.PREVALENCE: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>
+                        case testConstants.POS_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
+                        case testConstants.UNDET_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
                         case 'view': return <th key={key} className='text-normal text-center'>
                             <a href="/completedtests#" className='prim-color'>View results</a>
                         </th>
