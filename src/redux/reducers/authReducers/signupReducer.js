@@ -21,6 +21,18 @@ export default function signUpReducer(state = initalState, action) {
         isInvalid: true,
       };
 
+    case authConstants.LOCATION_FETCH_SUCCESS:
+      // console.log("reducer", action.payload.results[0]);
+      var results = action.payload.results;
+      var country = [];
+      for (var i = 0; i < results.length; i++) {
+        country.push(results[i].names);
+      }
+      
+      return {
+        countrylist: country,
+      };
+
     default:
       return state;
   }

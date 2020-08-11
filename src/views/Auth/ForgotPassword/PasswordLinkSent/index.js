@@ -35,7 +35,7 @@ class PasswordLinkSent extends Component {
                   <a className="nav-link"> Develop using our Algorithm</a>
                 </li>
                 <li>
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="./sign-up">
                     Contact us
                   </a>
                 </li>

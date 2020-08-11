@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -12,6 +12,7 @@ import {
   Spinner,
   Navbar,
 } from "react-bootstrap";
+import Autocomplete from "react-autocomplete";
 import { signUpActions } from "../../../redux/actions/authActions/signUpActions";
 import mask from "../Mask Group.png";
 import "./signUp.scss";
@@ -24,6 +25,7 @@ const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [labName, setLabName] = useState("");
+  const [country, setCountry] = useState("");
   const [labLocation, setLabLocation] = useState("");
   // const [validated, setValidated] = useState(false);
 
@@ -31,7 +33,7 @@ const SignUp = () => {
   const isSubmitted = useSelector((state) => state.signUp.isSubmitted);
   const isRegisterd = useSelector((state) => state.signUp.isRegistered);
   const isInvalid = useSelector((state) => state.signUp.isInvalid);
-
+  const countrylist = useSelector((state) => state.signUp.countrylist);
   // dispatch (used to define sign-up function)
   const dispatch = useDispatch();
   const signUpRequested = () => dispatch(signUpActions.signUpRequested());
@@ -39,6 +41,15 @@ const SignUp = () => {
     dispatch(
       signUpActions.signUp(email, firstName, lastName, labName, labLocation)
     );
+
+  const location = () => dispatch(signUpActions.location());
+
+  useEffect(() => {
+    console.log("useEffect has been called!");
+    location();
+  }, []);
+
+  // const countries = JSON.parse(localStorage.getItem("countries"));
 
   const handleEmailInput = (e) => {
     const { value } = e.target;
@@ -68,6 +79,13 @@ const SignUp = () => {
     }
   };
 
+  const handleCountryInput = (e) => {
+    const { value } = e.target;
+    if (value.length >= 0) {
+      setCountry(value);
+    }
+  };
+
   const handleLabLocationInput = (e) => {
     const { value } = e.target;
     if (value.length >= 0) {
@@ -84,7 +102,7 @@ const SignUp = () => {
     signUpRequested();
 
     if (email && firstName && lastName && labName && labLocation) {
-      signUp(email, firstName, lastName, labName, labLocation);
+      signUp(email, firstName, lastName, labName);
     }
     // setValidated(true);
   };
@@ -210,6 +228,32 @@ const SignUp = () => {
 
                 <Form.Group as={Row} controlId="formHorizontalText">
                   <Col sm={8}>
+                    {console.log(typeof countrylist)}
+                    <Autocomplete
+                      items={countrylist}
+                      getItemValue={(countrylist) => {
+                        
+                        // console.log(countrylist.names, "names");
+                      }}
+                      value={country}
+                      onChange={handleCountryInput}
+                      // onSelect={(val) => (country = val)}
+                      required
+                      renderItem={(item, isHighlighted) => (
+                        <div
+                          style={{
+                            background: isHighlighted ? "lightgray" : "white",
+                          }}
+                        >
+                          {item.label}
+                        </div>
+                      )}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formHorizontalText">
+                  <Col sm={8}>
                     <Form.Control
                       type="text"
                       as="select"
@@ -219,14 +263,26 @@ const SignUp = () => {
                       required
                     >
                       <option value="">Lab Location (Select City)</option>
-                      <option value="Andhra Pradesh">Andhra Pradesh</option>
+
+                      {/* <select name="country" value={countrylist}>
+                        {
+                          <option key={countrylist} value={countrylist}>
+                            {countrylist}
+                          </option>
+                        }
+                      </select> */}
+
+                      {/* {
+                      countrylist.map((countrylist) => <option key={countrylist.index} value={countrylist.value}>{countrylist.value}</option>)}
+                      <option value={countrylist.value} key={index}>{countrylist.value}</option> */}
+                      {/* <option value={countrylist}>{countrylist}</option> */}
                       <option value="Andaman and Nicobar Islands">
                         Andaman and Nicobar Islands
                       </option>
                       <option value="Arunachal Pradesh">
                         Arunachal Pradesh
                       </option>
-                      <option value="Assam">Assam</option>
+                      <option value="Mumbai">Mumbai</option>
                       <option value="Bihar">Bihar</option>
                       <option value="Chandigarh">Chandigarh</option>
                       <option value="Chhattisgarh">Chhattisgarh</option>
@@ -265,9 +321,13 @@ const SignUp = () => {
                       <option value="West Bengal">West Bengal</option>
                     </Form.Control>
                   </Col>
-                  <Form.Control.Feedback type="invalid">
-                    Location is required.
-                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="formBasicCheckbox">
+                  <Form.Check
+                    type="checkbox"
+                    label="I agree to the terms and conditions."
+                    required
+                  />
                 </Form.Group>
 
                 <Button variant="primary" size="lg" type="submit">

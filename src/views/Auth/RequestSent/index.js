@@ -4,7 +4,7 @@ import mask from "../Mask Group.png";
 import "./requestSent.scss";
 
 const RequestSent = () => {
-  const email = localStorage.getItem("user-details");
+  const email = localStorage.getItem("user");
   return (
     <Container fluid>
       <Row>

@@ -1,8 +1,5 @@
-import { createBrowserHistory } from "history";
 import { loginApi } from "../../../api/authApi/loginApi";
 import authConstants from "../../../constants/authConstants";
-
-const history = createBrowserHistory();
 
 export const loginActions = {
   loginRequested,
