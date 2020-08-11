@@ -5,7 +5,7 @@ import authConstants from "../../../constants/authConstants";
 export const signUpActions = {
   signUpRequested,
   signUp,
-  location,
+  countryList,
 };
 
 function signUpRequested() {
@@ -37,7 +37,7 @@ function signUp(email, firstName, lastName, labName) {
   };
 }
 
-function location() {
+function countryList() {
   return (dispatch) => {
     locationApi
       .country()

@@ -8,7 +8,6 @@ export const locationApi = {
 
 function country() {
   return axios.get(url.BASE_API_URL_SERVER + "country/").then((response) => {
-    console.log("yes")
     return response;
   });
 }

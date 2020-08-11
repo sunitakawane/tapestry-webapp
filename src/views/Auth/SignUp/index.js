@@ -42,11 +42,11 @@ const SignUp = () => {
       signUpActions.signUp(email, firstName, lastName, labName, labLocation)
     );
 
-  const location = () => dispatch(signUpActions.location());
+  const countryList = () => dispatch(signUpActions.countryList());
 
   useEffect(() => {
     console.log("useEffect has been called!");
-    location();
+    countryList();
   }, []);
 
   // const countries = JSON.parse(localStorage.getItem("countries"));
@@ -230,14 +230,11 @@ const SignUp = () => {
                   <Col sm={8}>
                     {console.log(typeof countrylist)}
                     <Autocomplete
+                      getItemValue={(item) => item.label}
                       items={countrylist}
-                      getItemValue={(countrylist) => {
-                        
-                        // console.log(countrylist.names, "names");
-                      }}
                       value={country}
                       onChange={handleCountryInput}
-                      // onSelect={(val) => (country = val)}
+                      onSelect={(val) => (country = val)}
                       required
                       renderItem={(item, isHighlighted) => (
                         <div
@@ -263,19 +260,6 @@ const SignUp = () => {
                       required
                     >
                       <option value="">Lab Location (Select City)</option>
-
-                      {/* <select name="country" value={countrylist}>
-                        {
-                          <option key={countrylist} value={countrylist}>
-                            {countrylist}
-                          </option>
-                        }
-                      </select> */}
-
-                      {/* {
-                      countrylist.map((countrylist) => <option key={countrylist.index} value={countrylist.value}>{countrylist.value}</option>)}
-                      <option value={countrylist.value} key={index}>{countrylist.value}</option> */}
-                      {/* <option value={countrylist}>{countrylist}</option> */}
                       <option value="Andaman and Nicobar Islands">
                         Andaman and Nicobar Islands
                       </option>
