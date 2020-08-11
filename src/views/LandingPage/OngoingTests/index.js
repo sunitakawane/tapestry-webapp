@@ -12,9 +12,10 @@ import getSVG from "../../../utils/getSVG"
 import Test from '../../../components/Test';
 import useTestModal from '../../../components/Test/showmodal';
 
-import {gettestList,gettestconductedlist,getmachine,getkit,getcount} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
-
+import {getkit,gettestconductedlist,getmachine} from '../../../redux/selectors/labSelectors'
+import {gettestList,getcount} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
 import {testActions} from '../../../redux/actions/testActions/testActions'
+import {labActions} from '../../../redux/actions/labActions/labActions'
 
 function OngoingTests(props) {
 
@@ -55,12 +56,15 @@ function OngoingTests(props) {
     // Redux
     const dispatch = useDispatch();
     const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions))
+    const userList = () => dispatch(labActions.userlist())
+    const kitList = () => dispatch(labActions.kitlist())
+    const machineList = () => dispatch(labActions.machinelist())
 
     // Users redux
     const currentUserId = "Anirudha"
-    const user = useSelector(state => state.users.users.find(user => user.userName=== currentUserId))
-    const userName = user.userName
-    const labName = user.labName
+    //const user = useSelector(state => state.users.users.find(user => user.userName=== currentUserId))
+    const userName = 'Anirudha'
+    const labName = 'Vedanta Memorial Labs'
 
     // Tests redux
     const tests_json = useSelector(gettestList);
@@ -78,7 +82,9 @@ function OngoingTests(props) {
         console.log('First render')
         var options = filterMap['0'] + '&page[number]=1'
         testList(options)
-        
+        userList()
+        kitList()
+        machineList()        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

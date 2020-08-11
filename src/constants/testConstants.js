@@ -14,7 +14,6 @@ const testConstants = {
     TEST_PUPDATE_SUCCESS: "TEST_PUPDATE_SUCCESS",
     TEST_PUPDATE_FAILURE: "TEST_PUPDATE_FAILURE",
 
-
     // Test content
     TEST_ID : 'id',
     SAMPLES : 'samples',

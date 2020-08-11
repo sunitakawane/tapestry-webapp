@@ -2,6 +2,7 @@ import testConstants from '../../../constants/testConstants'
 import {testListApi} from '../../../api/testApi/testListApi'
 import {testdata} from '../../../api/testApi/testdata'
 import {testUpdateApi} from '../../../api/testApi/testUpdateApi'
+import {testCreateApi} from '../../../api/testApi/testCreateApi'
 
 export const testActions = {
     test_listAll,
@@ -57,23 +58,23 @@ function test_create() {
     console.log('Before API call')
     console.log(testdata())
     return (dispatch) => {
-            // testdata()
-            // .then((response) => {
-                // console.log('API call successful')
-                dispatch({
-                    type: testConstants.TEST_CREATE_SUCCESS,
-                    payload: testdata(),
-                });
-    //         })
-    //         .catch((error) => {
-    //             console.log('API call failure')
-    //             dispatch({
-    //                 type: testConstants.TEST_CREATE_FAILURE,
-    //                 payload: error.toString()
-    //             });
-    //         })
-    // }
-            }
+        testCreateApi.testCreate(test)
+             .then((response) => {
+                 console.log('API call successful')
+                 dispatch({
+                     type: testConstants.TEST_CREATE_SUCCESS,
+                     payload: response.data,
+                     test
+                 })
+             })
+             .catch((error) => {
+                 console.log('API call failure')
+                 dispatch({
+                     type: testConstants.TEST_CREATE_FAILURE,
+                     payload: error.toString()
+                 });
+             })
+     }
 }
 
 function test_update(test) {
