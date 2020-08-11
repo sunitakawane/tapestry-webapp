@@ -117,7 +117,7 @@ function OngoingTests(props) {
     useEffect( () => {
         if (prevState.radioValue !== '0' || radioValue !== '0') {
             console.log('Status filter changed')
-            var options = filterMap[radioValue] + '&page[number]=' + page
+            var options = filterMap[radioValue] + '&page[number]=1'
             testList(options)
             setPrevState(prev => ({
                 ...prev,

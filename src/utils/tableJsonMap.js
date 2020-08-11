@@ -2,7 +2,6 @@ import {userListApi} from '../api/userApi/userListApi'
 
 async function tableJsonMap(jsoninput) {
 
-    //let jsonoutput = []
     async function jsonMap(jsoninput) {
         let jsonreturn = []
         let res = {}
@@ -12,14 +11,14 @@ async function tableJsonMap(jsoninput) {
         if(jsoninput === undefined){
             jsoninput = []
         }
-        await jsoninput.map(async (test) => {
+        await Promise.all(jsoninput.map(async (test) => {
             res = await userListApi.userListId(test.relationships.assignedTo.data.id)
             userinfo = res.data.data
-            name = userinfo[0].attributes.firstName
+            name = userinfo[0].attributes.firstName + ' ' + userinfo[0].attributes.lastName
             jsontemp = {
                 'id': test.id, 
                 'samples': test.attributes.nsamples, 
-                'assignedTo': name, //Will need to setup api call for obtaining name 
+                'assignedTo': name, 
                 'prevalence': test.attributes.prevalence,
                 'status': test.relationships.status.data.id, 
                 'file': test.attributes.poolingschemeFilename, 
@@ -27,8 +26,8 @@ async function tableJsonMap(jsoninput) {
                 'ninconclusive': test.attributes.ninconclusive}
             console.log(jsontemp)
             return jsonreturn.push(jsontemp)
-        })
-        return jsonreturn        
+        }))
+        return jsonreturn
     }
 
     var jsonoutput = await jsonMap(jsoninput)
