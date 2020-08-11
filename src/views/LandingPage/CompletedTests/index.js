@@ -12,7 +12,8 @@ import '../../../index.scss'
 import Test from '../../../components/Test';
 import useTestModal from '../../../components/Test/showmodal';
 
-import {gettestList,gettestconductedlist,getmachine,getkit,getcount} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
+import {gettestconductedlist,getmachine,getkit} from '../../../redux/selectors/labSelectors'
+import {gettestList,getcount} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
 import {testActions} from '../../../redux/actions/testActions/testActions'
 
 

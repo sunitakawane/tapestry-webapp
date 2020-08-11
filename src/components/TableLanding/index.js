@@ -11,10 +11,8 @@ import Test from '../../components/Test';
 import useTestModal from '../../components/Test/showmodal';
 import url from "../../constants/url";
 
-import {gettestconductedlist,getmachine,getkit} from '../../redux/selectors/landingPageSelectors/testsSelectors'
+import {gettestconductedlist,getmachine,getkit} from '../../redux/selectors/labSelectors'
 import {testActions} from '../../redux/actions/testActions/testActions'
-
-
 
 import testConstants from '../../constants/testConstants'
 
@@ -42,7 +40,7 @@ function TableLanding(props) {
     const dispatch = useDispatch();
     const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions))
 
-    testList();
+    //testList();
     const machine = useSelector(getmachine)
     const kit = useSelector(getkit)
     const testconductedlist = useSelector(gettestconductedlist)
@@ -150,6 +148,9 @@ function TableLanding(props) {
 
     const getHeader = () => {
         var heads = getKeys()
+        console.log(kit)
+        console.log(machine)
+        console.log(testconductedlist)
         return heads.map(head => 
         {
             if (props.testStatus === 'ongoing') {

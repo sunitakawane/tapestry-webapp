@@ -1,76 +1,22 @@
-import axios from 'axios';
-
 import testConstants from '../../../constants/testConstants'
-import url from "../../../constants/url";
-import { waitForDomChange } from '@testing-library/react';
-import {testdata} from '../../../api/testApi/testdata'
 
 const initialState = {
-    users : [],
-    machine : [],
-    kit : [],
-    testconductedlist : []
-};
-
-    
+    //users : [],
+    //machine : [],
+    //kit : [],
+    //testconductedlist : []
+};  
 
 export default function testReducer(state=initialState, action) {
-    // if(localStorage.getItem("user") !== null)
-    // {
-    //     axios.get(url["BASE_API_URL"]+'machine-type/',{
-    //         headers:{
-    //             'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
-    //         }
-    //         }).then(res => {
-    //             state.machine = res.data.results
-    //         }).catch(err=>{
-    //             console.log(err)
-    //         }
-    //         )
 
-        
-    //     axios.get(url["BASE_API_URL"]+'test-kit/',{
-    //         headers:{
-    //             'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
-    //         }
-    //         }).then(res => {
-    //             state.kit = res.data.results     
-    //         }).catch(err=>{
-    //             console.log(err)
-    //         }
-    //         )
-        
-    //     axios.get(url["BASE_API_URL"]+'user/',{
-    //         headers:{
-    //             'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
-    //         }
-    //         }).then(res => {
-    //             state.testconductedlist = res.data.results     
-    //         }).catch(err=>{
-    //             console.log(err)
-    //         }
-    //         )
-    //     }
-    //     else
-    //     {
-    //         if(window.location.href !== url["BASE_URL"] + 'login')
-    //         {
-    //             window.location.href = url["BASE_URL"] + 'login'
-    //         }
-    //     }
-
-    testdata('machine-type').then(results=>state.machine = results)
-    testdata('test-kit').then(results=>state.kit=results)
-    testdata('user').then(results=>state.testconductedlist=results)
-
+    //testdata('machine-type').then(results=>state.machine = results)
+    //testdata('test-kit').then(results=>state.kit=results)
+    //testdata('user').then(results=>state.testconductedlist=results)
     switch(action.type){
 
         case testConstants.TEST_LIST_SUCCESS: 
             console.log('Test list success');
-            const newstate = {...state}
-            newstate.users = action.payload
-            // console.log(newstate.users['data'])
-            return newstate
+            return action.payload
 
         case testConstants.TEST_LIST_FAILURE:
             console.log('Test list failure\n' + action.payload)
