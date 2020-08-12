@@ -1,12 +1,14 @@
 import axios from "axios";
 import url from "../../constants/url";
+import labstate from "../../constants/labconfiguration"
+
 
 export const testListApi = {
     testListAll,
     testListId
 }
 
-const token = 'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+const token = labstate['token']
 
 function testListAll(filterOptions) {
     if (filterOptions === null) {filterOptions = ''}

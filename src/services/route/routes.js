@@ -11,6 +11,16 @@ import Congratulations from "../../views/Auth/ForgotPassword/Congratulations";
 import Onboarding from "../../views/OnboardingPage";
 import OngoingTests from "../../views/LandingPage/OngoingTests";
 import CompletedTests from "../../views/LandingPage/CompletedTests";
+import url from "../../constants/url";
+// import { useWindowDimensions } from "react-native";
+
+if(localStorage.getItem("user") == undefined)
+{
+  if(window.location.href !== url['BASE_URL']+'login')
+      {
+          window.location.href = url['BASE_URL']+'login'
+      }
+}
 
 const routes = [
   {

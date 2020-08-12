@@ -1,12 +1,13 @@
 import axios from "axios";
 import url from "../../constants/url";
+import labstate from "../../constants/labconfiguration"
 
 export const userListApi = {
     userListAll,
     userListId
 }
 
-const token = 'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+const token = labstate['token'];
 
 async function userListAll() {
     return await axios

@@ -19,7 +19,6 @@ constructor(props){
     }
     this.handleClose = props.handleClose;
     this.fileInputRef = React.createRef()
-
     this.openFileDialog =   this.openFileDialog.bind(this)
     this.onFileAdded = this.onFileAdded.bind(this)
     // this.onDragOver = this.onDragOver.bind(this

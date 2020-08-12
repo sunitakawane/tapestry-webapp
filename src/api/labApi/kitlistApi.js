@@ -1,11 +1,12 @@
 import axios from "axios";
 import url from "../../constants/url";
+import labstate from "../../constants/labconfiguration"
 
 export const kitListApi = {
     kitList
 }
 
-const token = 'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'];
+const token = labstate['token'];
 
 function kitList() {
     return axios

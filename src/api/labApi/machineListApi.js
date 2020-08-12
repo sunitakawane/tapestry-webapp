@@ -1,11 +1,12 @@
 import axios from "axios";
 import url from "../../constants/url";
+import labstate from "../../constants/labconfiguration"
 
 export const machineListApi = {
     machineList
 }
 
-const token = 'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'];
+const token = labstate['token']
 
 function machineList() {
     return axios

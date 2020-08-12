@@ -1,5 +1,7 @@
 import axios from "axios";
 import url from "../../constants/url";
+import labstate from "../../constants/labconfiguration"
+
 
 // export const testdataApi = {
 //     machine,
@@ -7,12 +9,12 @@ import url from "../../constants/url";
 //     userlist
 // }
 
-const token = 'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+const token = labstate['token']
 
 export function testdata(param) {
     return axios.get(url["BASE_API_URL"]+param+'/',{
         headers:{
-            'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
+            'Authorization':'Bearer '+ token
         }
         }).then(res => {
             return res.data.results
