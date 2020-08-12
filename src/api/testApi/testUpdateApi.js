@@ -7,7 +7,7 @@ export const testUpdateApi = {
     testPUpdate
 }
 
-const token = labstate['token'];
+const token = labstate()['token'];
 
 function testUpdate(test) {
     return axios

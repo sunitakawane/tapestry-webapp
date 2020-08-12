@@ -7,7 +7,7 @@ export const testCreateApi = {
     testCreate
 }
 
-const token = labstate['token'];
+const token = labstate()['token'];
 
 function testCreate(test) {
     return axios

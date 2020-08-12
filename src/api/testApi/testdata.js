@@ -9,7 +9,7 @@ import labstate from "../../constants/labconfiguration"
 //     userlist
 // }
 
-const token = labstate['token']
+const token = labstate()['token']
 
 export function testdata(param) {
     return axios.get(url["BASE_API_URL"]+param+'/',{

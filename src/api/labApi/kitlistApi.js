@@ -6,7 +6,7 @@ export const kitListApi = {
     kitList
 }
 
-const token = labstate['token'];
+const token = labstate()['token'];
 
 function kitList() {
     return axios

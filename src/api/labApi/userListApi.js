@@ -7,7 +7,7 @@ export const userListApi = {
     userListId
 }
 
-const token = labstate['token'];
+const token = labstate()['token'];
 
 async function userListAll() {
     return await axios

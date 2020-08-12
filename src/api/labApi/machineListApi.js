@@ -6,7 +6,8 @@ export const machineListApi = {
     machineList
 }
 
-const token = labstate['token']
+const token = labstate()['token']
+
 
 function machineList() {
     return axios

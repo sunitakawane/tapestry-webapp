@@ -8,7 +8,7 @@ export const testListApi = {
     testListId
 }
 
-const token = labstate['token']
+const token = labstate()['token']
 
 function testListAll(filterOptions) {
     if (filterOptions === null) {filterOptions = ''}

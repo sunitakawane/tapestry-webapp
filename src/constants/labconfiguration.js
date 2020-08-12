@@ -1,9 +1,16 @@
-import url from './url'
+
+
 
 const labstate = () =>{
     if(localStorage.getItem("user") !== undefined)
     {
-        return {'token':JSON.parse(localStorage.getItem("user"))['token']}
+        console.log('Bearer '+JSON.parse(localStorage.getItem("user"))['token'])
+        return {
+            token:'Bearer '+JSON.parse(localStorage.getItem("user"))['token']
+        }
+    }
+    else{
+        console.log("hello")
     }
     // 
 }
