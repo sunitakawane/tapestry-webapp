@@ -30,7 +30,7 @@ function TableLanding(props) {
     const [prevalancerate,setprevalancerate] = useState(0)
     const [selectedkit,setselectedkit] = useState('')
     const [selectedmachine,setselectedmachine] = useState('')
-    const [completed,setcompleted] = useState(30)
+    const [completed,setcompleted] = useState(0)
     const [download,setdownload] = useState(false)
     
 
@@ -62,40 +62,7 @@ function TableLanding(props) {
     const sendRequest = () =>{
         // return new Promise((resolve, reject) => {
         toggleupload()
-        console.log(JSON.parse(localStorage.getItem("user"))['token'])
-        axios.post(url["BASE_API_URL"]+'upload/',{
-            "test_id": 7,
-            "file_name": "string.xlsx"
-        },{
-        headers:{
-            "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'],
-            'Content-Type':'application/json'
-        }})
-        .then(res=>{ 
-            const upload_url = res.data['upload_url']
-            console.log(upload_url)
-            let config = {
-                onUploadProgress: function(progressEvent){
-                    setcompleted(Math.round((progressEvent.loaded * 100) / progressEvent.total));
-                    console.log(completed)
-                }
-            }
-            const obj = {hello: 'world'};
-            const blob = new Blob([JSON.stringify(obj, null, 2)], {type : 'application/json'});
-
-            const formData = new FormData();
-            formData.append("file",blob,"string.xlsx");
         
-            axios.put(upload_url,formData,config)
-            .then("load", event => {
-                setdownload(true)
-                console.log("Successful")
-            })
-            .catch(error=>{
-                console.log(error.message)
-            })
-        })
-        .catch(err=>console.log(err))
         
         // req.upload.addEventListener("progress", event => {
         // if (event.lengthComputable) {

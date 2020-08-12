@@ -39,7 +39,7 @@ export default function testReducer(state=initialState, action) {
                 ...state,
                 machine: action.payload
             }
-            return state
+            return stateMachine
 
         case labConstants.MACHINE_LIST_FAILURE:
             console.log("Machine list failed" + action.payload)

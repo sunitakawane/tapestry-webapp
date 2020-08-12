@@ -45,11 +45,11 @@ export default function DropdownContent(props) {
                 {{switch(name)
                 {
                   case "selectedmachine":
-                    return <option value={item['id']}>{(item['no_of_wells']+'wells(' + item['dim_x'] + 'x' + item['dim_y'] + ') ' + item['name'])}</option>
+                    return <option value={item['id']}>{(item['attributes']['noOfWells']+'wells(' + item['attributes']['dimX'] + 'x' +  item['attributes']['dimY'] + ') ' +  item['attributes']['name'])}</option>
                   case "selectedkit":
-                    return <option value={item['id']}>{("("+item['gene_type']+") "+item['name'])}</option>
+                    return <option value={item['id']}>{("("+item['attributes']['geneType']+") "+item['attributes']['name'])}</option>
                   case "testconductedby":
-                    return <option value={item['id']}>{item["first_name"] +' '+ item['last_name']}</option>
+                    return <option value={item['id']}>{item['attributes']["firstName"] +' '+ item['attributes']['lastName']}</option>
                 }}              
               }
             )}
