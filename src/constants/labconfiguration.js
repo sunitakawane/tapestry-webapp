@@ -2,17 +2,17 @@
 
 
 const labstate = () =>{
-    if(localStorage.getItem("user") !== undefined)
+    if(localStorage.getItem("user") !== null)
     {
-        console.log('Bearer '+JSON.parse(localStorage.getItem("user"))['token'])
         return {
             token:'Bearer '+JSON.parse(localStorage.getItem("user"))['token']
         }
     }
-    else{
-        console.log("hello")
+    else {
+        return {
+            token: ''
+        }   
     }
-    // 
 }
 
 export default labstate

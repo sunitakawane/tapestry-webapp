@@ -32,9 +32,7 @@ function TableLanding(props) {
     const [selectedmachine,setselectedmachine] = useState('')
     const [completed,setcompleted] = useState(0)
     const [download,setdownload] = useState(false)
-    
-
-    const remarks = ''
+    const [remarks, setremarks] = useState('')
 
     // Redux
     const dispatch = useDispatch();
@@ -86,7 +84,7 @@ function TableLanding(props) {
     }
 
     const onClick = (row) =>{
-        axios.get(url["BASE_API_URL"]+'test/'+row[testConstants.TEST_ID]+"/",{
+        axios.get(url["BASE_API_URL"]+'test/'+ row[testConstants.TEST_ID]+"/",{
         headers:{
             'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
         }
@@ -97,6 +95,8 @@ function TableLanding(props) {
             setselectedkit(res.data['test_kit']['id'])
             setselectedmachine(res.data['machine_type']['id'])
             setprevalancerate(res.data['prevalence'])
+            setremarks(res.data['remark'])
+            console.log(res.data['remark'])
             toggletest()
         })
         .catch(function (error) {
@@ -274,7 +274,7 @@ function TableLanding(props) {
                 }
             </Row>
             <Modal size="lg" show={showtest}>
-                <Test testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                <Test testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist} modalType = {'edit'}/>
             </Modal>
         </Container>
     );

@@ -15,7 +15,7 @@ import useTestModal from '../../../components/Test/showmodal';
 import {gettestconductedlist,getmachine,getkit} from '../../../redux/selectors/labSelectors'
 import {gettestList,getcount} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
 import {testActions} from '../../../redux/actions/testActions/testActions'
-
+import {labActions} from '../../../redux/actions/labActions/labActions'
 
 function CompletedTests() {
     const {showtest, toggletest} = useTestModal();
@@ -33,7 +33,8 @@ function CompletedTests() {
 
     const [search,setSearch] = useState('')
     const [jsonoutput, setJsonOutput] = useState([])
-    
+    const [loading, setLoading] = useState(true)
+
     const filter_options = [
         {value:'this week', label:'This Week'},
         {value:'this month', label:'This Month'},
@@ -52,14 +53,18 @@ function CompletedTests() {
     // Redux states
     const dispatch = useDispatch()
     const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions))
+    const userList = () => dispatch(labActions.userlist())
+    const kitList = () => dispatch(labActions.kitlist())
+    const machineList = () => dispatch(labActions.machinelist())
 
-    const currentUserId = 12345
-    const user = useSelector(state => state.users.users.find(user => user.userId === currentUserId))
-    const userName = user.userName
-    const labName = user.labName
+    const currentUserId = 7
+    //const user = useSelector(state => state.users.users.find(user => user.userId === currentUserId))
+    const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
+    const labName = 'Test'
 
     // Tests redux
     const tests_json = useSelector(gettestList);
+
     const machine = useSelector(getmachine)
     const kit = useSelector(getkit)
     const testconductedlist = useSelector(gettestconductedlist)
@@ -77,8 +82,17 @@ function CompletedTests() {
         var options = filter + '&page[number]=1'
         console.log(options)
         testList(options)
+        userList()
+        kitList()
+        machineList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect( () => {
+        console.log('New test modal closed')
+        var options = filter + '&page[number]=1'
+        testList(options)
+    }, [showtest])
 
     // Button state
     useEffect( () => {
@@ -138,8 +152,15 @@ function CompletedTests() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
-    useEffect( () => {
-        setJsonOutput(tableJsonMap(tests_json))
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await tableJsonMap(tests_json)
+            setLoading(false)
+            setJsonOutput(result)
+        }
+        setLoading(true)
+        fetchData();
+        //setJsonOutput(tableJsonMap(tests_json))
     }, [tests_json])
 
     // Other functions
@@ -227,13 +248,14 @@ function CompletedTests() {
                     <Col xs={{span:2}}>
                         <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                         <Modal size="lg" show={showtest}>
-                            <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                            <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist} modalType = {'new'}/>
                         </Modal>
                     </Col>
                 </Row>
                 
                 <Row className='mt-3 ml-3 mr-3'>
                     <Col>
+                        {loading? <p className='text-center'>Loading!</p> : null}
                         <TableLanding jsonoutput={jsonoutput} testStatus={testStatus}/>
                     </Col>
                 </Row>
