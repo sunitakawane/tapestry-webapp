@@ -43,7 +43,7 @@ function OngoingTests(props) {
     const [page, setPage] = useState(1)
     const [searchOn, setSearchOn] = useState(false)
     const [prevState, setPrevState] = useState({'search': '', 'searchOn': false, 'page': 1, 'radioValue': '0'})
-
+    const [loading, setLoading] = useState(true)
 
     const onGoingTests = jsonoutput.length
     const radios = [
@@ -61,10 +61,10 @@ function OngoingTests(props) {
     const machineList = () => dispatch(labActions.machinelist())
 
     // Users redux
-    const currentUserId = "Anirudha"
+    const currentUserId = 7
     //const user = useSelector(state => state.users.users.find(user => user.userName=== currentUserId))
-    const userName = 'Anirudha'
-    const labName = 'Vedanta Memorial Labs'
+    const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
+    const labName = 'Test'
 
     // Tests redux
     const tests_json = useSelector(gettestList);
@@ -87,6 +87,12 @@ function OngoingTests(props) {
         machineList()        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect( () => {
+        console.log('New test modal closed')
+        var options = filterMap['0'] + '&page[number]=1'
+        testList(options)
+    }, [showtest])
 
     useEffect( () => {
         if (searchOn) {
@@ -165,9 +171,15 @@ function OngoingTests(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [radioValue])
 
-    useEffect( () => {
-        setJsonOutput(tableJsonMap(tests_json))
-        console.log(machine)
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await tableJsonMap(tests_json)
+            setLoading(false)
+            setJsonOutput(result)
+        }
+        setLoading(true)
+        fetchData();
+        //setJsonOutput(tableJsonMap(tests_json))
     }, [tests_json])
 
     const handleRadio = (e) => {
@@ -288,14 +300,15 @@ function OngoingTests(props) {
                         <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                             <Modal size="lg" show={showtest}>
-                                <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist}/>
+                                <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist} modalType = {'new'}/>
                             </Modal>
                         </Col>
                     </Row>
                 </Col>
             </Row>    
             <Row className='mt-3 ml-3 mr-3'>
-                <Col>                    
+                <Col>       
+                    {loading? <p className='text-center'>Loading!</p> : null}
                     <TableLanding jsonoutput={jsonoutput} testStatus={testStatus}/>
                 </Col>
             </Row>

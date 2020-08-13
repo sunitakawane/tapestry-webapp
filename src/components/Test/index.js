@@ -17,6 +17,7 @@ constructor(props){
   super(props)
   this.handleClose = props.handleClose;
   console.log(props.testconductedlist)
+  console.log(props.remarks)
   this.state ={
     machine:props.machine,
     kit:props.kit,
@@ -56,58 +57,117 @@ download()
   console.log(this.state.prevalancerate)
   console.log(this.state.testconductedby)
   this.setState({showspinner:true})
-  axios.post(url["BASE_API_URL"]+'test/',{
-    "data":{
-                "type": "test",
-                "attributes": {
-                    "labId": 1,
-                    "nsamples": this.evil(this.state.totalsamples),
-                    "prevalence": this.evil(this.state.prevalancerate)
-                },
-                "relationships": {
-                    "assignedTo": {
-                        "data": {
-                            "type": "user",
-                            "id": ""+this.state.testconductedby
-                        }
-                    },
-                    "status": {
-                        "data": {
-                            "type": "status",
-                            "id": "3"
-                        }
-                    },
-                    "testKit": {
-                        "data": {
-                            "type": "testKit",
-                            "id": this.state.selectedkit
-                        }
-                    },
-                    "machineType": {
-                        "data": {
-                            "type": "machineType",
-                            "id": this.state.selectedmachine,
-                        }
-                    }
-                }
-            }
-  },{
-  headers:{
-    "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'],
-    'Content-Type': 'application/vnd.api+json'
-  }})
-  .then(response => {
-    const link = document.createElement('a');
-    link.href = response.data["pooling_matrix_download_url"];
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    this.handleClose()
-  }).then(
-    )
-    .catch(function (error) {
-    console.log(error);
-  });
+  if (this.props.modalType === 'new') {
+    axios.post(url["BASE_API_URL"]+'test/',{
+      "data":{
+                  "type": "test",
+                  "attributes": {
+                      "labId": 1,
+                      "nsamples": this.evil(this.state.totalsamples),
+                      "prevalence": this.evil(this.state.prevalancerate),
+                      "remark": this.state.remarks
+                  },
+                  "relationships": {
+                      "assignedTo": {
+                          "data": {
+                              "type": "user",
+                              "id": ""+this.state.testconductedby
+                          }
+                      },
+                      "status": {
+                          "data": {
+                              "type": "status",
+                              "id": "3"
+                          }
+                      },
+                      "testKit": {
+                          "data": {
+                              "type": "testKit",
+                              "id": this.state.selectedkit
+                          }
+                      },
+                      "machineType": {
+                          "data": {
+                              "type": "machineType",
+                              "id": this.state.selectedmachine,
+                          }
+                      }
+                  }
+              }
+    },{
+    headers:{
+      "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'],
+      'Content-Type': 'application/vnd.api+json'
+    }})
+    .then(response => {
+      const link = document.createElement('a');
+      link.href = response.data["pooling_matrix_download_url"];
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      this.handleClose()
+    }).then(
+      )
+      .catch(function (error) {
+      console.log(error);
+    });
+  } else {
+    
+    axios.put(url["BASE_API_URL"]+'test/' + this.state.testid + '/', {
+      "data":{
+                  "type": "test",
+                  "id": this.state.testid,
+                  "attributes": {
+                      "labId": 1,
+                      "nsamples": this.evil(this.state.totalsamples),
+                      "prevalence": this.evil(this.state.prevalancerate),
+                      "remark": this.state.remarks
+                  },
+                  "relationships": {
+                      "assignedTo": {
+                          "data": {
+                              "type": "user",
+                              "id": ""+this.state.testconductedby
+                          }
+                      },
+                      "status": {
+                          "data": {
+                              "type": "status",
+                              "id": "3"
+                          }
+                      },
+                      "testKit": {
+                          "data": {
+                              "type": "testKit",
+                              "id": this.state.selectedkit
+                          }
+                      },
+                      "machineType": {
+                          "data": {
+                              "type": "machineType",
+                              "id": this.state.selectedmachine,
+                          }
+                      }
+                  }
+              }
+    },{
+    headers:{
+      "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'],
+      'Content-Type': 'application/vnd.api+json'
+    }})
+    .then(response => {
+      const link = document.createElement('a');
+      link.href = response.data["pooling_matrix_download_url"];
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      this.handleClose()
+    }).then(
+      )
+      .catch(function (error) {
+      console.log(error);
+    });
+  }
 }
 downloadpoolingmatrixcolor()
 {
@@ -276,7 +336,7 @@ render()
               {/* <div style={{float: "left",width: "100%;"}}>
                 <textarea style={{width:"100%",maxwidth:"100%"}} name="remarks" placeholder="Write your remarks here" onChange={this.handleInput} rows="4" onFocus={this.handleFocus}></textarea>
               </div> */}
-              <textarea id="remarks" name="remarks" placeholder="Write your remarks here" onChange={this.handleInput} rows={5} cols={window.innerWidth/30} onFocus={this.handleFocus}></textarea>
+              <textarea id="remarks" name="remarks" placeholder="Write your remarks here" value={(this.state.remarks === '') ? null : this.state.remarks} onChange={this.handleInput} rows={5} cols={window.innerWidth/30} onFocus={this.handleFocus}></textarea>
             </Col>
           </Row>
         </Container>
