@@ -4,7 +4,6 @@ async function tableJsonMap(jsoninput, userslist) {
         if(list !== undefined && list !== [])
         {
             let userin = list.find(o => o.id === id);
-            console.log(userin)
             return userin.attributes.firstName + ' ' + userin.attributes.lastName
         }
     }

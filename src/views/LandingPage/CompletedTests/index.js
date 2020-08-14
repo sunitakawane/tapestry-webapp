@@ -18,6 +18,8 @@ import {testActions} from '../../../redux/actions/testActions/testActions'
 import {labActions} from '../../../redux/actions/labActions/labActions'
 
 function CompletedTests() {
+    
+    var initialmount = true
     const {showtest, toggletest} = useTestModal();
     const remarks = ''
     const testid = ''
@@ -65,7 +67,8 @@ function CompletedTests() {
 
     const machine = useSelector(getmachine)
     const kit = useSelector(getkit)
-    const testconductedlist = useSelector(gettestconductedlist)
+    var testconductedlist = []
+    testconductedlist = useSelector(gettestconductedlist)
 
     const pageinfo = useSelector(getcount)
     if(pageinfo) {
@@ -75,21 +78,35 @@ function CompletedTests() {
     // useEffect functions
 
     // View mount
-    useEffect( () => {
+    async function testdelayList() {
         console.log('First render')
         var options = filter + '&page[number]=1'
-        console.log(options)
-        userList()
-        kitList()
-        machineList()
+        function timeout(delay) {
+            return new Promise( res => setTimeout(res, delay) );
+        }
+        await timeout(2000);
         testList(options)
+    }
+
+    useEffect( () => {
+        const fetchlists = async () => {
+            userList()
+            await testdelayList()
+            kitList()
+            machineList()
+        }
+        fetchlists()
+        //testList(options)        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect( () => {
-        console.log('New test modal closed')
-        var options = filter + '&page[number]=1'
-        testList(options)
+        if (!initialmount) {
+            console.log('New test modal closed')
+            var options = filter + '&page[number]=1'
+            testList(options)
+            initialmount = false
+        }
     }, [showtest])
 
     // Button state

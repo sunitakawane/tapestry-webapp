@@ -19,6 +19,7 @@ import {labActions} from '../../../redux/actions/labActions/labActions'
 
 function OngoingTests(props) {
 
+    var initialmount = true;
     // // Local state
     // const userId = 'Anirudha'
     // const labName = 'Vedanta Memorial Hospitals, Biogen Labs'
@@ -69,27 +70,43 @@ function OngoingTests(props) {
 
     const machine = useSelector(getmachine)
     const kit = useSelector(getkit)
-    const testconductedlist = useSelector(gettestconductedlist)
+    var testconductedlist = []
+    testconductedlist = useSelector(gettestconductedlist)
     
     const pageinfo = useSelector(getcount)
     if(pageinfo) {
         pages = pageinfo.pagination.pages
     } 
 
-    useEffect( () => {
+    async function testdelayList() {
         console.log('First render')
         var options = filterMap['0'] + '&page[number]=1'
-        userList()
-        kitList()
-        machineList()
-        testList(options)        
+        function timeout(delay) {
+            return new Promise( res => setTimeout(res, delay) );
+        }
+        await timeout(2000);
+        testList(options)
+    }
+
+    useEffect( () => {
+        const fetchlists = async () => {
+            userList()
+            await testdelayList()
+            kitList()
+            machineList()
+        }
+        fetchlists()
+        //testList(options)        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect( () => {
-        console.log('New test modal closed')
-        var options = filterMap['0'] + '&page[number]=1'
-        testList(options)
+        if (!initialmount) {
+            console.log('New test modal closed')
+            var options = filterMap['0'] + '&page[number]=1'
+            testList(options)
+            initialmount = false
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showtest])
 
