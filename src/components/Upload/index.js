@@ -1,73 +1,77 @@
 import React from 'react';
 import {Container,Row,Col,Spinner} from 'react-bootstrap';
+import axios from 'axios';
 
 import './style.css'
 import ProgressBar from './progressbar'
+import url from "../../constants/url";
+import Dropzone from "../Dropzone"
+
 
 export default class Upload extends React.Component{
 
 constructor(props){
     super(props)
     this.state = {
-        download : true,
-        completed:40,
-        files:props.files
+        download :props.download,
+        completed:props.completed,
+        fileselected:false,
     }
     this.handleClose = props.handleClose;
-    this.uploadFiles = this.uploadFiles.bind(this);
-    this.sendRequest = this.sendRequest.bind(this);
+    this.fileInputRef = React.createRef()
+    this.openFileDialog =   this.openFileDialog.bind(this)
+    this.onFileAdded = this.onFileAdded.bind(this)
+    // this.onDragOver = this.onDragOver.bind(this
+    // this.uploadFiles = this.uploadFiles.bind(this);
+    // this.sendRequest = this.sendRequest.bind(this);
     // this.renderActions = this.renderActions.bind(this);
 }
+openFileDialog() {
+    // if (this.props.disabled) return
+    this.fileInputRef.current.click()
+  }
 
-async uploadFiles() {
-    this.setState({ uploadProgress: {}});
-    const promises = [];
-    promises.push(this.sendRequest(this.state.files));
-    try {
-      await Promise.all(promises);
-  
-      this.setState({ download:true });
-    } catch (e) {
-      // Not Production ready! Do some error handling here instead...
-      this.setState({ download: false });
-    }
-}
+onFileAdded(evt) {
+    const file = evt.target.files[0]
+    this.setState({fileselected:true})
+    // if (this.props.onFilesAdded) {
+    //   const array = this.fileListToArray(files)
+    //   this.props.onFilesAdded(array)
+    // }
+    axios.post(url["BASE_API_URL"]+'upload/',{
+        "test_id": 7,
+        "file_name": file.name
+    },{
+    headers:{
+        "Authorization":'Bearer '+ JSON.parse(localStorage.getItem("user"))['token'],
+        'Content-Type':'application/json',
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
 
-sendRequest(file) {
- return new Promise((resolve, reject) => {
-  const req = new XMLHttpRequest();
+    }})
+    .then(res=>{ 
+        const upload_url = res.data['upload_url']
+        console.log(upload_url)
+        let config = {
+            onUploadProgress: function(progressEvent){
+                // setcompleted(Math.round((progressEvent.loaded * 100) / progressEvent.total));
+                console.log(Math.round((progressEvent.loaded * 100) / progressEvent.total))
+            }
+        }
 
-  req.upload.addEventListener("progress", event => {
-   if (event.lengthComputable) {
-    // const copy = { ...this.state.completed };
-    // copy[file.name] = {
-    //  state: "pending",
-    //  percentage: (event.loaded / event.total) * 100
-    // };
-    this.setState({ completed: (event.loaded / event.total) * 100});
-   }
-  });
-   
-  req.upload.addEventListener("load", event => {
-//    const copy = { ...this.state.uploadProgress };
-//    copy[file.name] = { state: "done", percentage: 100 };
-   this.setState({ download:true,completed:100});
-   resolve(req.response);
-  });
-   
-  req.upload.addEventListener("error", event => {
-//    const copy = { ...this.state.uploadProgress };
-//    copy[file.name] = { state: "error", percentage: 0 };
-   this.setState({download:false,completed:0});
-   reject(req.response);
-  });
+        const formData = new FormData();
+        formData.append("file",file,file.name);
 
-  const formData = new FormData();
-  formData.append("file", this.state.file, this.state.file.filename);
-
-  req.open("POST", "http://localhost:8000/upload");
-  req.send(formData);
- });
+        axios.put(upload_url,formData,config)
+        .then("load", event => {
+            // setdownload(true)
+            console.log("Successful")
+        })
+        .catch(error=>{
+            console.log(error.message)
+        })
+    })
+    .catch(err=>console.log(err))
 }
 
 render(){
@@ -75,10 +79,11 @@ render(){
     <div>
         {
         this.state.download?
-        <ProgressBar value={"File uploaded successfully"} completed={100} bgcolor={ '#1ec491'}  />:
-        <ProgressBar value={"Uploading File"} completed={this.state.completed} bgcolor={'#33B6FF'} handleClose={this.props.handleClose}  />
+        <ProgressBar value={"File uploaded successfully"} completed={100} bgcolor={ '#1ec491'} handleClose={this.handleClose} />:
+        <ProgressBar value={"Uploading File"} completed={this.state.completed} bgcolor={'#33B6FF'} handleClose={this.handleClose}  />
         }
         <div class="Content">
+            {(this.state.fileseleted)?
             <Container>
                 {   
                 this.state.download?
@@ -128,7 +133,31 @@ render(){
                         <button class="endbuttons" onClick={this.handleClose}>Cancel</button>
                     </Col>
                 </Row>}
+            </Container>:
+            <Container>
+                <Row className="justify-content-md-right">
+                    <div className="Dropzone" onClick={this.openFileDialog} style={{ cursor: this.props.disabled ? 'default' : 'pointer' }}>
+                        <input ref={this.fileInputRef} className="FileInput" type="file" onChange={this.onFileAdded}/>
+                        <img alt="upload" className="Icon" src="baseline-cloud_upload-24px.svg"/>
+                        <span>Upload Files</span>
+                    </div>
+                    <Col xs lg="6">
+                        <br/>
+                        <br/>
+                        File uploading
+                    </Col>
+                    <Col xs lg="3">
+                        <br/>
+                        <br/>
+                    </Col>
+                    <Col xs lg="3">
+                        <br/>
+                        <br/>
+                        <button class="endbuttons" onClick={this.handleClose}>Cancel</button>
+                    </Col>
+                </Row>
             </Container>
+            }
         </div>
     </div>
     )

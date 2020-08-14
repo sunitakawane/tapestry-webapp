@@ -1,12 +1,9 @@
-import React, { Component } from "react";
-
-import { connect } from "react-redux";
+import React from "react";
 
 import "./App.css";
 
 export const App = () => {
   return (
-    // console.log(this.props),
     (
       <div className="App">
         <header className="App-header">
