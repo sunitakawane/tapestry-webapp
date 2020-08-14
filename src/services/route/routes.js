@@ -14,8 +14,7 @@ import CompletedTests from "../../views/LandingPage/CompletedTests";
 import url from "../../constants/url";
 // import { useWindowDimensions } from "react-native";
 
-
-if(localStorage.getItem("user") == undefined)
+if(localStorage.getItem("user") === undefined)
 {
   if(window.location.href !== url['BASE_URL']+'login')
       {

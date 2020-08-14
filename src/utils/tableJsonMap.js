@@ -1,20 +1,23 @@
-import {userListApi} from '../api/labApi/userListApi'
+async function tableJsonMap(jsoninput, userslist) {
 
-async function tableJsonMap(jsoninput) {
+    async function getName(id,list) {
+        if(list !== undefined && list !== [])
+        {
+            let userin = list.find(o => o.id === id);
+            console.log(userin)
+            return userin.attributes.firstName + ' ' + userin.attributes.lastName
+        }
+    }
 
     async function jsonMap(jsoninput) {
         let jsonreturn = []
-        let res = {}
-        let userinfo = {}
         let name = ''
         let jsontemp = {}
         if(jsoninput === undefined){
             jsoninput = []
         }
         await Promise.all(jsoninput.map(async (test) => {
-            res = await userListApi.userListId(test.relationships.assignedTo.data.id)
-            userinfo = res.data.data
-            name = userinfo[0].attributes.firstName + ' ' + userinfo[0].attributes.lastName
+            name = await getName(test.relationships.assignedTo.data.id, userslist)
             jsontemp = {
                 'id': test.id, 
                 'samples': test.attributes.nsamples, 

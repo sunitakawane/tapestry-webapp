@@ -57,8 +57,6 @@ function CompletedTests() {
     const kitList = () => dispatch(labActions.kitlist())
     const machineList = () => dispatch(labActions.machinelist())
 
-    const currentUserId = 7
-    //const user = useSelector(state => state.users.users.find(user => user.userId === currentUserId))
     const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
     const labName = 'Test'
 
@@ -81,10 +79,10 @@ function CompletedTests() {
         console.log('First render')
         var options = filter + '&page[number]=1'
         console.log(options)
-        testList(options)
         userList()
         kitList()
         machineList()
+        testList(options)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -154,7 +152,7 @@ function CompletedTests() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await tableJsonMap(tests_json)
+            const result = await tableJsonMap(tests_json, testconductedlist)
             setLoading(false)
             setJsonOutput(result)
         }

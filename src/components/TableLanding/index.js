@@ -115,9 +115,9 @@ function TableLanding(props) {
 
     const getHeader = () => {
         var heads = getKeys()
-        console.log(kit)
-        console.log(machine)
-        console.log(testconductedlist)
+        //console.log(kit)
+        //console.log(machine)
+        //console.log(testconductedlist)
         return heads.map(head => 
         {
             if (props.testStatus === 'ongoing') {

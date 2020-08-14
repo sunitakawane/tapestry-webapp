@@ -60,9 +60,7 @@ function OngoingTests(props) {
     const kitList = () => dispatch(labActions.kitlist())
     const machineList = () => dispatch(labActions.machinelist())
 
-    // Users redux
-    const currentUserId = 7
-    //const user = useSelector(state => state.users.users.find(user => user.userName=== currentUserId))
+    // Users local storage
     const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
     const labName = 'Test'
 
@@ -81,10 +79,10 @@ function OngoingTests(props) {
     useEffect( () => {
         console.log('First render')
         var options = filterMap['0'] + '&page[number]=1'
-        testList(options)
         userList()
         kitList()
-        machineList()        
+        machineList()
+        testList(options)        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -92,6 +90,7 @@ function OngoingTests(props) {
         console.log('New test modal closed')
         var options = filterMap['0'] + '&page[number]=1'
         testList(options)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showtest])
 
     useEffect( () => {
@@ -127,7 +126,6 @@ function OngoingTests(props) {
             setPage(1)
             setRadioValue('0')
         }
-        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[search])
 
@@ -149,7 +147,6 @@ function OngoingTests(props) {
                 testList(options)
             }
         }
-        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
@@ -173,13 +170,13 @@ function OngoingTests(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await tableJsonMap(tests_json)
+            const result = await tableJsonMap(tests_json, testconductedlist)
             setLoading(false)
             setJsonOutput(result)
         }
         setLoading(true)
         fetchData();
-        //setJsonOutput(tableJsonMap(tests_json))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tests_json])
 
     const handleRadio = (e) => {
@@ -246,7 +243,6 @@ function OngoingTests(props) {
         <div id='body' className='bg-light'>
 
         <NavBarLanding activepage='/ongoingtests' userName={userName} labName={labName}/>
-        
         <Container fluid>
             <Row className='mt-3'> {/* Control bar */}
                 <Col xs={7}>
