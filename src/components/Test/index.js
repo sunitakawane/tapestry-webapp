@@ -58,7 +58,7 @@ download()
   console.log(this.state.testconductedby)
   this.setState({showspinner:true})
   if (this.props.modalType === 'new') {
-    axios.post(url["BASE_API_URL"]+'test/',{
+    axios.post(url["BASE_API_URL"]+ 'lab/' + this.state.labId + '/test/',{
       "data":{
                   "type": "test",
                   "attributes": {
@@ -113,7 +113,7 @@ download()
     });
   } else {
     
-    axios.put(url["BASE_API_URL"]+'test/' + this.state.testid + '/', {
+    axios.put(url["BASE_API_URL"]+ 'lab/' + this.state.labId + '/test/' + this.state.testid + '/', {
       "data":{
                   "type": "test",
                   "id": this.state.testid,

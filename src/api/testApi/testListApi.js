@@ -10,10 +10,10 @@ export const testListApi = {
 
 const token = labstate()['token']
 
-function testListAll(filterOptions) {
+function testListAll(filterOptions, labid) {
     if (filterOptions === null) {filterOptions = ''}
     return axios
-        .get(url.BASE_API_URL + 'test/?' + filterOptions, {
+        .get(url.BASE_API_URL + 'lab/' + labid + '/test/?' + filterOptions, {
             headers:{
                 'Authorization': token,
                 Accept : 'application/vnd.api+json'
@@ -24,9 +24,9 @@ function testListAll(filterOptions) {
         });
 }
 
-function testListId(id) {
+function testListId(id,labid) {
     return axios
-        .get(url.BASE_API_URL + 'test/' + id.toString() , {
+        .get(url.BASE_API_URL + 'lab/' + labid + '/test/' + id.toString() , {
             headers:{
                 'Authorization': token,
                 Accept : 'application/vnd.api+json'

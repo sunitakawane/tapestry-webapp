@@ -56,14 +56,15 @@ function OngoingTests(props) {
 
     // Redux
     const dispatch = useDispatch();
-    const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions))
-    const userList = () => dispatch(labActions.userlist())
+    const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions,labid))
+    const userList = () => dispatch(labActions.userlist(labid))
     const kitList = () => dispatch(labActions.kitlist())
     const machineList = () => dispatch(labActions.machinelist())
 
     // Users local storage
     const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
     const labName = 'Test'
+    const labid = 1
 
     // Tests redux
     const tests_json = useSelector(gettestList);
@@ -85,12 +86,12 @@ function OngoingTests(props) {
             return new Promise( res => setTimeout(res, delay) );
         }
         await timeout(2000);
-        testList(options)
+        testList(options,labid)
     }
 
     useEffect( () => {
         const fetchlists = async () => {
-            userList()
+            userList(labid)
             await testdelayList()
             kitList()
             machineList()
@@ -104,7 +105,7 @@ function OngoingTests(props) {
         if (!initialmount) {
             console.log('New test modal closed')
             var options = filterMap['0'] + '&page[number]=1'
-            testList(options)
+            testList(options,labid)
             initialmount = false
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,7 +115,7 @@ function OngoingTests(props) {
         if (searchOn) {
             console.log('Search operation')
             var options = filterMap['0'] + '&search=' + search + '&page[number]=1'
-            testList(options)
+            testList(options,labid)
             setPrevState(prev => ({
                 ...prev,
                 'searchOn': true,
@@ -132,7 +133,7 @@ function OngoingTests(props) {
         if(searchOn) {
             console.log('Search operation removed')
             var options = filterMap['0'] + '&page[number]=1'
-            testList(options)
+            testList(options,labid)
             setPrevState(prev => ({
                 ...prev,
                 'searchOn': false,
@@ -152,7 +153,7 @@ function OngoingTests(props) {
             if(!searchOn) {
                 console.log('New page')
                 options = options.concat(filterMap[radioValue] + '&page[number]=' + page)
-                testList(options)
+                testList(options,labid)
                 setPrevState(prev => ({
                     ...prev,
                     'search': search
@@ -161,7 +162,7 @@ function OngoingTests(props) {
             } else {
                 console.log('Page changed in search mode')
                 options = options.concat(filterMap['0'] + '&search=' + search + '&page[number]=' + page)
-                testList(options)
+                testList(options,labid)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,7 +172,7 @@ function OngoingTests(props) {
         if (prevState.radioValue !== '0' || radioValue !== '0') {
             console.log('Status filter changed')
             var options = filterMap[radioValue] + '&page[number]=' + page
-            testList(options)
+            testList(options,labid)
             setPrevState(prev => ({
                 ...prev,
                 'search': search,
@@ -257,8 +258,7 @@ function OngoingTests(props) {
 
     //Render
     return (
-        <div id='body' className='bg-light'>
-
+        <div id='body' className='bg-light'>    
         <NavBarLanding activepage='/ongoingtests' userName={userName} labName={labName}/>
         <Container fluid>
             <Row className='mt-3'> {/* Control bar */}
@@ -322,7 +322,7 @@ function OngoingTests(props) {
             <Row className='mt-3 ml-3 mr-3'>
                 <Col>       
                     {loading? <p className='text-center'>Loading!</p> : null}
-                    <TableLanding jsonoutput={jsonoutput} testStatus={testStatus}/>
+                    <TableLanding jsonoutput={jsonoutput} testStatus={testStatus} labid={labid}/>
                 </Col>
             </Row>
             {paginateTable()}

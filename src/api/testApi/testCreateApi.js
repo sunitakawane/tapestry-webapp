@@ -9,9 +9,9 @@ export const testCreateApi = {
 
 const token = labstate()['token'];
 
-function testCreate(test) {
+function testCreate(test, labid) {
     return axios
-        .post(url.BASE_API_URL + 'test/', test, {
+        .post(url.BASE_API_URL + 'lab/' + labid + '/test/', test, {
             headers:{
                 'Authorization': token,
                 Accept : 'application/vnd.api+json'

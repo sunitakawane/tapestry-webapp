@@ -12,10 +12,10 @@ export const testActions = {
     test_pupdate
 };
 
-function test_listAll(filterOptions) {
+function test_listAll(filterOptions,labid) {
     console.log('Before API call')
     return (dispatch) => {
-        testListApi.testListAll(filterOptions)
+        testListApi.testListAll(filterOptions,labid)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({
@@ -33,10 +33,10 @@ function test_listAll(filterOptions) {
     }
 }
 
-function test_listId(id) {
+function test_listId(id,labid) {
     console.log('Before API call')
     return (dispatch) => {
-        testListApi.testListId(id)
+        testListApi.testListId(id,labid)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({
@@ -54,11 +54,11 @@ function test_listId(id) {
     }
 }
 
-function test_create() {
+function test_create(test,labid) {
     console.log('Before API call')
-    console.log(testdata())
+    //console.log(testdata())
     return (dispatch) => {
-        testCreateApi.testCreate(test)
+        testCreateApi.testCreate(test,labid)
              .then((response) => {
                  console.log('API call successful')
                  dispatch({
@@ -77,10 +77,10 @@ function test_create() {
      }
 }
 
-function test_update(test) {
+function test_update(test,labid) {
     console.log('Before API call')
     return (dispatch) => {
-        testUpdateApi.testUpdate(test)
+        testUpdateApi.testUpdate(test,labid)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({
@@ -99,10 +99,10 @@ function test_update(test) {
     }
 }
 
-function test_pupdate(testId, keyId, value) {
+function test_pupdate(testId, keyId, value, labid) {
     console.log('Before API call')
     return (dispatch) => {
-        testUpdateApi.testPUpdate(testId, keyId, value)
+        testUpdateApi.testPUpdate(testId, keyId, value, labid)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({

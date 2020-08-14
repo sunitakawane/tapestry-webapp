@@ -84,7 +84,7 @@ function TableLanding(props) {
     }
 
     const onClick = (row) =>{
-        axios.get(url["BASE_API_URL"]+'test/'+ row[testConstants.TEST_ID]+"/",{
+        axios.get(url["BASE_API_URL"]+ 'lab/' + props.labid + '/test/'+ row[testConstants.TEST_ID]+"/",{
         headers:{
             'Authorization':'Bearer '+ JSON.parse(localStorage.getItem("user"))['token']
         }
@@ -158,6 +158,20 @@ function TableLanding(props) {
         </Popover>
     }
 
+    const downloadmatrix = (filelink) => {
+        if (filelink !== '') {
+            /*const link = document.createElement('a');
+            console.log(link)
+            link.href = filelink;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);*/
+            console.log('Download')
+        } else {
+            console.log('No file')
+        }
+    }
+
     const getBody = () => {
         var items = props.jsonoutput;
         var keys = getKeys();
@@ -175,7 +189,8 @@ function TableLanding(props) {
                                 case testConstants.ASSIGNED: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
                                 case testConstants.STATUS: return <th key={key} className='text-normal text-center text-danger'>{statusMap[row[key]]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
-                                    <a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>
+                                    {/*<a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>*/}
+                                    <button className='download-button' onClick={downloadmatrix(row[testConstants.FILE])}>Download pooling matrix</button>
                                 </th>
                                 case 'upload': return <th key={key} className='text-normal text-center'>
                                     <a className='text-dark prim-color'>Reupload {getSVG('reupload')}</a>
@@ -202,7 +217,7 @@ function TableLanding(props) {
                                 case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
                                 case testConstants.STATUS: return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
-                                    <a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>
+                                    <button className='download-button' onClick={() => {downloadmatrix(row[testConstants.FILE])}}>Download pooling matrix</button>
                                 </th>
                                 case 'upload': return <th key={key} className='text-normal text-center'>
                                     <span onClick={()=>sendRequest()} className='prim-color'>Upload qPCR results</span>
