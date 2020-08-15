@@ -12,10 +12,8 @@ function country() {
   });
 }
 
-function city(country_id) {
-  return axios
-    .get(url.BASE_API_URL_SERVER + "city/" + country_id + "/")
-    .then((response) => {
-      return response;
-    });
+function city() {
+  return axios.get(url.BASE_API_URL_SERVER + "city/").then((response) => {
+    return response;
+  });
 }

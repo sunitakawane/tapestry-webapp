@@ -21,8 +21,9 @@ export default function signUpReducer(state = initalState, action) {
         isInvalid: true,
       };
 
-    case authConstants.LOCATION_FETCH_SUCCESS:
+    case authConstants.COUNTRY_FETCH_SUCCESS:
       var results = action.payload.results;
+      console.log(action.payload.results, "reducer-tathu");
       // var country = [];
       // for (var i = 0; i < results.length; i++) {
       //   country.push(results[i]);
@@ -32,6 +33,18 @@ export default function signUpReducer(state = initalState, action) {
       return {
         countrylist: results,
       };
+
+    case authConstants.COUNTRY_FETCH_FAILURE:
+      return {};
+
+    case authConstants.CITY_FETCH_SUCCESS:
+      var results = action.payload.results;
+      return {
+        cities: results,
+      };
+
+    case authConstants.CITY_FETCH_FAILURE:
+      return {};
 
     default:
       return state;

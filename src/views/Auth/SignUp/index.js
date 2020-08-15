@@ -34,6 +34,7 @@ const SignUp = () => {
   const isRegisterd = useSelector((state) => state.signUp.isRegistered);
   const isInvalid = useSelector((state) => state.signUp.isInvalid);
   const countrylist = useSelector((state) => state.signUp.countrylist);
+  const cities = useSelector((state) => state.signUp.cities);
   // dispatch (used to define sign-up function)
   const dispatch = useDispatch();
   const signUpRequested = () => dispatch(signUpActions.signUpRequested());
@@ -43,12 +44,15 @@ const SignUp = () => {
     );
 
   const countryList = () => dispatch(signUpActions.countryList());
+  const cityList = () => dispatch(signUpActions.cityList());
 
   useEffect(() => {
     console.log("useEffect has been called!");
-    countryList();
+    // countryList();
+    cityList();
   }, []);
 
+  console.log(cities);
   // const countries = JSON.parse(localStorage.getItem("countries"));
 
   const handleEmailInput = (e) => {
@@ -229,7 +233,7 @@ const SignUp = () => {
                 <Form.Group as={Row} controlId="formHorizontalText">
                   <Col sm={8}>
                     {console.log(typeof countrylist)}
-                    <Autocomplete
+                    {/* <Autocomplete
                       getItemValue={(item) => item.label}
                       items={countrylist}
                       value={country}
@@ -245,7 +249,7 @@ const SignUp = () => {
                           {item.label}
                         </div>
                       )}
-                    />
+                    /> */}
                   </Col>
                 </Form.Group>
 

@@ -14,21 +14,26 @@ function loginRequested() {
 }
 
 function login(email, password) {
-  console.log("action", email, password);
   return (dispatch) => {
     loginApi
       .login(email, password)
       .then((response) => {
-        console.log("yesss", response);
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("user-login-info", JSON.stringify(response.data));
         dispatch({
           type: authConstants.LOGIN_SUCCESS,
           payload: response.data,
         });
-        // history.push("/onboarding");
       })
       .catch((error) => {
-        console.log("noooo", error);
+        if (error.response) {
+          // client received an error response (5xx, 4xx)
+          // console.log("response-data", error.response.data[0].detail)
+        } else if (error.request) {
+          // client never received a response, or request never left
+          console.log("request", error.request)
+        } else {
+          // anything else
+        }    
         dispatch({
           type: authConstants.LOGIN_FAILURE,
           payload: error.toString(),

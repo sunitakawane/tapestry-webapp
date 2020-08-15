@@ -6,6 +6,7 @@ export const signUpActions = {
   signUpRequested,
   signUp,
   countryList,
+  cityList,
 };
 
 function signUpRequested() {
@@ -42,12 +43,37 @@ function countryList() {
     locationApi
       .country()
       .then((response) => {
-        localStorage.setItem("countries", JSON.stringify(response.data));
         dispatch({
-          type: authConstants.LOCATION_FETCH_SUCCESS,
+          type: authConstants.COUNTRY_FETCH_SUCCESS,
           payload: response.data,
         });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        dispatch({
+          type: authConstants.COUNTRY_FETCH_FAILURE,
+          payload: error.toString(),
+        });
+      });
+  };
+}
+
+function cityList() {
+  return (dispatch) => {
+    locationApi
+      .city()
+      .then((response) => {
+        dispatch({
+          type: authConstants.CITY_FETCH_SUCCESS,
+          payload: response.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch({
+          type: authConstants.CITY_FETCH_FAILURE,
+          payload: error.toString(),
+        });
+      });
   };
 }

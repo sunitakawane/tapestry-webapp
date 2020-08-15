@@ -10,7 +10,7 @@ function getUser() {
     userApi
       .getUser()
       .then((response) => {
-        localStorage.setItem("full-user-info", JSON.stringify(response.data));
+        localStorage.setItem("user", JSON.stringify(response.data));
         dispatch({
           type: userConstants.GET_USER_SUCCESS,
           payload: response.data,
