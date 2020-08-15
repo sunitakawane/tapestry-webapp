@@ -12,10 +12,10 @@ export const testActions = {
     test_pupdate
 };
 
-function test_listAll(filterOptions,labid) {
+function test_listAll(filterOptions,labId) {
     console.log('Before API call')
     return (dispatch) => {
-        testListApi.testListAll(filterOptions,labid)
+        testListApi.testListAll(filterOptions,labId)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({
@@ -33,10 +33,10 @@ function test_listAll(filterOptions,labid) {
     }
 }
 
-function test_listId(id,labid) {
+function test_listId(id,labId) {
     console.log('Before API call')
     return (dispatch) => {
-        testListApi.testListId(id,labid)
+        testListApi.testListId(id,labId)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({
@@ -54,11 +54,11 @@ function test_listId(id,labid) {
     }
 }
 
-function test_create(test,labid) {
+function test_create(test,labId) {
     console.log('Before API call')
     //console.log(testdata())
     return (dispatch) => {
-        testCreateApi.testCreate(test,labid)
+        testCreateApi.testCreate(test,labId)
              .then((response) => {
                  console.log('API call successful')
                  dispatch({
@@ -77,10 +77,10 @@ function test_create(test,labid) {
      }
 }
 
-function test_update(test,labid) {
+function test_update(test,labId) {
     console.log('Before API call')
     return (dispatch) => {
-        testUpdateApi.testUpdate(test,labid)
+        testUpdateApi.testUpdate(test,labId)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({
@@ -99,10 +99,10 @@ function test_update(test,labid) {
     }
 }
 
-function test_pupdate(testId, keyId, value, labid) {
+function test_pupdate(testId, keyId, value, labId) {
     console.log('Before API call')
     return (dispatch) => {
-        testUpdateApi.testPUpdate(testId, keyId, value, labid)
+        testUpdateApi.testPUpdate(testId, keyId, value, labId)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({

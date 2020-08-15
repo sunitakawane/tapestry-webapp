@@ -1,3 +1,3 @@
-export const getkit = state => state.lab.kit
-export const getmachine = state => state.lab.machine
-export const gettestconductedlist = state => state.lab.testconductedlist
+export const getKit = state => state.lab.kit;
+export const getMachine = state => state.lab.machine;
+export const getTestConductedList = state => state.lab.testConductedList;

@@ -9,10 +9,10 @@ export const labActions = {
     machinelist
 } 
 
-function userlist(labid) {
+function userlist(labId) {
     console.log('Before API call')
     return(dispatch) => {
-        userListApi.userListAll(labid)
+        userListApi.userListAll(labId)
             .then((response) => {
                 console.log('API call successful')
                 dispatch({

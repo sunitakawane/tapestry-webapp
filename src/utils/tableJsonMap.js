@@ -31,8 +31,8 @@ async function tableJsonMap(jsoninput, userslist) {
         return jsonreturn
     }
 
-    var jsonoutput = await jsonMap(jsoninput)
-    return jsonoutput    
+    var jsonOutput = await jsonMap(jsoninput)
+    return jsonOutput    
 }
 
 export default tableJsonMap

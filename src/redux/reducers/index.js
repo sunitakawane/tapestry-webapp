@@ -1,19 +1,20 @@
 import { combineReducers } from "redux";
 
-import LoginReducer from "./authReducers/loginReducer";
-import SignUpReducer from "./authReducers/signupReducer";
-import PasswordReducer from "./authReducers/passwordReducer";
-import testReducer from './landingReducers/testsReducer'
-import summaryReducer from './landingReducers/summaryReducers'
-import labReducer from './labReducers/labReducers'
+// reducers
+import labReducer from './labReducers/labReducers';
+import loginReducer from "./authReducers/loginReducer";
+import passwordReducer from "./authReducers/passwordReducer";
+import signUpReducer from "./authReducers/signupReducer";
+import summaryReducer from './landingReducers/summaryReducers';
+import testReducer from './landingReducers/testsReducer';
 
 const rootReducer = combineReducers({
-  login: LoginReducer,
-  signUp: SignUpReducer,
-  password: PasswordReducer,
-  tests: testReducer,
+  lab: labReducer,
+  login: loginReducer,
+  password: passwordReducer,
+  signUp: signUpReducer,
   summary: summaryReducer,
-  lab: labReducer
+  tests: testReducer,
 });
 
 export default rootReducer;

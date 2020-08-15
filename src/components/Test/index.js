@@ -16,12 +16,12 @@ export default class Test extends React.Component{
 constructor(props){
   super(props)
   this.handleClose = props.handleClose;
-  console.log(props.testconductedlist)
+  console.log(props.testConductedList)
   console.log(props.remarks)
   this.state ={
     machine:props.machine,
     kit:props.kit,
-    testconductedlist:props.testconductedlist,
+    testConductedList:props.testConductedList,
     testconductedby:JSON.parse(localStorage.getItem("user"))['user']['pk'],
     remarks:props.remarks,
     testid:props.testid,    
@@ -214,7 +214,7 @@ componentDidMount()
   })
   // this.setState({machine:testdataApi.machine()})
   // this.setState({kit:testdataApi.kit()})
-  // this.setState({testconductedlist:testdataApi.userlist()})
+  // this.setState({testConductedList:testdataApi.userlist()})
 }
 
 render()
@@ -324,7 +324,7 @@ render()
               Test Conducted By
             </Col>
             <Col xs lg="3">
-              <DropdownContent name="testconductedby" list={this.state.testconductedlist} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.testconductedby}/>
+              <DropdownContent name="testconductedby" list={this.state.testConductedList} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.testconductedby}/>
             </Col>
           </Row>
           <br/>

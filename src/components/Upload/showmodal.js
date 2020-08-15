@@ -1,15 +1,15 @@
 import {useState} from 'react';
 
 const useUploadModal = () => {
-    const [showupload, setIsShowing] = useState(false);
+    const [showUpload, setIsShowing] = useState(false);
   
-    function toggleupload() {
-      setIsShowing(!showupload);
+    function toggleUpload() {
+      setIsShowing(!showUpload);
     }
   
     return {
-      showupload,
-      toggleupload,
+      showUpload,
+      toggleUpload,
     }
   };
 

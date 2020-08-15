@@ -9,9 +9,9 @@ export const userListApi = {
 
 const token = labstate()['token'];
 
-async function userListAll(labid) {
+async function userListAll(labId) {
     return await axios
-        .get(url.BASE_API_URL + 'lab/' + labid + '/member/', {
+        .get(url.BASE_API_URL + 'lab/' + labId + '/member/', {
             headers:{
                 'Authorization': token,
                 Accept : 'application/vnd.api+json'
@@ -22,9 +22,9 @@ async function userListAll(labid) {
         });
 }
 
-async function userListId(id, labid) {
+async function userListId(id, labId) {
     return await axios
-        .get(url.BASE_API_URL + 'lab/' + labid + '/member/' + id.toString(), {
+        .get(url.BASE_API_URL + 'lab/' + labId + '/member/' + id.toString(), {
             headers:{
                 'Authorization': token,
                 Accept : 'application/vnd.api+json'

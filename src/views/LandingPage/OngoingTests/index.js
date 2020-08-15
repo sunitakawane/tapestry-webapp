@@ -12,7 +12,7 @@ import getSVG from "../../../utils/getSVG"
 import Test from '../../../components/Test';
 import useTestModal from '../../../components/Test/showmodal';
 
-import {getkit,gettestconductedlist,getmachine} from '../../../redux/selectors/labSelectors'
+import {getKit,getTestConductedList,getMachine} from '../../../redux/selectors/labSelectors'
 import {gettestList,getcount} from '../../../redux/selectors/landingPageSelectors/testsSelectors'
 import {testActions} from '../../../redux/actions/testActions/testActions'
 import {labActions} from '../../../redux/actions/labActions/labActions'
@@ -40,13 +40,13 @@ function OngoingTests(props) {
 
     const [radioValue, setRadioValue] = useState('0');
     const [search,setSearch] = useState('')
-    const [jsonoutput, setJsonOutput] = useState([])
+    const [jsonOutput, setJsonOutput] = useState([])
     const [page, setPage] = useState(1)
     const [searchOn, setSearchOn] = useState(false)
     const [prevState, setPrevState] = useState({'search': '', 'searchOn': false, 'page': 1, 'radioValue': '0'})
     const [loading, setLoading] = useState(true)
 
-    const onGoingTests = jsonoutput.length
+    const onGoingTests = jsonOutput.length
     const radios = [
         {name:'All', value:'0'},
         {name:'Errors', value:'-1'},
@@ -56,23 +56,23 @@ function OngoingTests(props) {
 
     // Redux
     const dispatch = useDispatch();
-    const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions,labid))
-    const userList = () => dispatch(labActions.userlist(labid))
+    const testList = (apiFilterOptions) => dispatch(testActions.test_listAll(apiFilterOptions,labId))
+    const userList = () => dispatch(labActions.userlist(labId))
     const kitList = () => dispatch(labActions.kitlist())
     const machineList = () => dispatch(labActions.machinelist())
 
     // Users local storage
     const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
     const labName = 'Test'
-    const labid = 1
+    const labId = 1
 
     // Tests redux
     const tests_json = useSelector(gettestList);
 
-    const machine = useSelector(getmachine)
-    const kit = useSelector(getkit)
-    var testconductedlist = []
-    testconductedlist = useSelector(gettestconductedlist)
+    const machine = useSelector(getMachine)
+    const kit = useSelector(getKit)
+    var testConductedList = []
+    testConductedList = useSelector(getTestConductedList)
     
     const pageinfo = useSelector(getcount)
     if(pageinfo) {
@@ -86,12 +86,12 @@ function OngoingTests(props) {
             return new Promise( res => setTimeout(res, delay) );
         }
         await timeout(2000);
-        testList(options,labid)
+        testList(options,labId)
     }
 
     useEffect( () => {
         const fetchlists = async () => {
-            userList(labid)
+            userList(labId)
             await testdelayList()
             kitList()
             machineList()
@@ -105,7 +105,7 @@ function OngoingTests(props) {
         if (!initialmount) {
             console.log('New test modal closed')
             var options = filterMap['0'] + '&page[number]=1'
-            testList(options,labid)
+            testList(options,labId)
             initialmount = false
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,7 +115,7 @@ function OngoingTests(props) {
         if (searchOn) {
             console.log('Search operation')
             var options = filterMap['0'] + '&search=' + search + '&page[number]=1'
-            testList(options,labid)
+            testList(options,labId)
             setPrevState(prev => ({
                 ...prev,
                 'searchOn': true,
@@ -133,7 +133,7 @@ function OngoingTests(props) {
         if(searchOn) {
             console.log('Search operation removed')
             var options = filterMap['0'] + '&page[number]=1'
-            testList(options,labid)
+            testList(options,labId)
             setPrevState(prev => ({
                 ...prev,
                 'searchOn': false,
@@ -153,7 +153,7 @@ function OngoingTests(props) {
             if(!searchOn) {
                 console.log('New page')
                 options = options.concat(filterMap[radioValue] + '&page[number]=' + page)
-                testList(options,labid)
+                testList(options,labId)
                 setPrevState(prev => ({
                     ...prev,
                     'search': search
@@ -162,7 +162,7 @@ function OngoingTests(props) {
             } else {
                 console.log('Page changed in search mode')
                 options = options.concat(filterMap['0'] + '&search=' + search + '&page[number]=' + page)
-                testList(options,labid)
+                testList(options,labId)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -172,7 +172,7 @@ function OngoingTests(props) {
         if (prevState.radioValue !== '0' || radioValue !== '0') {
             console.log('Status filter changed')
             var options = filterMap[radioValue] + '&page[number]=' + page
-            testList(options,labid)
+            testList(options,labId)
             setPrevState(prev => ({
                 ...prev,
                 'search': search,
@@ -188,7 +188,7 @@ function OngoingTests(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await tableJsonMap(tests_json, testconductedlist)
+            const result = await tableJsonMap(tests_json, testConductedList)
             setLoading(false)
             setJsonOutput(result)
         }
@@ -313,7 +313,7 @@ function OngoingTests(props) {
                         <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                             <Modal size="lg" show={showtest}>
-                                <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist} modalType = {'new'}/>
+                                <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testConductedList={testConductedList} modalType = {'new'}/>
                             </Modal>
                         </Col>
                     </Row>
@@ -322,7 +322,7 @@ function OngoingTests(props) {
             <Row className='mt-3 ml-3 mr-3'>
                 <Col>       
                     {loading? <p className='text-center'>Loading!</p> : null}
-                    <TableLanding jsonoutput={jsonoutput} testStatus={testStatus} labid={labid}/>
+                    <TableLanding jsonOutput={jsonOutput} testStatus={testStatus} labId={labId}/>
                 </Col>
             </Row>
             {paginateTable()}
