@@ -115,25 +115,16 @@ const TableLanding = props => {
     //console.log(machine)
     //console.log(testConductedList)
     return heads.map(head => {
-      if (testStatus === 'ongoing') {
-        switch(head){
-          case testConstants.TEST_ID: return <th key={head}>TEST ID</th>;
-          case testConstants.SAMPLES: return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
-          case testConstants.ASSIGNED: return <th key={head}>ASSIGNED TO</th>;
-          case testConstants.STATUS: return <th key={head} className='text-center'>STATUS</th>;
-          default: return null;
-        }
-      } else {
-        switch(head){
-          case testConstants.TEST_ID: return <th key={head}>TEST ID</th>;
-          case testConstants.SAMPLES: return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
-          case testConstants.ASSIGNED: return <th key={head}>ASSIGNED TO</th>;
-          case testConstants.PREVALENCE: return <th key={head} className='text-center'>PREVALENCE</th>
-          case testConstants.POS_SAMPLES: return <th key={head} className='text-center'>POSITIVE SAMPLES</th>;
-          case testConstants.UNDET_SAMPLES: return <th key={head} className='text-center'>UNDETERMINED SAMPLES</th>
-          default: return null;
-        }
-      }            
+      switch(head){
+        case testConstants.ASSIGNED: return <th key={head}>ASSIGNED TO</th>;
+        case testConstants.POS_SAMPLES: return <th key={head} className='text-center'>POSITIVE SAMPLES</th>;
+        case testConstants.PREVALENCE: return <th key={head} className='text-center'>PREVALENCE</th>
+        case testConstants.SAMPLES: return <th key={head} className='text-center'>NUMBER OF SAMPLES</th>
+        case testConstants.STATUS: return <th key={head} className='text-center'>STATUS</th>;
+        case testConstants.TEST_ID: return <th key={head}>TEST ID</th>;
+        case testConstants.UNDET_SAMPLES: return <th key={head} className='text-center'>UNDETERMINED SAMPLES</th>
+        default: return null;
+      }          
     });
   };
 
@@ -166,97 +157,102 @@ const TableLanding = props => {
     }
   }
 
+  const getTestId = () => {};
+
   const getBody = () => {
     var items = jsonOutput;
     var keys = getKeys();
     keys = keys.concat(rows);
+
     return items.map((row, index) => {
       if (testStatus === 'ongoing') {
         if (row[testConstants.STATUS] === '5') {
-          return <tr key={index} style={{borderLeft: '5px solid red'}}>
+          return (
+            <tr key={index} style={{borderLeft: '5px solid red'}}>
+              {keys.map(key => {
+                switch(key) {
+                  case testConstants.TEST_ID: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
+                  case testConstants.SAMPLES: return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
+                  case testConstants.ASSIGNED: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
+                  case testConstants.STATUS: return <th key={key} className='text-normal text-center text-danger'>{statusMap[row[key]]}</th>;
+                  case 'download': return <th key={key} className='text-normal text-center'>
+                    {/*<a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>*/}
+                    <button className='download-button' onClick={downloadMatrix(row[testConstants.FILE])}>Download pooling matrix</button>
+                  </th>
+                  case 'upload': return <th key={key} className='text-normal text-center'>
+                    <a className='text-dark prim-color'>Reupload {getSVG('reupload')}</a>
+                  </th>
+                  case 'options': return (
+                    <th key={key} className='text-center'>
+                      <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsOverlayTrigger(row)}>
+                        <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
+                      </OverlayTrigger>                                            
+                    </th>
+                  )
+                  default: return null;
+                }    
+              })}
+            </tr>
+          )
+        } else {
+          return (
+            <tr key={index}>
+              {keys.map(key => {
+                switch(key) {
+                  case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
+                  case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                  case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
+                  case testConstants.STATUS: return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
+                  case 'download': return <th key={key} className='text-normal text-center'>
+                    <button className='download-button' onClick={() => {downloadMatrix(row[testConstants.FILE])}}>Download pooling matrix</button>
+                  </th>
+                  case 'upload': return <th key={key} className='text-normal text-center'>
+                    <span onClick={()=>sendRequest()} className='prim-color'>Upload qPCR results</span>
+                    <Modal size="lg" show={showUpload}>
+                        <Upload download={download} completed={completed} handleClose={toggleUpload}/>
+                    </Modal>
+                  </th>
+                  case 'options': return (
+                    <th key={key} className='text-center'>
+                      <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsOverlayTrigger(row)}>
+                        <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
+                      </OverlayTrigger>                                            
+                    </th>
+                  )
+                  default: return null;
+                }    
+            })}
+            </tr>
+          );
+        }
+      } else {
+        return (
+          <tr key={index}>
             {keys.map(key => {
               switch(key) {
-                case testConstants.TEST_ID: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
-                case testConstants.SAMPLES: return <th key={key} className='text-normal text-center text-danger'>{row[key]}</th>;
-                case testConstants.ASSIGNED: return <th key={key} className='text-normal text-danger'>{row[key]}</th>;
-                case testConstants.STATUS: return <th key={key} className='text-normal text-center text-danger'>{statusMap[row[key]]}</th>;
-                case 'download': return <th key={key} className='text-normal text-center'>
-                  {/*<a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>*/}
-                  <button className='download-button' onClick={downloadMatrix(row[testConstants.FILE])}>Download pooling matrix</button>
-                </th>
-                case 'upload': return <th key={key} className='text-normal text-center'>
-                  <a className='text-dark prim-color'>Reupload {getSVG('reupload')}</a>
+                case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
+                case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
+                case testConstants.PREVALENCE: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>
+                case testConstants.POS_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
+                case testConstants.UNDET_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
+                case 'view': return <th key={key} className='text-normal text-center'>
+                    <a href="/completedtests#" className='prim-color'>View results</a>
                 </th>
                 case 'options': return (
                   <th key={key} className='text-center'>
-                    <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsOverlayTrigger(row)}>
+                    <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsct()}>
                       <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
                     </OverlayTrigger>                                            
                   </th>
                 )
                 default: return null;
-              }    
+              }
             })}
           </tr>
-            } else {
-              return (
-                <tr key={index}>
-                  {keys.map(key => {
-                    switch(key) {
-                      case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
-                      case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                      case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
-                      case testConstants.STATUS: return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
-                      case 'download': return <th key={key} className='text-normal text-center'>
-                        <button className='download-button' onClick={() => {downloadMatrix(row[testConstants.FILE])}}>Download pooling matrix</button>
-                      </th>
-                      case 'upload': return <th key={key} className='text-normal text-center'>
-                        <span onClick={()=>sendRequest()} className='prim-color'>Upload qPCR results</span>
-                        <Modal size="lg" show={showUpload}>
-                            <Upload download={download} completed={completed} handleClose={toggleUpload}/>
-                        </Modal>
-                      </th>
-                      case 'options': return (
-                        <th key={key} className='text-center'>
-                          <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsOverlayTrigger(row)}>
-                            <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
-                          </OverlayTrigger>                                            
-                        </th>
-                      )
-                      default: return null;
-                    }    
-                })}
-                </tr>
-              );
-            }
-          } else {
-            return (
-              <tr key={index}>
-                {keys.map(key => {
-                  switch(key) {
-                    case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
-                    case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                    case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
-                    case testConstants.PREVALENCE: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>
-                    case testConstants.POS_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
-                    case testConstants.UNDET_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
-                    case 'view': return <th key={key} className='text-normal text-center'>
-                        <a href="/completedtests#" className='prim-color'>View results</a>
-                    </th>
-                    case 'options': return (
-                      <th key={key} className='text-center'>
-                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsct()}>
-                          <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
-                        </OverlayTrigger>                                            
-                      </th>
-                    )
-                    default: return null;
-                  }
-                })}
-              </tr>
-            )
-          }      
-      });
+        )
+      }      
+  });
   }
 
   return (  
