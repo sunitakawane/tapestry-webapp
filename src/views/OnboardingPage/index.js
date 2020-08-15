@@ -16,6 +16,10 @@ import machine3 from "./machine3.png";
 import machine4 from "./machine4.png";
 import "./onboarding.scss";
 
+const userinfo = JSON.parse(localStorage.getItem("full-user-info"));
+console.log(userinfo, "user-info");
+
+
 class Onboarding extends Component {
   render() {
     return (
