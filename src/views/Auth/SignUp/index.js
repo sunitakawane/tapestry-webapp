@@ -115,6 +115,92 @@ const SignUp = () => {
     history.push("/request-sent");
   }
 
+  const stateList = [
+    "Andaman and Nicobar Islands",
+    "Arunachal Pradesh",
+    "Mumbai",
+    "Bihar",
+    "Chandigarh",
+    "Chhattisgarh",
+    "Dadar and Nagar Haveli",
+    "Daman and Diu",
+    "Delhi",
+    "Lakshadweep",
+    "Puducherry",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jammu and Kashmir",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttar Pradesh",
+    "Uttarakhand",
+    "West Bengal"
+  ];
+
+  const getEventTarget = e => e && e.target && e.target.value;
+
+  const handleUpdateFieldFunctionMap = {
+    'email': (e) => setEmail(getEventTarget(e)),
+    'firstName': (e) => setFirstName(getEventTarget(e)),
+    'lastName': (e) => setLastName(getEventTarget(e)),
+    'labName': (e) => setLabName(getEventTarget(e)),
+  }
+
+  const FormFields = [
+    {
+      id: email,
+      type: 'email',
+      className: 'input',
+      placeholder: 'Email Address',
+      value: email,
+      required: true,
+      controlId: 'formHorizontalEmail',
+    },
+    {
+      id: 'firstName',
+      type: 'text',
+      className: 'input',
+      placeholder: 'First Name',
+      value: firstName,
+      required: true,
+      controlId: 'formHorizontalText',
+    },
+    {
+      id: 'lastName',
+      type: 'text',
+      className: 'input',
+      placeholder: 'Last Name',
+      value: lastName,
+      required: true,
+      controlId: 'formHorizontalText',
+    },
+    {
+      id: 'labName',
+      type: 'text',
+      className: 'input',
+      placeholder: 'Lab Name',
+      value: labName,
+      required: true,
+      controlId: 'formHorizontalText',
+    },
+  ]
+
   return (
     <Container fluid>
       <Row>
@@ -162,74 +248,29 @@ const SignUp = () => {
 
               <Form onSubmit={handleSubmit}>
                 {/* noValidate validated={validated} */}
-                <Form.Group as={Row} controlId="formHorizontalEmail">
-                  <Col sm={8}>
-                    <Form.Control
-                      className="input"
-                      type="email"
-                      placeholder="Email Address"
-                      size="lg"
-                      value={email}
-                      onChange={handleEmailInput}
-                      required
-                    />
-                  </Col>
-                  <Form.Control.Feedback type="invalid">
-                    Email is required.
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group as={Row} controlId="formHorizontalText">
-                  <Col sm={8}>
-                    <Form.Control
-                      className="input"
-                      type="text"
-                      placeholder="First Name"
-                      size="lg"
-                      value={firstName}
-                      onChange={handleFirstNameInput}
-                      required
-                    />
-                  </Col>
-                  <Form.Control.Feedback type="invalid">
-                    First Name is required.
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group as={Row} controlId="formHorizontalText">
-                  <Col sm={8}>
-                    <Form.Control
-                      className="input"
-                      type="text"
-                      placeholder="Last Name"
-                      size="lg"
-                      value={lastName}
-                      onChange={handleLastNameInput}
-                      required
-                    />
-                  </Col>
-                  <Form.Control.Feedback type="invalid">
-                    Last Name is required.
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group as={Row} controlId="formHorizontalText">
-                  <Col sm={8}>
-                    <Form.Control
-                      className="input"
-                      type="text"
-                      placeholder="Lab Name"
-                      size="lg"
-                      value={labName}
-                      onChange={handleLabNameInput}
-                      required
-                    />
-                  </Col>
-                  <Form.Control.Feedback type="invalid">
-                    Lab Name is required.
-                  </Form.Control.Feedback>
-                </Form.Group>
-
+                {
+                  FormFields.map(f => {
+                    const { id, className, controlId, placeholder, required, type, value} = f;
+                    return (
+                      <Form.Group as={Row} controlId={controlId}>
+                        <Col sm={8}>
+                          <Form.Control
+                            className={className}
+                            type={type}
+                            placeholder={placeholder}
+                            size="lg"
+                            value={value}
+                            onChange={handleUpdateFieldFunctionMap[id]}
+                            required={required}
+                          />
+                        </Col>
+                        <Form.Control.Feedback type="invalid">
+                          {`${placeholder} is required.`}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    )
+                  })
+                }
                 <Form.Group as={Row} controlId="formHorizontalText">
                   <Col sm={8}>
                     {console.log(typeof countrylist)}
@@ -264,49 +305,7 @@ const SignUp = () => {
                       required
                     >
                       <option value="">Lab Location (Select City)</option>
-                      <option value="Andaman and Nicobar Islands">
-                        Andaman and Nicobar Islands
-                      </option>
-                      <option value="Arunachal Pradesh">
-                        Arunachal Pradesh
-                      </option>
-                      <option value="Mumbai">Mumbai</option>
-                      <option value="Bihar">Bihar</option>
-                      <option value="Chandigarh">Chandigarh</option>
-                      <option value="Chhattisgarh">Chhattisgarh</option>
-                      <option value="Dadar and Nagar Haveli">
-                        Dadar and Nagar Haveli
-                      </option>
-                      <option value="Daman and Diu">Daman and Diu</option>
-                      <option value="Delhi">Delhi</option>
-                      <option value="Lakshadweep">Lakshadweep</option>
-                      <option value="Puducherry">Puducherry</option>
-                      <option value="Goa">Goa</option>
-                      <option value="Gujarat">Gujarat</option>
-                      <option value="Haryana">Haryana</option>
-                      <option value="Himachal Pradesh">Himachal Pradesh</option>
-                      <option value="Jammu and Kashmir">
-                        Jammu and Kashmir
-                      </option>
-                      <option value="Jharkhand">Jharkhand</option>
-                      <option value="Karnataka">Karnataka</option>
-                      <option value="Kerala">Kerala</option>
-                      <option value="Madhya Pradesh">Madhya Pradesh</option>
-                      <option value="Maharashtra">Maharashtra</option>
-                      <option value="Manipur">Manipur</option>
-                      <option value="Meghalaya">Meghalaya</option>
-                      <option value="Mizoram">Mizoram</option>
-                      <option value="Nagaland">Nagaland</option>
-                      <option value="Odisha">Odisha</option>
-                      <option value="Punjab">Punjab</option>
-                      <option value="Rajasthan">Rajasthan</option>
-                      <option value="Sikkim">Sikkim</option>
-                      <option value="Tamil Nadu">Tamil Nadu</option>
-                      <option value="Telangana">Telangana</option>
-                      <option value="Tripura">Tripura</option>
-                      <option value="Uttar Pradesh">Uttar Pradesh</option>
-                      <option value="Uttarakhand">Uttarakhand</option>
-                      <option value="West Bengal">West Bengal</option>
+                      {stateList.map(state => <option value={state}>{state}</option>)}
                     </Form.Control>
                   </Col>
                 </Form.Group>
@@ -336,7 +335,6 @@ const SignUp = () => {
                   </Card.Text>
                 )}
               </Form>
-
               <Card.Text>
                 Already a user? <a href="/login">Sign in</a> here
               </Card.Text>
