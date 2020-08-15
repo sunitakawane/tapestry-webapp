@@ -1,8 +1,8 @@
-import React from "react";
 import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
 
 import "./NavBarLanding.scss";
 import "../../index.scss";
+
 
 function NavBarLanding(props) {
   return (

@@ -1,0 +1,75 @@
+@import "src/constants/color.scss";
+
+.RectangleParent {
+	position: relative;
+	width: 100;
+	height: relative;
+	left: 0%;
+	top:20%;
+	padding: 1% 2%;
+	font-size: 18px;
+	background: $color-background !important;
+	color:$color-white;
+}
+
+.close {
+	background: $color-background !important;
+	color:$color-white;
+	font-weight: bold;
+	border: 0px solid $color-background !important;
+	font-size: 36px;
+	text-align: right;
+}
+
+
+.Rectangle1 {
+	position: relative;
+	left: 0%;
+	width: 100%;
+	top:20%;
+	background: $color-secondary-background;
+	border: 1px solid $color-rectangle-border;
+	box-sizing: border-box;
+	padding: 2%;
+	color:$color-black;
+}
+
+.Rectangle2{
+	position: relative;
+	left: 0%;
+	width: 100%;
+	top:20%;
+	background: $color-secondary-background;
+	border: 1px solid $color-rectangle-border;
+	box-sizing: border-box;
+	padding: 2%;
+	color:$color-black;
+}
+
+.downloadpoolingmatrix {
+	background: $color-background !important;
+	border: 1px solid $color-background !important;
+	box-sizing: border-box;
+	border-radius: 2px;
+	font-size: 16px;
+	padding: 3px;
+	color:$color-white;
+}
+.downloadpoolingmatrix:disabled,
+.downloadpoolingmatrix[disabled] {
+	border: 1px solid $color-white;
+	background: $color-white;
+	color: $color-disabled-writing;
+}
+.endbuttons {
+	border: 1px solid $color-endbutton-border;
+	box-sizing: border-box;
+	border-radius: 2px;
+	font-size: 16px;
+	padding:4px;
+	background: $color-white;
+	&:hover {
+		color: $color-background !important;
+		border: 1px solid $color-background;
+	}
+}
