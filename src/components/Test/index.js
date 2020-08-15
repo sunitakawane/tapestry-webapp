@@ -24,14 +24,14 @@ constructor(props){
     testConductedList:props.testConductedList,
     testconductedby:JSON.parse(localStorage.getItem("user"))['user']['pk'],
     remarks:props.remarks,
-    testid:props.testid,    
-    totalsamples:props.totalsamples,
-    prevalancerate:props.prevalancerate,
-    selectedkit:props.selectedkit,
-    selectedmachine:props.selectedmachine,
-    showtriggerprevalancerate:false,
+    testId:props.testId,    
+    totalSamples:props.totalSamples,
+    prevalanceRate:props.prevalanceRate,
+    selectedKit:props.selectedKit,
+    selectedMachine:props.selectedMachine,
+    showtriggerprevalanceRate:false,
     showtriggersamples:false,
-    triggerprevalancerate:React.createRef(),
+    triggerprevalanceRate:React.createRef(),
     triggersamples:React.createRef(),
     labId :null,
     showspinner:false
@@ -51,10 +51,10 @@ evil(fn)
 
 download()
 {
-  console.log(this.state.selectedkit)
-  console.log(this.state.selectedmachine)
-  console.log(this.state.totalsamples)
-  console.log(this.state.prevalancerate)
+  console.log(this.state.selectedKit)
+  console.log(this.state.selectedMachine)
+  console.log(this.state.totalSamples)
+  console.log(this.state.prevalanceRate)
   console.log(this.state.testconductedby)
   this.setState({showspinner:true})
   if (this.props.modalType === 'new') {
@@ -63,8 +63,8 @@ download()
                   "type": "test",
                   "attributes": {
                       "labId": 1,
-                      "nsamples": this.evil(this.state.totalsamples),
-                      "prevalence": this.evil(this.state.prevalancerate),
+                      "nsamples": this.evil(this.state.totalSamples),
+                      "prevalence": this.evil(this.state.prevalanceRate),
                       "remark": this.state.remarks
                   },
                   "relationships": {
@@ -83,13 +83,13 @@ download()
                       "testKit": {
                           "data": {
                               "type": "testKit",
-                              "id": this.state.selectedkit
+                              "id": this.state.selectedKit
                           }
                       },
                       "machineType": {
                           "data": {
                               "type": "machineType",
-                              "id": this.state.selectedmachine,
+                              "id": this.state.selectedMachine,
                           }
                       }
                   }
@@ -113,14 +113,14 @@ download()
     });
   } else {
     
-    axios.put(url["BASE_API_URL"]+ 'lab/' + this.state.labId + '/test/' + this.state.testid + '/', {
+    axios.put(url["BASE_API_URL"]+ 'lab/' + this.state.labId + '/test/' + this.state.testId + '/', {
       "data":{
                   "type": "test",
-                  "id": this.state.testid,
+                  "id": this.state.testId,
                   "attributes": {
                       "labId": 1,
-                      "nsamples": this.evil(this.state.totalsamples),
-                      "prevalence": this.evil(this.state.prevalancerate),
+                      "nsamples": this.evil(this.state.totalSamples),
+                      "prevalence": this.evil(this.state.prevalanceRate),
                       "remark": this.state.remarks
                   },
                   "relationships": {
@@ -139,13 +139,13 @@ download()
                       "testKit": {
                           "data": {
                               "type": "testKit",
-                              "id": this.state.selectedkit
+                              "id": this.state.selectedKit
                           }
                       },
                       "machineType": {
                           "data": {
                               "type": "machineType",
-                              "id": this.state.selectedmachine,
+                              "id": this.state.selectedMachine,
                           }
                       }
                   }
@@ -171,7 +171,7 @@ download()
 }
 downloadpoolingmatrixcolor()
 {
-  return ((this.evil(this.state.totalsamples) > 0) && (this.evil(this.state.prevalancerate) > 0) && (this.evil(this.state.prevalancerate)<100) && (Number.isInteger(this.evil(this.state.totalsamples))))
+  return ((this.evil(this.state.totalSamples) > 0) && (this.evil(this.state.prevalanceRate) > 0) && (this.evil(this.state.prevalanceRate)<100) && (Number.isInteger(this.evil(this.state.totalSamples))))
 }
 handleInput(event)
 {
@@ -182,15 +182,15 @@ handleInput(event)
 
 handleFocus(event)
 {
-  if(event.target.name==="prevalancerate")
+  if(event.target.name==="prevalanceRate")
   {
-    this.setState({showtriggerprevalancerate:true})
+    this.setState({showtriggerprevalanceRate:true})
   }
   else
   {
-    this.setState({showtriggerprevalancerate:false})
+    this.setState({showtriggerprevalanceRate:false})
   }
-  if(event.target.name==="totalsamples")
+  if(event.target.name==="totalSamples")
   {
     this.setState({showtriggersamples:true})
   }
@@ -239,7 +239,7 @@ render()
           </Row>
           <Row>
             <Col xs lg="4">
-              <DropdownContent name="selectedkit" list={this.state.kit} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.selectedkit}/>      
+              <DropdownContent name="selectedKit" list={this.state.kit} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.selectedKit}/>      
             </Col>
           </Row>
           <br/>
@@ -248,7 +248,7 @@ render()
           </Row>
           <Row>
             <Col xs lg="4">
-              <DropdownContent name="selectedmachine" list={this.state.machine} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.selectedmachine}/>      
+              <DropdownContent name="selectedMachine" list={this.state.machine} onChange={this.handleInput} onFocus={this.handleFocus} currentvalue={this.state.selectedMachine}/>      
             </Col>
           </Row>
           <br/>
@@ -265,11 +265,11 @@ render()
                   aria-describedby="basic-addon1"
                   step="1"
                   min="0"
-                  name="totalsamples"   
+                  name="totalSamples"   
                   onChange={this.handleInput}  
                   ref={this.state.triggersamples}
                   onFocus={this.handleFocus}
-                  value={(this.state.totalsamples === 0)?null:this.state.totalsamples}
+                  value={(this.state.totalSamples === 0)?null:this.state.totalSamples}
                 />
               </InputGroup>
               <Overlay target={this.state.triggersamples.current} show={this.state.showtriggersamples} placement="left">
@@ -289,14 +289,14 @@ render()
                   aria-describedby="basic-addon1"
                   max="100"
                   min="0"
-                  name="prevalancerate"
+                  name="prevalanceRate"
                   onChange={this.handleInput}
-                  ref={this.state.triggerprevalancerate}
+                  ref={this.state.triggerprevalanceRate}
                   onFocus={this.handleFocus}
-                  value={(this.state.prevalancerate === 0)?null:this.state.prevalancerate}
+                  value={(this.state.prevalanceRate === 0)?null:this.state.prevalanceRate}
                 />
               </InputGroup>
-              <Overlay target={this.state.triggerprevalancerate.current} show={this.state.showtriggerprevalancerate} placement="right">
+              <Overlay target={this.state.triggerprevalanceRate.current} show={this.state.showtriggerprevalanceRate} placement="right">
                 {(props) => (
                   <Tooltip id="trigger prevalance rate" {...props}>
                     Prevalance Rate should be less than 20% <a href="mailto:algorithmicbiologics@gmail.com">Contact Us</a>
@@ -315,7 +315,7 @@ render()
               Test ID
             </Col>
             <Col xs lg="4">
-              {this.state.testid}
+              {this.state.testId}
             </Col>
           </Row>
           <br/>

@@ -27,15 +27,15 @@ const TableLanding = props => {
   const completedRows = ['view', 'options'];
   const rows = testStatus === 'ongoing' ? ongoingRows : completedRows;
   const {showUpload, toggleUpload} = useUploadModal();
-  const {showtest, toggleTest} = useTestModal();
+  const {showTest, toggleTest} = useTestModal();
 
   // state variables
-  const [testid, setTestId] = useState('');
-  const [totalsamples, setTotalSamples] = useState(0);
+  const [testId, setTestId] = useState('');
+  const [totalSamples, setTotalSamples] = useState(0);
   const [user, setUser] = useState('');
-  const [prevalancerate, setPrevalanceRate] = useState(0);
-  const [selectedkit, setSelectedKit] = useState('');
-  const [selectedmachine, setSelectedMachine] = useState('');
+  const [prevalanceRate, setPrevalanceRate] = useState(0);
+  const [selectedKit, setSelectedKit] = useState('');
+  const [selectedMachine, setSelectedMachine] = useState('');
   const [completed, setCompleted] = useState(0);
   const [download, setDownload] = useState(false);
   const [remarks, setRemarks] = useState('');
@@ -199,60 +199,62 @@ const TableLanding = props => {
             })}
           </tr>
             } else {
-              return <tr key={index}>
-                {keys.map(key =>
-                {
+              return (
+                <tr key={index}>
+                  {keys.map(key => {
+                    switch(key) {
+                      case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
+                      case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
+                      case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
+                      case testConstants.STATUS: return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
+                      case 'download': return <th key={key} className='text-normal text-center'>
+                        <button className='download-button' onClick={() => {downloadMatrix(row[testConstants.FILE])}}>Download pooling matrix</button>
+                      </th>
+                      case 'upload': return <th key={key} className='text-normal text-center'>
+                        <span onClick={()=>sendRequest()} className='prim-color'>Upload qPCR results</span>
+                        <Modal size="lg" show={showUpload}>
+                            <Upload download={download} completed={completed} handleClose={toggleUpload}/>
+                        </Modal>
+                      </th>
+                      case 'options': return (
+                        <th key={key} className='text-center'>
+                          <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsOverlayTrigger(row)}>
+                            <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
+                          </OverlayTrigger>                                            
+                        </th>
+                      )
+                      default: return null;
+                    }    
+                })}
+                </tr>
+              );
+            }
+          } else {
+            return (
+              <tr key={index}>
+                {keys.map(key => {
                   switch(key) {
                     case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
                     case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
                     case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
-                    case testConstants.STATUS: return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
-                    case 'download': return <th key={key} className='text-normal text-center'>
-                      <button className='download-button' onClick={() => {downloadMatrix(row[testConstants.FILE])}}>Download pooling matrix</button>
-                    </th>
-                    case 'upload': return <th key={key} className='text-normal text-center'>
-                      <span onClick={()=>sendRequest()} className='prim-color'>Upload qPCR results</span>
-                      <Modal size="lg" show={showUpload}>
-                          <Upload download={download} completed={completed} handleClose={toggleUpload}/>
-                      </Modal>
+                    case testConstants.PREVALENCE: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>
+                    case testConstants.POS_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
+                    case testConstants.UNDET_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
+                    case 'view': return <th key={key} className='text-normal text-center'>
+                        <a href="/completedtests#" className='prim-color'>View results</a>
                     </th>
                     case 'options': return (
                       <th key={key} className='text-center'>
-                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsOverlayTrigger(row)}>
+                        <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsct()}>
                           <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
                         </OverlayTrigger>                                            
                       </th>
                     )
                     default: return null;
-                  }    
-              })}
-              </tr>    
-            }
-          } else {
-            return <tr key={index}>
-            {keys.map(key =>
-            {
-              switch(key) {
-                case testConstants.TEST_ID: return <th key={key} className='text-normal'>{row[key]}</th>;
-                case testConstants.SAMPLES: return <th key={key} className='text-normal text-center'>{row[key]}</th>;
-                case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
-                case testConstants.PREVALENCE: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>
-                case testConstants.POS_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
-                case testConstants.UNDET_SAMPLES: return <th key={key} className='text-normal text-center'>{row[key] === null ? '-' : row[key]}</th>;
-                case 'view': return <th key={key} className='text-normal text-center'>
-                    <a href="/completedtests#" className='prim-color'>View results</a>
-                </th>
-                case 'options': return (
-                  <th key={key} className='text-center'>
-                    <OverlayTrigger trigger='focus' placement='bottom' overlay={optionsct()}>
-                      <Button bsPrefix='btn-text prim-color'>{getSVG('dots')}</Button>
-                    </OverlayTrigger>                                            
-                  </th>
-                )
-                default: return null;
-              }
-            })}
-            </tr>
+                  }
+                })}
+              </tr>
+            )
           }      
       });
   }
@@ -279,8 +281,20 @@ const TableLanding = props => {
           </div>
         }
       </Row>
-      <Modal size="lg" show={showtest}>
-        <Test testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggleTest} machine={machine} kit={kit} testConductedList={testConductedList} modalType = {'edit'}/>
+      <Modal size="lg" show={showTest}>
+        <Test
+          handleClose={toggleTest}
+          kit={kit}
+          machine={machine}
+          modalType = {'edit'}
+          prevalanceRate={prevalanceRate}
+          remarks={remarks}
+          selectedKit={selectedKit}
+          selectedMachine={selectedMachine}
+          testConductedList={testConductedList}
+          testId={testId}
+          totalSamples={totalSamples}
+        />
       </Modal>
     </Container>
   );

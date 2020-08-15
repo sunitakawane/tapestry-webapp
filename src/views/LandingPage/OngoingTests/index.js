@@ -23,13 +23,13 @@ function OngoingTests(props) {
     // // Local state
     // const userId = 'Anirudha'
     // const labName = 'Vedanta Memorial Hospitals, Biogen Labs'
-    const {showtest, toggletest} = useTestModal();
+    const {showTest, toggletest} = useTestModal();
     const remarks = ''
-    const testid = ''
-    const totalsamples = 0
-    const prevalancerate = 0
-    const selectedkit = 1
-    const selectedmachine = 1
+    const testId = ''
+    const totalSamples = 0
+    const prevalanceRate = 0
+    const selectedKit = 1
+    const selectedMachine = 1
     // JSON.parse(localStorage.getItem("user"))['user']['username']
     
     //const count = 1
@@ -109,7 +109,7 @@ function OngoingTests(props) {
             initialmount = false
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showtest])
+    }, [showTest])
 
     useEffect( () => {
         if (searchOn) {
@@ -312,8 +312,8 @@ function OngoingTests(props) {
                         </Col>
                         <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
-                            <Modal size="lg" show={showtest}>
-                                <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testConductedList={testConductedList} modalType = {'new'}/>
+                            <Modal size="lg" show={showTest}>
+                                <Test username={7} testId={testId} totalSamples={totalSamples} prevalanceRate={prevalanceRate} selectedKit={selectedKit} selectedMachine={selectedMachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testConductedList={testConductedList} modalType = {'new'}/>
                             </Modal>
                         </Col>
                     </Row>

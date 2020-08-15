@@ -20,13 +20,13 @@ import {labActions} from '../../../redux/actions/labActions/labActions'
 function CompletedTests() {
     
     var initialmount = true
-    const {showtest, toggletest} = useTestModal();
+    const {showTest, toggletest} = useTestModal();
     const remarks = ''
-    const testid = ''
-    const totalsamples = 0
-    const prevalancerate = 0
-    const selectedkit = 1
-    const selectedmachine = 1
+    const testId = ''
+    const totalSamples = 0
+    const prevalanceRate = 0
+    const selectedKit = 1
+    const selectedMachine = 1
     
     // Local states
     const testStatus='completed'
@@ -108,7 +108,7 @@ function CompletedTests() {
             testList(options,labId)
             initialmount = false
         }
-    }, [showtest])
+    }, [showTest])
 
     // Button state
     useEffect( () => {
@@ -263,8 +263,8 @@ function CompletedTests() {
                     </Col>
                     <Col xs={{span:2}}>
                         <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
-                        <Modal size="lg" show={showtest}>
-                            <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testConductedList={testConductedList} modalType = {'new'}/>
+                        <Modal size="lg" show={showTest}>
+                            <Test username={7} testId={testId} totalSamples={totalSamples} prevalanceRate={prevalanceRate} selectedKit={selectedKit} selectedMachine={selectedMachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testConductedList={testConductedList} modalType = {'new'}/>
                         </Modal>
                     </Col>
                 </Row>

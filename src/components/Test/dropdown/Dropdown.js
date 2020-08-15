@@ -44,9 +44,9 @@ export default function DropdownContent(props) {
             {list.map(item=>
                 {{switch(name)
                 {
-                  case "selectedmachine":
+                  case "selectedMachine":
                     return <option value={item['id']}>{(item['attributes']['noOfWells']+'wells(' + item['attributes']['dimX'] + 'x' +  item['attributes']['dimY'] + ') ' +  item['attributes']['name'])}</option>
-                  case "selectedkit":
+                  case "selectedKit":
                     return <option value={item['id']}>{("("+item['attributes']['geneType']+") "+item['attributes']['name'])}</option>
                   case "testconductedby":
                     return <option value={item['id']}>{item['attributes']["firstName"] +' '+ item['attributes']['lastName']}</option>
