@@ -11,14 +11,16 @@ import store from './redux/store/index'
 import './index.scss';
 
 ReactDOM.render( 
+  (
     <React.StrictMode>
         <Provider store={store}>
-            <Router > 
-                { routeService.renderRoutes(routes) } 
-            </Router>   
-        </Provider>    
-    </React.StrictMode>,
-    document.getElementById('root')
+            <Router>
+                { routeService.renderRoutes(routes) }
+            </Router>
+        </Provider>
+    </React.StrictMode>
+  ),
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

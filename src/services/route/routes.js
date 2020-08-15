@@ -1,25 +1,26 @@
-import Wrapper from "../../bootstrap/Wrapper/Wrapper";
 import App from "../../App";
-import Login from "../../views/Auth/Login";
-import SignUp from "../../views/Auth/SignUp";
-import RequestSent from "../../views/Auth/RequestSent";
-import ResetPassword from "../../views/Auth/ForgotPassword/ResetPassword";
-import PasswordLinkSent from "../../views/Auth/ForgotPassword/PasswordLinkSent";
-import SetPassword from "../../views/Auth/SetPassword";
 import ChangePassword from "../../views/Auth/ForgotPassword/ChangePassword";
+import CompletedTests from "../../views/LandingPage/CompletedTests";
 import Congratulations from "../../views/Auth/ForgotPassword/Congratulations";
+import Login from "../../views/Auth/Login";
 import Onboarding from "../../views/OnboardingPage";
 import OngoingTests from "../../views/LandingPage/OngoingTests";
-import CompletedTests from "../../views/LandingPage/CompletedTests";
+import PasswordLinkSent from "../../views/Auth/ForgotPassword/PasswordLinkSent";
+import RequestSent from "../../views/Auth/RequestSent";
+import ResetPassword from "../../views/Auth/ForgotPassword/ResetPassword";
+import SetPassword from "../../views/Auth/SetPassword";
+import SignUp from "../../views/Auth/SignUp";
+import Wrapper from "../../bootstrap/Wrapper/Wrapper";
 import url from "../../constants/url";
 // import { useWindowDimensions } from "react-native";
 
-if(localStorage.getItem("user") === undefined)
-{
-  if(window.location.href !== url['BASE_URL']+'login')
-      {
-          window.location.href = url['BASE_URL']+'login'
-      }
+const baseUrl = url['BASE_URL'];
+const loginBaseUrl = `${baseUrl}login`;
+
+if (localStorage.getItem("user") === undefined) {
+  if (window.location.href !== loginBaseUrl) {
+    window.location.href = loginBaseUrl;
+  }
 }
 
 const routes = [
@@ -30,7 +31,7 @@ const routes = [
         path: "/",
         exact: true,
         strict: true,
-        name: "Home",
+        name: "home",
         component: App,
       },
       {
@@ -44,7 +45,7 @@ const routes = [
         path: "/sign-up",
         exact: true,
         strict: true,
-        name: "singUp",
+        name: "signUp",
         component: SignUp,
       },
       {
@@ -97,14 +98,14 @@ const routes = [
         component: Onboarding,
       },
       {
-        path: "/ongoingtests",
+        path: "/ongoing-tests",
         exact: true,
         strict: true,
         name: "ongoingTests",
         component: OngoingTests,
       },
       {
-        path: "/completedtests",
+        path: "/completed-tests",
         exact: true,
         strict: true,
         name: "completedTests",
