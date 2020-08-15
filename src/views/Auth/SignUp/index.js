@@ -16,6 +16,7 @@ import Autocomplete from "react-autocomplete";
 import { signUpActions } from "../../../redux/actions/authActions/signUpActions";
 import mask from "../Mask Group.png";
 import "./signUp.scss";
+import { stateList } from './config';
 
 const SignUp = () => {
   let history = useHistory();
@@ -35,6 +36,7 @@ const SignUp = () => {
   const isInvalid = useSelector((state) => state.signUp.isInvalid);
   const countrylist = useSelector((state) => state.signUp.countrylist);
   const cities = useSelector((state) => state.signUp.cities);
+
   // dispatch (used to define sign-up function)
   const dispatch = useDispatch();
   const signUpRequested = () => dispatch(signUpActions.signUpRequested());
@@ -52,48 +54,14 @@ const SignUp = () => {
     cityList();
   }, []);
 
-  console.log(cities);
   // const countries = JSON.parse(localStorage.getItem("countries"));
 
-  const handleEmailInput = (e) => {
-    const { value } = e.target;
-    if (value.length >= 0) {
-      setEmail(value);
-    }
-  };
-
-  const handleFirstNameInput = (e) => {
-    const { value } = e.target;
-    if (value.length >= 0) {
-      setFirstName(value);
-    }
-  };
-
-  const handleLastNameInput = (e) => {
-    const { value } = e.target;
-    if (value.length >= 0) {
-      setLastName(value);
-    }
-  };
-
-  const handleLabNameInput = (e) => {
-    const { value } = e.target;
-    if (value.length >= 0) {
-      setLabName(value);
-    }
-  };
+  const getEventTarget = e => e && e.target && e.target.value;
 
   const handleCountryInput = (e) => {
     const { value } = e.target;
     if (value.length >= 0) {
       setCountry(value);
-    }
-  };
-
-  const handleLabLocationInput = (e) => {
-    const { value } = e.target;
-    if (value.length >= 0) {
-      setLabLocation(value);
     }
   };
 
@@ -115,46 +83,6 @@ const SignUp = () => {
     history.push("/request-sent");
   }
 
-  const stateList = [
-    "Andaman and Nicobar Islands",
-    "Arunachal Pradesh",
-    "Mumbai",
-    "Bihar",
-    "Chandigarh",
-    "Chhattisgarh",
-    "Dadar and Nagar Haveli",
-    "Daman and Diu",
-    "Delhi",
-    "Lakshadweep",
-    "Puducherry",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jammu and Kashmir",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Nagaland",
-    "Odisha",
-    "Punjab",
-    "Rajasthan",
-    "Sikkim",
-    "Tamil Nadu",
-    "Telangana",
-    "Tripura",
-    "Uttar Pradesh",
-    "Uttarakhand",
-    "West Bengal"
-  ];
-
-  const getEventTarget = e => e && e.target && e.target.value;
-
   const handleUpdateFieldFunctionMap = {
     'email': (e) => setEmail(getEventTarget(e)),
     'firstName': (e) => setFirstName(getEventTarget(e)),
@@ -164,7 +92,7 @@ const SignUp = () => {
 
   const FormFields = [
     {
-      id: email,
+      id: 'email',
       type: 'email',
       className: 'input',
       placeholder: 'Email Address',
@@ -301,7 +229,7 @@ const SignUp = () => {
                       as="select"
                       size="lg"
                       value={labLocation.value}
-                      onChange={handleLabLocationInput}
+                      onChange={(e) => setLabLocation(getEventTarget(e))}
                       required
                     >
                       <option value="">Lab Location (Select City)</option>
