@@ -11,7 +11,7 @@ import {
   Navbar,
   Spinner
 } from "react-bootstrap";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { passwordActions } from "../../../../redux/actions/authActions/passwordActions";
 import "./changePassword.scss";
 import mask from "../../Mask Group.png";
@@ -22,7 +22,7 @@ const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [validated, setValidated] = useState(false);
+  // const [validated, setValidated] = useState(false);
 
   const isSubmitted = useSelector((state) => state.password.isSubmitted);
   const isChangePasswordSuccess = useSelector(
@@ -81,7 +81,7 @@ const ChangePassword = () => {
       changePassword(oldPassword, newPassword, confirmPassword);
     }
 
-    setValidated(true);
+    // setValidated(true);
   };
 
   if (isChangePasswordSuccess) {

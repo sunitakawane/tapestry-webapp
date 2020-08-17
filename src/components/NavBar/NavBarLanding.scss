@@ -1,10 +1,11 @@
-@import '../../constants/colors.scss';
+@import "../../constants/colors.scss";
 
-.navbar {
+.main-navbar {
+  .navbar {
     background-color: $color-background;
-}
+  }
 
-.navbar-brand {
+  .navbar-brand {
     font-style: normal;
     font-weight: 600;
     font-size: 18px;
@@ -16,30 +17,31 @@
 
     color: $color-shade !important;
     mix-blend-mode: normal;
-}
+  }
 
-#user-nav-dropdown {
-    color: $color-shade !important; 
-}
-
-.nav-link {
+  #user-nav-dropdown {
     color: $color-shade !important;
-}
+  }
 
-.nav-link.active {
+  .nav-link {
+    color: $color-shade !important;
+  }
+
+  .nav-link.active {
     border-bottom: 2px solid $color-shade;
-}
+  }
 
-.firstline {
+  .firstline {
     border-color: $color-background;
     width: 75%;
-}
+  }
 
-.secondline {
+  .secondline {
     border-color: $color-background;
     width: 20%;
-}
+  }
 
-.bdg-prim {
+  .bdg-prim {
     color: $color-background !important;
+  }
 }

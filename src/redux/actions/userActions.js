@@ -1,27 +1,27 @@
-import { userConstants } from "../../constants/userConstants";
+import { userApi } from "../../api/user";
+import userConstants from "../../constants/userConstants";
 
 export const userActions = {
-  success,
-  error,
-  clear,
+  getUser,
 };
 
-function success(msg) {
-  return {
-    type: userConstants.SUCCESS,
-    payload: msg,
-  };
-}
-
-function error(msg) {
-  return {
-    type: userConstants.ERROR,
-    payload: msg,
-  };
-}
-
-function clear() {
-  return {
-    type: userConstants.CLEAR,
+function getUser() {
+  return (dispatch) => {
+    userApi
+      .getUser()
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        dispatch({
+          type: userConstants.GET_USER_SUCCESS,
+          payload: response.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch({
+          type: userConstants.GET_USER_FAILURE,
+          payload: error.toString(),
+        });
+      });
   };
 }

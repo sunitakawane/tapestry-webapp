@@ -1,0 +1,16 @@
+@import "src/constants/color.scss";
+
+.dropdowncontent {
+	background: $color-secondary-background;
+	border: 1px solid $color-dropdowncontentbackground-border;  
+	padding: 5% 10%;
+	box-sizing: border-box;
+	border-radius: 3px;
+}
+
+@media (max-width:800px){
+	.dropdowncontent{
+		width:80%;
+	}
+
+}
