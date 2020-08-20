@@ -1,17 +1,9 @@
 import testConstants from '../../../constants/testConstants'
 
-const initialState = {
-    //users : [],
-    //machine : [],
-    //kit : [],
-    //testconductedlist : []
-};  
+const initialState = {};  
 
 export default function testReducer(state=initialState, action) {
 
-    //testdata('machine-type').then(results=>state.machine = results)
-    //testdata('test-kit').then(results=>state.kit=results)
-    //testdata('user').then(results=>state.testconductedlist=results)
     switch(action.type){
 
         case testConstants.TEST_LIST_SUCCESS: 
@@ -24,7 +16,6 @@ export default function testReducer(state=initialState, action) {
 
         case testConstants.TEST_LISTID_SUCCESS:
             console.log('Test list for single id success')
-            // Code to check id, see if any update required
             const stateListID = {...state}
             stateListID.tests.forEach((test, index) => {
                 test.id === action.test.id ? 

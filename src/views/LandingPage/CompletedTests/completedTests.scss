@@ -1,10 +1,22 @@
 @import '../../../constants/color.scss';
 
+.bg-tapestry {
+  background-color: $color-background !important;
+  border-color: $color-background !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .filter-dd {
     background-color: white !important;
     color: $color-background !important;
     border: '1px' !important;
     border-color: $color-background !important;
+}
+
+.search-id {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .text-red {

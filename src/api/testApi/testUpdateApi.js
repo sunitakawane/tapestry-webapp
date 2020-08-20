@@ -11,7 +11,7 @@ const token = labstate()['token'];
 
 function testUpdate(test, labid) {
     return axios
-        .put(url.BASE_API_URL + 'lab/' + labid + '/test/' + test.id.toString() , test, {
+        .put(url.BASE_API_URL + 'lab/' + labid + '/test/' + test.id.toString() + '/' , test, {
             headers:{
                 'Authorization': token,
                 Accept : 'application/vnd.api+json'
@@ -24,7 +24,7 @@ function testUpdate(test, labid) {
 
 function testPUpdate(testId, keyId, value,labid) {
     return axios
-        .patch(url.BASE_API_URL + 'lab/' + labid + '/test/' + testId.toString() , keyId, value, {
+        .patch(url.BASE_API_URL + 'lab/' + labid + '/test/' + testId.toString() + '/' , keyId, value, {
             headers:{
                 'Authorization': token,
                 Accept : 'application/vnd.api+json'

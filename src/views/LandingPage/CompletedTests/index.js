@@ -60,7 +60,7 @@ function CompletedTests() {
     const machineList = () => dispatch(labActions.machinelist())
 
     const labid = 1
-    const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
+    const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ' '+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
     const labName = 'Test'
 
     // Tests redux
@@ -115,7 +115,6 @@ function CompletedTests() {
         if (searchOn) { // Search is done only if button is clicked
             console.log('Search operation')
             var options = 'search=' + search + '&page[number]=1'
-            console.log(options)
             testList(options,labid)
             setPrevState(prev => ({
                 ...prev,
@@ -132,7 +131,6 @@ function CompletedTests() {
         if (searchOn) { // If search done was removed
             console.log('Search selection removed')
             var options = filter + '&page[number]=1'
-            console.log(options)
             testList(options,labid) // API call for initial state
             setPrevState(prev => ({
                 ...prev,
@@ -151,7 +149,6 @@ function CompletedTests() {
             if(!searchOn) { // Page changed
                 console.log('New page')
                 options = options.concat('&page[number]=' + page)
-                console.log(options)
                 testList(options,labid)
                 setPrevState(prev => ({
                     ...prev,
@@ -161,7 +158,6 @@ function CompletedTests() {
             } else { // Page changed in search mode
                 console.log('New search page')
                 options = options.concat('&search=' + search + '&page[number]=' + page)
-                console.log(options)
                 testList(options,labid)
             }
         }
@@ -240,32 +236,37 @@ function CompletedTests() {
                     <Col xs={6}>
                         <h5>COMPLETED TESTS</h5>
                     </Col>
-                    <Col xs={{span:2, offset:2}}>
-                        <Form>
-                            <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
-                                Search
-                            </Form.Label>
-                            <InputGroup>
-                                <FormControl  
-                                        id="inlineFormInputGroupUsername2" 
-                                        type='text'
-                                        placeholder="Search TEST ID" 
-                                        value={search}
-                                        onChange={handleSearch}
-                                />
-                                <InputGroup.Append>
-                                    <Button variant='outline-secondary' onClick={handleClick}>
-                                        {getSVG('search')}
-                                    </Button>
-                                </InputGroup.Append>
-                            </InputGroup>
-                        </Form>
-                    </Col>
-                    <Col xs={{span:2}}>
-                        <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
-                        <Modal size="lg" show={showtest}>
-                            <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist} modalType = {'new'}/>
-                        </Modal>
+                    <Col xs={6}>
+                        <Row>
+                        <Col xs={{span:4, offset:5}} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                            <Form>
+                                <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
+                                    Search
+                                </Form.Label>
+                                <InputGroup>
+                                    <FormControl  
+                                            id="inlineFormInputGroupUsername2" 
+                                            type='text'
+                                            placeholder="Search TEST ID" 
+                                            value={search}
+                                            className='search-id'
+                                            onChange={handleSearch}
+                                    />
+                                    <InputGroup.Append>
+                                        <Button variant='outline-secondary' onClick={handleClick}>
+                                            {getSVG('search')}
+                                        </Button>
+                                    </InputGroup.Append>
+                                </InputGroup>
+                            </Form>
+                        </Col>
+                        <Col xs={{span:3}} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                            <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
+                            <Modal size="lg" show={showtest}>
+                                <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist} modalType = {'new'}/>
+                            </Modal>
+                        </Col>
+                        </Row>
                     </Col>
                 </Row>
                 

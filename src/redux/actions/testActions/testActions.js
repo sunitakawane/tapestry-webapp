@@ -1,6 +1,5 @@
 import testConstants from '../../../constants/testConstants'
 import {testListApi} from '../../../api/testApi/testListApi'
-import {testdata} from '../../../api/testApi/testdata'
 import {testUpdateApi} from '../../../api/testApi/testUpdateApi'
 import {testCreateApi} from '../../../api/testApi/testCreateApi'
 

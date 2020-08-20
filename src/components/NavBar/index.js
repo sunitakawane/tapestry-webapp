@@ -12,7 +12,7 @@ function NavBarLanding(props) {
         <Container fluid>
           <Navbar.Brand href="#home">TAPESTRY POOLING</Navbar.Brand>
           <Nav
-            className="m-auto nav align-content-md-end"
+            className="m-auto nav"
             activeKey={props.activepage}
           >
             <Nav.Item>
@@ -26,10 +26,10 @@ function NavBarLanding(props) {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          <NavDropdown title={props.userId} id="user-nav-dropdown" alignRight>
+          <NavDropdown title={props.userName} id="user-nav-dropdown" alignRight>
             {/* Dropdown links to be added */}
             <NavDropdown.Item>
-              <h6>{props.userId}</h6>
+              <h6>{props.userName}</h6>
               <p className="text-muted">{props.labName}</p>
             </NavDropdown.Item>
             <hr className="firstline" />
