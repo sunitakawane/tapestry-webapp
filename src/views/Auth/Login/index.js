@@ -61,7 +61,7 @@ const Login = () => {
   };
 
   if (isLoggedIn) {
-    history.push("/ongointests");
+    history.push("/ongoingtests");
   }
 
   return (

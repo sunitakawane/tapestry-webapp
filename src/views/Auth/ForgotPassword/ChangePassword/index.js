@@ -85,7 +85,7 @@ const ChangePassword = () => {
   };
 
   if (isChangePasswordSuccess) {
-    history.push("/ongointests");
+    history.push("/ongoingtests");
   }
 
   return (

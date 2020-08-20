@@ -75,7 +75,7 @@ const SetPassword = () => {
   };
 
   if (isSetPasswordSuccess) {
-    history.push("/onboarding");
+    history.push("/ongoingtests");
   }
 
   return (
