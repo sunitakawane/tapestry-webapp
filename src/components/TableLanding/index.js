@@ -264,7 +264,7 @@ function TableLanding(props) {
             <Row>
                 {props.jsonoutput.length ?
                     <Table borderless hover responsive className='border shadow-sm bg-white'>
-                        <thead className='border-bottom bg-light'>
+                        <thead className='border-bottom bg-shade'>
                             <tr>    
                                 {getHeader()}
                                 {emptyHeader()}                        
