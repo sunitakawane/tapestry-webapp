@@ -60,7 +60,7 @@ function CompletedTests() {
     const machineList = () => dispatch(labActions.machinelist())
 
     const labid = 1
-    const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ' '+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
+    const userName = JSON.parse(localStorage.getItem("user-login-info"))['user']['first_name'] + ' '+ JSON.parse(localStorage.getItem("user-login-info"))['user']['last_name']
     const labName = 'Test'
 
     // Tests redux
@@ -233,12 +233,12 @@ function CompletedTests() {
             <NavBarLanding activepage='/completedTests' userName={userName} labName={labName}/>
             <Container fluid>
                 <Row className='mt-3'>
-                    <Col xs={6}>
+                    <Col lg={6}>
                         <h5>COMPLETED TESTS</h5>
                     </Col>
-                    <Col xs={6}>
+                    <Col lg={6}>
                         <Row>
-                        <Col xs={{span:4, offset:5}} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <Col lg={{span:4, offset:5}} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Form>
                                 <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
                                     Search
@@ -260,7 +260,7 @@ function CompletedTests() {
                                 </InputGroup>
                             </Form>
                         </Col>
-                        <Col xs={{span:3}} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <Col lg={{span:3}} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                             <Modal size="lg" show={showtest}>
                                 <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist} modalType = {'new'}/>
