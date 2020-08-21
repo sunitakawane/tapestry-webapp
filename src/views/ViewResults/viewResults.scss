@@ -1,0 +1,17 @@
+@import '../../constants/color.scss';
+
+.back-button {
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+}
+
+.txt-result {
+    font-weight: bold;
+}
+
+.search-id {
+    outline: none !important;
+    box-shadow: none !important;
+}
