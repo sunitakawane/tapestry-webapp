@@ -1,4 +1,7 @@
 @import '~bootstrap/scss/bootstrap.scss';
+@import "./media-queries.scss";
+
+@import "src/constants/color.scss";
 
 body {
     margin: 0;
@@ -17,4 +20,33 @@ code {
 .container {
     margin-left: 10px;
     margin-right: 10px;
+
 }
+
+.form {
+    .btn.btn-primary,
+    .btn.btn-primary:hover,
+    .btn.btn-primary:active,
+    .btn.btn-primary:visited {
+      background-color: $color-background !important;
+      border-color: $color-background;
+      border-radius: 5px;
+      width: 65%;
+
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+      letter-spacing: 0.15px;
+      // margin-bottom: 70px;
+    }
+  }
+  
+    @include xs {
+        .sign-up-image {
+                .card{
+             display: none;
+                }
+        }
+    }

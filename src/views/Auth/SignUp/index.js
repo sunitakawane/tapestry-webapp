@@ -117,6 +117,7 @@ const SignUp = () => {
 
   return (
     <Container fluid>
+    <div className="scrolling-wrapper">
       <Row>
         {/* Column for background image*/}
         <Col>
@@ -157,8 +158,9 @@ const SignUp = () => {
             </ul>
           </Navbar>
           <div className="sign-up">
-            <Card border="light">
-              <Card.Title>SIGN UP!</Card.Title>
+            <Card border="0">
+              <Card.Title>SIGN UP</Card.Title>
+              <Card.Text>Provide your email and lab details and we will get back to you</Card.Text>
 
               <Form onSubmit={handleSubmit}>
                 {/* noValidate validated={validated} */}
@@ -168,7 +170,7 @@ const SignUp = () => {
                       className="input"
                       type="email"
                       placeholder="Email Address"
-                      size="lg"
+                      // size="lg"
                       value={email}
                       onChange={handleEmailInput}
                       required
@@ -185,7 +187,7 @@ const SignUp = () => {
                       className="input"
                       type="text"
                       placeholder="First Name"
-                      size="lg"
+                      // size="lg"
                       value={firstName}
                       onChange={handleFirstNameInput}
                       required
@@ -202,7 +204,7 @@ const SignUp = () => {
                       className="input"
                       type="text"
                       placeholder="Last Name"
-                      size="lg"
+                      // size="lg"
                       value={lastName}
                       onChange={handleLastNameInput}
                       required
@@ -219,7 +221,7 @@ const SignUp = () => {
                       className="input"
                       type="text"
                       placeholder="Lab Name"
-                      size="lg"
+                      // size="lg"
                       value={labName}
                       onChange={handleLabNameInput}
                       required
@@ -258,7 +260,7 @@ const SignUp = () => {
                     <Form.Control
                       type="text"
                       as="select"
-                      size="lg"
+                      // size="lg"
                       value={labLocation.value}
                       onChange={handleLabLocationInput}
                       required
@@ -344,6 +346,7 @@ const SignUp = () => {
           </div>
         </Col>
       </Row>
+      </div>
     </Container>
   );
 };
