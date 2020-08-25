@@ -10,7 +10,7 @@ import '../../index.scss'
 function ViewResults(props) {
 
     const labId = 1
-    const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
+    const userName = JSON.parse(localStorage.getItem("user-login-info"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user-login-info"))['user']['last_name']
     const labName = 'Test'
 
     const radios = [
@@ -94,17 +94,17 @@ function ViewResults(props) {
         <div className='bg-light'>
             <NavBar activepage='/completedTests' userName={userName} labName={labName}/>
             <Container fluid>
-                <Row className='mt-3'>
+                <Row className='mt-2'>
                     <Col xs={6}>
                         <button className='back-button'>{getSVG('backarrow')} Back</button>
                     </Col>
                 </Row>
-                <Row className='mt-3'>
+                <Row className='mt-2'>
                     <Col xs={6}>
                         <h5>TEST RESULTS</h5>
                     </Col>
                 </Row>
-                <Row className='mt-3'>
+                <Row className='mt-2'>
                     <Col xs={12}>
                         <Card>
                             <Card.Body>
@@ -117,7 +117,7 @@ function ViewResults(props) {
                         </Card>
                     </Col>
                 </Row>
-                <Row className='mt-4'>
+                <Row className='mt-3'>
                     <Col xs={6}>
                         <Row>
                             <Col xs={1} className='my-auto'>

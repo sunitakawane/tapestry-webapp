@@ -1,17 +1,63 @@
 @import '../../constants/color.scss';
 
-.bg-shade {
-    background-color: $color-shade;
-}
+.view-results {
 
-.txt-info {
-    font-weight: normal;
-}
+    .bg-shade {
+        background-color: $color-shade;
+    }
 
-.table-bleft {
-    border-left-style: none !important;
-}
+    .txt-info {
+        font-weight: normal;
+    }
 
-.table-bright {
-    border-right-style: none !important;
+    .table-bleft {
+        border-left-style: none !important;
+    }
+
+    .table-bright {
+        border-right-style: none !important;
+    }
+
+    tbody {
+        display:block;
+        height:450px;
+        overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;/* even columns width , fix width of table too*/
+    }
+
+    .txt-result {
+        font-weight: bold;
+    }
+
+    .card-side-margin {
+        margin-left: 5rem !important;
+        margin-right: 5rem !important;
+    }
+
+    .padding3 {
+        margin-right: 0.6rem;
+    }
+
+    .padding4 {
+        margin-right: 5.4rem;
+    }
+
+    .section-change {
+        width: 75%;
+    }
+
+    .btn-text {
+        background-color: transparent;
+        border-color: transparent;
+        color: $color-background;
+        outline: none !important;
+        box-shadow: none !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer;
+    }
 }
