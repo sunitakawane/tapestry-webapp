@@ -11,6 +11,7 @@ import Congratulations from "../../views/Auth/ForgotPassword/Congratulations";
 import Onboarding from "../../views/OnboardingPage";
 import OngoingTests from "../../views/LandingPage/OngoingTests";
 import CompletedTests from "../../views/LandingPage/CompletedTests";
+import ViewResults from "../../views/ViewResults";
 import url from "../../constants/url";
 // import { useWindowDimensions } from "react-native";
 
@@ -110,6 +111,13 @@ const routes = [
         name: "completedTests",
         component: CompletedTests,
       },
+      {
+        path: "/viewresults",
+        exact: true,
+        strict: true,
+        name: "viewResults",
+        component: ViewResults,
+      }
     ],
   },
 ];

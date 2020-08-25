@@ -3,6 +3,7 @@
 .main-navbar {
   .navbar {
     background-color: $color-background;
+    padding-bottom: 0%;
   }
 
   .navbar-brand {
@@ -28,7 +29,8 @@
   }
 
   .nav-link.active {
-    border-bottom: 2px solid $color-shade;
+    border-bottom: 3px solid $color-shade;
+    font-weight: bolder;
   }
 
   .firstline {

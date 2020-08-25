@@ -62,7 +62,7 @@ function OngoingTests(props) {
     const machineList = () => dispatch(labActions.machinelist())
 
     // Users local storage
-    const userName = JSON.parse(localStorage.getItem("user"))['user']['first_name'] + ''+ JSON.parse(localStorage.getItem("user"))['user']['last_name']
+    const userName = JSON.parse(localStorage.getItem("user-login-info"))['user']['first_name'] + ' '+ JSON.parse(localStorage.getItem("user-login-info"))['user']['last_name']
     const labName = 'Test'
     const labid = 1
 
@@ -262,12 +262,12 @@ function OngoingTests(props) {
         <NavBarLanding activepage='/ongoingtests' userName={userName} labName={labName}/>
         <Container fluid>
             <Row className='mt-3'> {/* Control bar */}
-                <Col xs={7}>
+                <Col lg={6}>
                     <Row>
-                        <Col xs={5} className='my-auto'>
+                        <Col lg={5} className='my-auto'>
                             <h5>ONGOING TESTS ({onGoingTests})</h5>
                         </Col>
-                        <Col xs={7}>
+                        <Col lg={7}>
                             <Row>
                                 <p className='my-auto'>Filters</p>
                                     {radios.map((radio, idx) => (
@@ -289,9 +289,9 @@ function OngoingTests(props) {
                         </Col>
                     </Row>
                 </Col>
-                <Col xs={5}>
+                <Col lg={6}>
                     <Row>
-                        <Col xs={{span: 5, offset: 2}} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <Col lg={{span: 4, offset: 5}} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Form>
                                 <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>Search</Form.Label>
                                 <InputGroup>
@@ -300,6 +300,7 @@ function OngoingTests(props) {
                                         type="number"
                                         placeholder="Search TEST ID" 
                                         value={search}
+                                        className='search-id'
                                         onChange={handleSearch}
                                     />
                                     <InputGroup.Append>
@@ -310,7 +311,7 @@ function OngoingTests(props) {
                                 </InputGroup>
                             </Form>
                         </Col>
-                        <Col xs={5} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <Col lg={3} style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button bsPrefix='ml-3 pl-4 pr-4 bg-tapestry btn' onClick={toggletest}>+ New Test</Button>
                             <Modal size="lg" show={showtest}>
                                 <Test username={7} testid={testid} totalsamples={totalsamples} prevalancerate={prevalancerate} selectedkit={selectedkit} selectedmachine={selectedmachine} remarks={remarks} handleClose={toggletest} machine={machine} kit={kit} testconductedlist={testconductedlist} modalType = {'new'}/>

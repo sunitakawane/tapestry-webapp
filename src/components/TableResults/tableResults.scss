@@ -1,0 +1,17 @@
+@import '../../constants/color.scss';
+
+.bg-shade {
+    background-color: $color-shade;
+}
+
+.txt-info {
+    font-weight: normal;
+}
+
+.table-bleft {
+    border-left-style: none !important;
+}
+
+.table-bright {
+    border-right-style: none !important;
+}

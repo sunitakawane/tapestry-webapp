@@ -15,6 +15,7 @@ import {gettestconductedlist,getmachine,getkit} from '../../redux/selectors/labS
 import {testActions} from '../../redux/actions/testActions/testActions'
 
 import testConstants from '../../constants/testConstants'
+import {testListApi} from '../../api/testApi/testListApi'
 
 function TableLanding(props) {
 
@@ -96,7 +97,6 @@ function TableLanding(props) {
             setselectedmachine(res.data['machine_type']['id'])
             setprevalancerate(res.data['prevalence'])
             setremarks(res.data['remark'])
-            console.log(res.data['remark'])
             toggletest()
         })
         .catch(function (error) {
@@ -115,9 +115,6 @@ function TableLanding(props) {
 
     const getHeader = () => {
         var heads = getKeys()
-        //console.log(kit)
-        //console.log(machine)
-        //console.log(testconductedlist)
         return heads.map(head => 
         {
             if (props.testStatus === 'ongoing') {
@@ -147,7 +144,6 @@ function TableLanding(props) {
             <Popover.Title className='text-muted'>DATA OPTIONS</Popover.Title>
             <Popover.Content>
                 <Button bsPrefix='btn-text' onClick={()=>onClick(props)}>{getSVG('options')} Edit Pool Test</Button>
-                
             </Popover.Content>
         </Popover>
     }
@@ -158,18 +154,15 @@ function TableLanding(props) {
         </Popover>
     }
 
-    const downloadmatrix = (filelink) => {
-        if (filelink !== '') {
-            /*const link = document.createElement('a');
-            console.log(link)
-            link.href = filelink;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);*/
-            console.log('Download')
-        } else {
-            console.log('No file')
-        }
+    const downloadmatrix = (id) => {
+        testListApi.testPooling(id)
+            .then((response) => {
+                const link = document.createElement('a');
+                link.href = response.data.data.pooling_matrix_download_url;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
     }
 
     const getBody = () => {
@@ -190,7 +183,7 @@ function TableLanding(props) {
                                 case testConstants.STATUS: return <th key={key} className='text-normal text-center text-danger'>{statusMap[row[key]]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
                                     {/*<a href={row[testConstants.FILE]} className='download-link text-dark'>Download pooling matrix</a>*/}
-                                    <button className='download-button' onClick={downloadmatrix(row[testConstants.FILE])}>Download pooling matrix</button>
+                                    <button className='download-button btn-text' onClick={() => {downloadmatrix(row[testConstants.TEST_ID])}}>Download pooling matrix</button>
                                 </th>
                                 case 'upload': return <th key={key} className='text-normal text-center'>
                                     <a className='text-dark prim-color'>Reupload {getSVG('reupload')}</a>
@@ -217,9 +210,9 @@ function TableLanding(props) {
                                 case testConstants.ASSIGNED: return <th key={key} className='text-normal'>{row[key]}</th>;
                                 case testConstants.STATUS: return <th key={key} className='text-normal text-muted text-center'>{row[key]}</th>;
                                 case 'download': return <th key={key} className='text-normal text-center'>
-                                    <button className='download-button' onClick={() => {downloadmatrix(row[testConstants.FILE])}}>Download pooling matrix</button>
+                                    <button className='download-button btn-text' onClick={() => {downloadmatrix(row[testConstants.TEST_ID])}}>Download pooling matrix</button>
                                 </th>
-                                case 'upload': return <th key={key} className='text-normal text-center'>
+                                case 'upload': return <th key={key} className='text-normal text-center btn-text'>
                                     <span onClick={()=>sendRequest()} className='prim-color'>Upload qPCR results</span>
                                     <Modal size="lg" show={showupload}>
                                         <Upload download={download} completed={completed} handleClose={toggleupload}/>
@@ -271,7 +264,7 @@ function TableLanding(props) {
             <Row>
                 {props.jsonoutput.length ?
                     <Table borderless hover responsive className='border shadow-sm bg-white'>
-                        <thead className='border-bottom bg-light'>
+                        <thead className='border-bottom bg-shade'>
                             <tr>    
                                 {getHeader()}
                                 {emptyHeader()}                        

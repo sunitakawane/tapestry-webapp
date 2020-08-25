@@ -3,6 +3,8 @@
 .bg-tapestry {
     background-color: $color-background !important;
     border-color: $color-background !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .filter-btn {
@@ -13,6 +15,11 @@
 .filter-btn.active {
     color: $color-background !important;
     border-color: $color-background !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.search-id {
     outline: none !important;
     box-shadow: none !important;
 }
