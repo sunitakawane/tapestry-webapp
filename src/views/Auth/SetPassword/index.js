@@ -80,106 +80,110 @@ const SetPassword = () => {
 
   return (
     <Container fluid>
-      <Row>
-        {/* Column for background image*/}
-        <Col>
-          <div className="sign-up-image">
-            <Card>
-              <Image src={mask} />
-              <Card.ImgOverlay>
-                <Card.Text>Tapestry Pooling</Card.Text>
-                <Card.Title>
-                  Towards faster <br /> testing
-                </Card.Title>
-                <Card.Subtitle>
-                  Tapestry, a novel quantitative nonadaptive pooling <br />
-                  scheme to test many samples using only a few tests.
-                </Card.Subtitle>
-              </Card.ImgOverlay>
-            </Card>
-          </div>
-        </Col>
+      <div className="scrolling-wrapper">
+        <Row>
+          {/* Column for background image*/}
+          <Col>
+            <div className="sign-up-image">
+              <Card>
+                <Image src={mask} />
+                <Card.ImgOverlay>
+                  <Card.Text>Tapestry Pooling</Card.Text>
+                  <Card.Title>
+                    Towards faster <br /> testing
+                  </Card.Title>
+                  <Card.Subtitle>
+                    Tapestry, a novel quantitative nonadaptive pooling <br />
+                    scheme to test many samples using only a few tests.
+                  </Card.Subtitle>
+                </Card.ImgOverlay>
+              </Card>
+            </div>
+          </Col>
 
-        {/* Column for the Sign-up Box */}
-        <Col>
-          <Navbar>
-            <ul className="navbar-nav ml-auto">
-              <li>
-                <a className="nav-link"> Develop using our Algorithm</a>
-              </li>
-              <li>
-                <a className="nav-link" href="#">
-                  Contact us
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="#">
-                  Visit Website
-                </a>
-              </li>
-            </ul>
-          </Navbar>
+          {/* Column for the Sign-up Box */}
+          <Col>
+            <Navbar>
+              <ul className="navbar-nav ml-auto">
+                <li>
+                  <a className="nav-link"> Develop using our Algorithm</a>
+                </li>
+                <li>
+                  <a className="nav-link" href="#">
+                    Contact us
+                  </a>
+                </li>
+                <li>
+                  <a className="nav-link" href="#">
+                    Visit Website
+                  </a>
+                </li>
+              </ul>
+            </Navbar>
 
-          <div className="login">
-            <Card border="light">
-              <Card.Title>Set Password</Card.Title>
-              <Card.Subtitle>Create a new Password.</Card.Subtitle> <br />
-              <Form onSubmit={handleSubmit}>
-                {/* noValidate validated={validated} */}
-                <Form.Group as={Row} controlId="formBasicPassword">
-                  <Col sm={8}>
-                    <Form.Control
-                      className="input"
-                      type="password"
-                      placeholder="New Password"
-                      size="lg"
-                      value={newPassword}
-                      onChange={handleNewPasswordInput}
-                      required
-                    />
-                  </Col>
-                </Form.Group>
+            <div className="login">
+              <Card border="0">
+                <Card.Title>Set Password</Card.Title>
+                <Card.Subtitle>Create a new Password.</Card.Subtitle> <br />
+                <Form onSubmit={handleSubmit}>
+                  {/* noValidate validated={validated} */}
+                  <Form.Group as={Row} controlId="formBasicPassword">
+                    <Col sm={8}>
+                      <Form.Control
+                        className="input"
+                        type="password"
+                        placeholder="New Password"
+                        // size="lg"
+                        value={newPassword}
+                        onChange={handleNewPasswordInput}
+                        required
+                      />
+                    </Col>
+                  </Form.Group>
 
-                <Form.Group as={Row} controlId="formBasicPassword">
-                  <Col sm={8}>
-                    <Form.Control
-                      className="input"
-                      type="password"
-                      placeholder="Confirm Password"
-                      size="lg"
-                      value={confirmPassword}
-                      onChange={handleConfirmPasswordInput}
-                      required
-                    />
-                  </Col>
-                </Form.Group>
-                <Button variant="primary" size="lg" type="submit">
-                  {isSubmitted && (
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
+                  <Form.Group as={Row} controlId="formBasicPassword">
+                    <Col sm={8}>
+                      <Form.Control
+                        className="input"
+                        type="password"
+                        placeholder="Confirm Password"
+                        // size="lg"
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordInput}
+                        required
+                      />
+                    </Col>
+                  </Form.Group>
+                  <Button variant="primary" size="lg" type="submit">
+                    {isSubmitted && (
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                    )}
+                    Create Password
+                  </Button>
+                  {newPassword !== confirmPassword && (
+                    <Card.Text>
+                      Passwords dont match. Please try again!
+                    </Card.Text>
                   )}
-                  Create Password
-                </Button>
-                {newPassword !== confirmPassword && (
-                  <Card.Text>Passwords dont match. Please try again!</Card.Text>
-                )}
-                {isInvalid && (
-                  <Card.Text>Request failed. Please try again!</Card.Text>
-                )}
-              </Form>
-              <Card.Text>Back to Login?</Card.Text>
-              <Card.Text className="new-user">
-                New user? <a href="/sign-up">Contact us</a> to register.
-              </Card.Text>
-            </Card>
-          </div>
-        </Col>
-      </Row>
+                  {isInvalid && (
+                    <Card.Text>Request failed. Please try again!</Card.Text>
+                  )}
+                </Form>
+                <Card.Text>Back to Login?</Card.Text>
+                <Card.Text className="new-user">
+                  New user? <a href="/sign-up">Contact us</a> to register.
+                </Card.Text>
+              </Card>
+            </div>
+          </Col>
+        </Row>
+      </div>
     </Container>
   );
 };
