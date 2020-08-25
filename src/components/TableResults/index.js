@@ -55,7 +55,7 @@ function TableResults(props) {
         <div className='view-results'>
         <Container fluid>
             <Row>
-                <Col xs = {6} className="pr-0">
+                <Col lg = {6} className="pr-0">
                     <Table borderless hover responsive className='border shadow-sm bg-white table-bright'>
                         <thead className='border-bottom bg-shade'>
                             {getHeader()}
@@ -65,7 +65,7 @@ function TableResults(props) {
                         </tbody>
                     </Table>
                 </Col>
-                <Col xs = {6} className="pl-0">
+                <Col lg = {6} className="pl-0">
                     <Table borderless hover responsive className='border shadow-sm bg-white table-bleft'>
                         <thead className='border-bottom bg-shade'>
                             <tr>
